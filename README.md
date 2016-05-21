@@ -1,3 +1,6 @@
+[![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
+[![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg?maxAge=2592000)](https://www.nuget.org/packages/WebDriverManager)
+
 # WebDriverManager.Net
 Automatic Selenium WebDriver binaries management for .Net
 
@@ -18,7 +21,7 @@ WebDriverManager is open source, released under the terms of [MIT] license.
 [WebDriverManager.Net] can be downloaded from NuGet.
 Use the GUI or the following command in the Package Manager Console:
 
-    PM> Install-Package WebDriverManager.Net
+    PM> Install-Package WebDriverManager
 
 ## Usage
 
@@ -111,7 +114,7 @@ WebDriverManager.Net (Copyright &copy; 2016) is a personal project of [Alexander
 Comments, questions and suggestions are always very welcome!
 
 [Alexander Rosolko]: https://github.com/rosolko
-[WebDriverManager.Net]: https://www.nuget.org/packages
+[WebDriverManager.Net]: https://www.nuget.org/packages/WebDriverManager
 [Boni García]: http://bonigarcia.github.io
 [GitHub Repository]: https://github.com/bonigarcia/webdrivermanager
 [Selenium Webdriver]: http://docs.seleniumhq.org/projects/webdriver

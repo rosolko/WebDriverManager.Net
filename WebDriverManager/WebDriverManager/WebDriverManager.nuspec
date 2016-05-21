@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/rosolko/WebDriverManager.Net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright © Alexander Rosolko 2016</copyright>
+  </metadata>
+</package>

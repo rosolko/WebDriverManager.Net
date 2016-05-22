@@ -1,5 +1,4 @@
-[![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg?maxAge=2592000)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
-[![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg?maxAge=2592000)](https://www.nuget.org/packages/WebDriverManager)
+[![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
 
 # WebDriverManager.Net
 Automatic Selenium WebDriver binaries management for .Net

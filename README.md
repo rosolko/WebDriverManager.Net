@@ -1,5 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
 [![NuGet version](https://badge.fury.io/nu/WebDriverManager.svg)](https://badge.fury.io/nu/WebDriverManager)
+[![Github Releases](https://img.shields.io/github/downloads/atom/atom/latest/total.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/releases/latest)
 
 # WebDriverManager.Net
 Automatic Selenium WebDriver binaries management for .Net

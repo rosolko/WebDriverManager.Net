@@ -1,6 +1,7 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
-[![NuGet version](https://badge.fury.io/nu/WebDriverManager.svg)](https://badge.fury.io/nu/WebDriverManager)
-[![Github Releases](https://img.shields.io/github/downloads/atom/atom/latest/total.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/releases/latest)
+[![AppVeyor](https://img.shields.io/appveyor/ci/rosolko/webdrivermanager-net.svg?maxAge=3600)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
+[![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg?maxAge=3600)](https://www.nuget.org/packages/WebDriverManager)
+[![GitHub release](https://img.shields.io/github/release/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/releases/latest)
+[![license](https://img.shields.io/github/license/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE)
 
 # WebDriverManager.Net
 Automatic Selenium WebDriver binaries management for .Net

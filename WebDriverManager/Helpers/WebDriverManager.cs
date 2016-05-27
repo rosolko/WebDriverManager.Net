@@ -163,7 +163,7 @@
         {
             try
             {
-                Environment.SetEnvironmentVariable(variable, desticationFile, EnvironmentVariableTarget.Machine);
+                Environment.SetEnvironmentVariable(variable, desticationFolder, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {

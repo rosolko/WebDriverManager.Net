@@ -53,6 +53,7 @@
     <Compile Include="BrowserManagers\InternetExplorerDriverManager.cs" />
     <Compile Include="BrowserManagers\MarionetteDriverManager.cs" />
     <Compile Include="BrowserManagers\OperaDriverManager.cs" />
+    <Compile Include="BrowserManagers\AppiumDriverManager.cs" />
     <Compile Include="BrowserManagers\PhantomJsDriverManager.cs" />
     <Compile Include="Helpers\Architecture.cs" />
     <Compile Include="BrowserManagers\ChromeDriverManager.cs" />

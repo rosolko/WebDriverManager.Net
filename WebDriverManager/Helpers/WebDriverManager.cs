@@ -2,6 +2,7 @@
 {
     using NLog;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
     using System.Net;
@@ -17,6 +18,8 @@
         private static string desticationFile { get; set; } = null;
 
         private static string zip { get; set; } = null;
+
+        private static bool isNew { get; set; } = false;
 
         /// <summary>
         /// Build browser driver download URL from mock using config parameters
@@ -35,7 +38,7 @@
                     .Replace("<version>", version)
                     .Replace("<architecture>", architecture);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 hLog.Error(ex, "Error occurred during building browser driver archive download URL");
                 throw new WebDriverManagerException("Error occurred during building browser driver archive download URL", ex);
@@ -53,7 +56,7 @@
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 hLog.Error(ex, "Error occurred during browser driver catalog preparation");
                 throw new WebDriverManagerException("Error occurred during browser driver catalog preparation", ex);
@@ -71,7 +74,7 @@
             {
                 return Path.GetFileName(hreflink);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 hLog.Error(ex, "Error occurred during getting browser driver archive name");
                 throw new WebDriverManagerException("Error occurred during getting browser driver archive name", ex);
@@ -129,7 +132,10 @@
                             }
                         }
                     }
+                    isNew = true;
                 }
+                else
+                    isNew = false;
             }
             catch (Exception ex)
             {
@@ -191,6 +197,38 @@
             {
                 hLog.Error(ex, "Error occurred during updating PATH environment variable");
                 throw new WebDriverManagerException("Error occurred during updating PATH environment variable", ex);
+            }
+        }
+
+        /// <summary>
+        /// Install application from file
+        /// </summary>
+        /// <param name="command">Installation command</param>
+        public static void Install(string command)
+        {
+            try
+            {
+                if (File.Exists(desticationFile) && isNew)
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        UseShellExecute = false,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = desticationFile,
+                        Arguments = command
+                    };
+                    Process process = new Process
+                    {
+                        StartInfo = startInfo
+                    };
+                    process.Start();
+                    process.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+                hLog.Error(ex, $"Error occurred during application installation from file '{desticationFile}' using command '{command}'");
+                throw new WebDriverManagerException($"Error occurred during application installation from file '{desticationFile}' using command '{command}'", ex);
             }
         }
     }

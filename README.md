@@ -11,7 +11,7 @@ Java implementation you can find here - [GitHub Repository].
 
 This piece of software is a small library aimed to automate the [Selenium WebDriver] binaries management inside a .Net project.
 
-If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**, **Internet Explorer**, **Opera**, **Microsoft Edge**, **PhantomJS**, or **Marionette**) you need to download a binary which allows WebDriver to handle the browser. 
+If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**, **Internet Explorer**, **Opera**, **Microsoft Edge**, **PhantomJS**, **Marionette** or **Appium**) you need to download a binary which allows WebDriver to handle the browser. 
 In addition, the absolute path to this binary must be set as part of the PATH environment variable or manually copied to build output folder (working directory).
 
 This is quite annoying since it forces you to link directly this binary in your source code. In addition, you have to check manually when new versions of the binaries are released. This library comes to the rescue, performing in an automated way all this dirty job for you.
@@ -79,6 +79,7 @@ So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Internet Exp
     new MarionetteDriverManager().Init();
     new OperaDriverManager().Init();
     new PhantomJsDriverManager().Init();
+    new AppiumDriverManager().Init();
 
 ## Advanced
 

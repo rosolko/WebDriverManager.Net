@@ -188,9 +188,9 @@
             {
                 var name = "PATH";
                 string pathvar = Environment.GetEnvironmentVariable(name);
-                var path = pathvar + $@";%{variable}%";
+                var path = pathvar + $@"%{variable}%";
 
-                if (!pathvar.Contains(variable))
+                if (!pathvar.Contains(desticationFolder))
                     Environment.SetEnvironmentVariable(name, path, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)

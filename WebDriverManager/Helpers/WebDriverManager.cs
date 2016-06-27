@@ -169,7 +169,9 @@
         {
             try
             {
-                Environment.SetEnvironmentVariable(variable, desticationFolder, EnvironmentVariableTarget.Machine);
+                var variableValue = Environment.GetEnvironmentVariable(variable);
+                if (variableValue == null || !variableValue.Equals(desticationFolder))
+                    Environment.SetEnvironmentVariable(variable, desticationFolder, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {
@@ -182,6 +184,7 @@
         /// Update browser driver environment variable if it's already exist and different from current
         /// </summary>
         /// <param name="variable">Environment variable</param>
+        /// NOTE: Temporary disable this functionality because of wrong path override
         public static void UpdatePath(string variable)
         {
             try
@@ -190,8 +193,8 @@
                 string pathvar = Environment.GetEnvironmentVariable(name);
                 var path = pathvar + $@"%{variable}%";
 
-                if (!pathvar.Contains(desticationFolder))
-                    Environment.SetEnvironmentVariable(name, path, EnvironmentVariableTarget.Machine);
+                //if (!pathvar.Contains(desticationFolder))
+                    //Environment.SetEnvironmentVariable(name, path, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {

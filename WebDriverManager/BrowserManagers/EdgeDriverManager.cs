@@ -66,8 +66,7 @@
         {
             WebDriverManager.Download(config);
             WebDriverManager.AddEnvironmentVariable(config.pathVariable);
-            // Temporary disable this functionality because of wrong path override
-            //WebDriverManager.UpdatePath(config.pathVariable);
+            WebDriverManager.UpdatePath(config.pathVariable);
         }
     }
 }

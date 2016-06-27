@@ -15,8 +15,8 @@
         /// </summary>
         WebDriverManagerConfig config = new WebDriverManagerConfig
         {
-            binary = "wires-<version>-win.exe",
-            url = "https://github.com/jgraham/wires/releases/download/v<version>/wires-<version>-win.zip",
+            binary = "geckodriver.exe",
+            url = "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win32.zip",
             pathVariable = "webdriver.gecko.driver",
             architecture = Architecture.x32.ToString()
         };
@@ -29,13 +29,12 @@
                 {
                     string version = null;
                     var doc = new HtmlDocument();
-                    var htmlCode = client.DownloadString("https://github.com/jgraham/wires/releases");
+                    var htmlCode = client.DownloadString("https://github.com/mozilla/geckodriver/releases");
                     doc.LoadHtml(htmlCode);
                     var itemList = doc.DocumentNode.SelectNodes("//*[@class='release-title']/a").Select(p => p.InnerText).ToList();
-                    version = itemList.FirstOrDefault();
+                    version = itemList.FirstOrDefault().Remove(0, 1);
                     if (version != null || version != string.Empty)
                     {
-                        SetBinary(version);
                         Log?.Info($"Latest marionette driver version is '{version}'");
                     }
                     else
@@ -50,12 +49,6 @@
             }
         }
 
-        private void SetBinary(string version)
-        {
-            config.binary = config.binary.Replace("<version>", version);
-            Log?.Trace($"Update binary name to: '{config.binary}' in accordance with marionette driver version: '{version}'");
-        }
-
         public MarionetteDriverManager()
             : base()
         {
@@ -67,7 +60,6 @@
         {
             config.version = version;
             Log?.Info($"Set marionette driver version to: '{version}'");
-            SetBinary(version);
         }
 
         public void Init()
@@ -89,8 +81,7 @@
             WebDriverManager.Unzip(config);
             WebDriverManager.Clean();
             WebDriverManager.AddEnvironmentVariable(config.pathVariable);
-            // Temporary disable this functionality because of wrong path override
-            //WebDriverManager.UpdatePath(config.pathVariable);
+            WebDriverManager.UpdatePath(config.pathVariable);
         }
     }
 }

@@ -10,7 +10,9 @@
     <projectUrl>https://github.com/rosolko/WebDriverManager.Net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <summary>$description$</summary>
+    <releaseNotes>Change repository and name of new firefox driver (wires > geckodriver)</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016</copyright>
+    <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
   </metadata>
 </package>

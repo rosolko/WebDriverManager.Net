@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Change repository and name of new firefox driver (wires > geckodriver)</releaseNotes>
+    <releaseNotes>Update edge driver home page. Fix marionette driver download link.</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016</copyright>
     <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
   </metadata>

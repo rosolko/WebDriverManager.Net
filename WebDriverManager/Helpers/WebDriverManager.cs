@@ -190,11 +190,11 @@
             try
             {
                 var name = "PATH";
-                string pathvar = Environment.GetEnvironmentVariable(name);
-                var path = pathvar + $@"%{variable}%";
+                var pathVariable = Environment.GetEnvironmentVariable(name);
+                var newPathVariable = pathVariable + (pathVariable.EndsWith(";") ? string.Empty : ";") + $@"%{variable}%";
 
-                //if (!pathvar.Contains(desticationFolder))
-                    //Environment.SetEnvironmentVariable(name, path, EnvironmentVariableTarget.Machine);
+                //if (!pathvar.Contains(desticationFolder) && !pathvar.Contains(variable))
+                    //Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {

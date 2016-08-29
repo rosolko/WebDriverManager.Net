@@ -10,15 +10,15 @@
     public class MarionetteDriverManager : Logging, IBaseBrowserManager
     {
         /// <summary>
-        /// Set target marionette driver architecture to x32 by default because of only 32 architecture presented
+        /// Set target marionette driver architecture to x64 by default because of only 64 architecture presented
         /// Set binary name as pattern because of it's changing in accordance with marionette driver version
         /// </summary>
         WebDriverManagerConfig config = new WebDriverManagerConfig
         {
             binary = "geckodriver.exe",
-            url = "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win32.zip",
+            url = "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip",
             pathVariable = "webdriver.gecko.driver",
-            architecture = Architecture.x32.ToString()
+            architecture = Architecture.x64.ToString()
         };
 
         public string GetLatestVersion()

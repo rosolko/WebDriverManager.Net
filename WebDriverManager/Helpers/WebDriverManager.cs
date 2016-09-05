@@ -9,17 +9,17 @@
 
     public static class WebDriverManager
     {
-        private static Logger hLog = LogManager.GetCurrentClassLogger();
+        private static readonly Logger HLog = LogManager.GetCurrentClassLogger();
 
-        private static string desticationFolder { get; set; } = null;
+        private static string DesticationFolder { get; set; }
 
-        private static string desticationZip { get; set; } = null;
+        private static string DesticationZip { get; set; }
 
-        private static string desticationFile { get; set; } = null;
+        private static string DesticationFile { get; set; }
 
-        private static string zip { get; set; } = null;
+        private static string Zip { get; set; }
 
-        private static bool isNew { get; set; } = false;
+        private static bool IsNew { get; set; }
 
         /// <summary>
         /// Build browser driver download URL from mock using config parameters
@@ -40,8 +40,9 @@
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during building browser driver archive download URL");
-                throw new WebDriverManagerException("Error occurred during building browser driver archive download URL", ex);
+                HLog.Error(ex, "Error occurred during building browser driver archive download URL");
+                throw new WebDriverManagerException(
+                    "Error occurred during building browser driver archive download URL", ex);
             }
         }
 
@@ -58,7 +59,7 @@
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during browser driver catalog preparation");
+                HLog.Error(ex, "Error occurred during browser driver catalog preparation");
                 throw new WebDriverManagerException("Error occurred during browser driver catalog preparation", ex);
             }
         }
@@ -76,7 +77,7 @@
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during getting browser driver archive name");
+                HLog.Error(ex, "Error occurred during getting browser driver archive name");
                 throw new WebDriverManagerException("Error occurred during getting browser driver archive name", ex);
             }
         }
@@ -87,24 +88,24 @@
         /// <param name="config">Specific browser driver config</param>
         public static void Download(WebDriverManagerConfig config)
         {
-            using (WebClient webClient = new WebClient())
+            using (var webClient = new WebClient())
             {
-                string url = BuildUrl(config.url, config.release, config.version, config.architecture);
-                zip = ZipFileName(url);
-                desticationFolder = Path.Combine(config.destication, Path.GetFileNameWithoutExtension(config.binary), config.version, config.architecture);
-                desticationZip = Path.Combine(desticationFolder, zip);
-                desticationFile = Path.Combine(desticationFolder, config.binary);
+                var url = BuildUrl(config.Url, config.Release, config.Version, config.Architecture);
+                Zip = ZipFileName(url);
+                var bin = Path.GetFileNameWithoutExtension(config.Binary);
+                if (bin != null)
+                    DesticationFolder = Path.Combine(config.Destication, bin, config.Version, config.Architecture);
+                DesticationZip = Path.Combine(DesticationFolder, Zip);
+                DesticationFile = Path.Combine(DesticationFolder, config.Binary);
                 try
                 {
-                    if (!File.Exists(desticationFile))
-                    {
-                        PrepareCatalogs(desticationFolder);
-                        webClient.DownloadFile(url, desticationZip);
-                    }
+                    if (File.Exists(DesticationFile)) return;
+                    PrepareCatalogs(DesticationFolder);
+                    webClient.DownloadFile(url, DesticationZip);
                 }
                 catch (Exception ex)
                 {
-                    hLog.Error(ex, "Error occurred during browser driver archive downloading");
+                    HLog.Error(ex, "Error occurred during browser driver archive downloading");
                     throw new WebDriverManagerException("Error occurred during browser driver archive downloading", ex);
                 }
             }
@@ -118,28 +119,28 @@
         {
             try
             {
-                desticationFile = Path.Combine(desticationFolder, config.binary);
+                DesticationFile = Path.Combine(DesticationFolder, config.Binary);
 
-                if (!File.Exists(desticationFile))
+                if (!File.Exists(DesticationFile))
                 {
-                    using (ZipArchive zip = ZipFile.Open(desticationZip, ZipArchiveMode.Read))
+                    using (var zip = ZipFile.Open(DesticationZip, ZipArchiveMode.Read))
                     {
-                        foreach (ZipArchiveEntry entry in zip.Entries)
+                        foreach (var entry in zip.Entries)
                         {
-                            if (entry.Name == config.binary)
+                            if (entry.Name == config.Binary)
                             {
-                                entry.ExtractToFile(desticationFile);
+                                entry.ExtractToFile(DesticationFile);
                             }
                         }
                     }
-                    isNew = true;
+                    IsNew = true;
                 }
                 else
-                    isNew = false;
+                    IsNew = false;
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during browser driver archive extracting");
+                HLog.Error(ex, "Error occurred during browser driver archive extracting");
                 throw new WebDriverManagerException("Error occurred during browser driver archive extracting", ex);
             }
         }
@@ -151,13 +152,14 @@
         {
             try
             {
-                if (File.Exists(desticationZip))
-                    File.Delete(desticationZip);
+                if (File.Exists(DesticationZip))
+                    File.Delete(DesticationZip);
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during deleting extracted browser driver archive");
-                throw new WebDriverManagerException("Error occurred during deleting extracted browser driver archive", ex);
+                HLog.Error(ex, "Error occurred during deleting extracted browser driver archive");
+                throw new WebDriverManagerException("Error occurred during deleting extracted browser driver archive",
+                    ex);
             }
         }
 
@@ -170,13 +172,14 @@
             try
             {
                 var variableValue = Environment.GetEnvironmentVariable(variable);
-                if (variableValue == null || !variableValue.Equals(desticationFolder))
-                    Environment.SetEnvironmentVariable(variable, desticationFolder, EnvironmentVariableTarget.Machine);
+                if (variableValue == null || !variableValue.Equals(DesticationFolder))
+                    Environment.SetEnvironmentVariable(variable, DesticationFolder, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during adding(updating) browser driver environment variable");
-                throw new WebDriverManagerException("Error occurred during adding(updating) browser driver environment variable", ex);
+                HLog.Error(ex, "Error occurred during adding(updating) browser driver environment variable");
+                throw new WebDriverManagerException(
+                    "Error occurred during adding(updating) browser driver environment variable", ex);
             }
         }
 
@@ -184,21 +187,20 @@
         /// Update browser driver environment variable if it's already exist and different from current
         /// </summary>
         /// <param name="variable">Environment variable</param>
-        /// NOTE: Temporary disable this functionality because of wrong path override
+        // TODO : Temporary disable this functionality because of wrong path override
         public static void UpdatePath(string variable)
         {
             try
             {
-                var name = "PATH";
-                var pathVariable = Environment.GetEnvironmentVariable(name);
-                var newPathVariable = pathVariable + (pathVariable.EndsWith(";") ? string.Empty : ";") + $@"%{variable}%";
-
-                //if (!pathvar.Contains(desticationFolder) && !pathvar.Contains(variable))
-                    //Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
+//                const string name = "PATH";
+//                var pathVariable = Environment.GetEnvironmentVariable(name);
+//                var newPathVariable = pathVariable + (pathVariable != null && pathVariable.EndsWith(";") ? string.Empty : ";") + $@"%{variable}%";
+//                if (pathVariable != null && !pathVariable.Contains(DesticationFolder) && !pathVariable.Contains(variable))
+//                    Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, "Error occurred during updating PATH environment variable");
+                HLog.Error(ex, "Error occurred during updating PATH environment variable");
                 throw new WebDriverManagerException("Error occurred during updating PATH environment variable", ex);
             }
         }
@@ -211,13 +213,13 @@
         {
             try
             {
-                if (File.Exists(desticationFile) && isNew)
+                if (File.Exists(DesticationFile) && IsNew)
                 {
                     ProcessStartInfo startInfo = new ProcessStartInfo
                     {
                         UseShellExecute = false,
                         WindowStyle = ProcessWindowStyle.Hidden,
-                        FileName = desticationFile,
+                        FileName = DesticationFile,
                         Arguments = command
                     };
                     Process process = new Process
@@ -230,8 +232,11 @@
             }
             catch (Exception ex)
             {
-                hLog.Error(ex, $"Error occurred during application installation from file '{desticationFile}' using command '{command}'");
-                throw new WebDriverManagerException($"Error occurred during application installation from file '{desticationFile}' using command '{command}'", ex);
+                HLog.Error(ex,
+                    $"Error occurred during application installation from file '{DesticationFile}' using command '{command}'");
+                throw new WebDriverManagerException(
+                    $"Error occurred during application installation from file '{DesticationFile}' using command '{command}'",
+                    ex);
             }
         }
     }

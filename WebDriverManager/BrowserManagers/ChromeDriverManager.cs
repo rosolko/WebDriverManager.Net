@@ -10,34 +10,35 @@
         /// <summary>
         /// Set target chrome driver architecture to x32 by default because of only 32 architecture presented
         /// </summary>
-        WebDriverManagerConfig config = new WebDriverManagerConfig
+        private readonly WebDriverManagerConfig _config = new WebDriverManagerConfig
         {
-            binary = "chromedriver.exe",
-            url = "https://chromedriver.storage.googleapis.com/<version>/chromedriver_win<architecture>.zip",
-            pathVariable = "webdriver.chrome.driver",
-            architecture = Architecture.x32.ToString().Replace("x", "")
+            Binary = "chromedriver.exe",
+            Url = "https://chromedriver.storage.googleapis.com/<version>/chromedriver_win<architecture>.zip",
+            PathVariable = "webdriver.chrome.driver",
+            Architecture = Architecture.X32.ToString().Replace("x", "")
         };
 
         public string GetLatestVersion()
         {
             try
             {
-                string version = null;
                 var webRequest = WebRequest.Create(@"https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
-
                 using (var response = webRequest.GetResponse())
                 {
                     using (var content = response.GetResponseStream())
                     {
-                        using (var reader = new StreamReader(content))
+                        if (content != null)
                         {
-                            version = reader.ReadToEnd().Trim();
-                            if (version != null || version != string.Empty)
+                            using (var reader = new StreamReader(content))
+                            {
+                                var version = reader.ReadToEnd().Trim();
                                 Log?.Info($"Latest chrome driver version is '{version}'");
-                            else
-                                Log?.Warn($"Problem with getting latest chrome driver version. Parsed version is '{version}'");
-                            return version;
+                                return version;
+                            }
                         }
+                        Log?.Error("Can't get content from URL");
+                        throw new WebDriverManagerException(
+                            "Can't get content from URL", new Exception());
                     }
                 }
             }
@@ -49,39 +50,37 @@
         }
 
         public ChromeDriverManager()
-            : base()
         {
-            config.version = GetLatestVersion();
+            _config.Version = GetLatestVersion();
         }
 
         public ChromeDriverManager(string version)
-            : base()
         {
-            config.version = version;
+            _config.Version = version;
             Log?.Info($"Set chrome driver version to: '{version}'");
         }
 
         public void Init()
         {
-            config.destication = Path.Combine(Directory.GetCurrentDirectory(), config.DefaultDestinationFolder);
-            Log?.Debug($"Use default chrome driver destination path: '{config.destication}'");
+            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), _config.DefaultDestinationFolder);
+            Log?.Debug($"Use default chrome driver destination path: '{_config.Destication}'");
             Base();
         }
 
         public void Init(string destination)
         {
-            config.destication = destination;
+            _config.Destication = destination;
             Log?.Info($"Set custom chrome driver destination path to: '{destination}'");
             Base();
         }
 
         public void Base()
         {
-            WebDriverManager.Download(config);
-            WebDriverManager.Unzip(config);
+            WebDriverManager.Download(_config);
+            WebDriverManager.Unzip(_config);
             WebDriverManager.Clean();
-            WebDriverManager.AddEnvironmentVariable(config.pathVariable);
-            WebDriverManager.UpdatePath(config.pathVariable);
+            WebDriverManager.AddEnvironmentVariable(_config.PathVariable);
+            WebDriverManager.UpdatePath(_config.PathVariable);
         }
     }
 }

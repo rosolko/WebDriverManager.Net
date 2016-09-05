@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Update edge driver home page. Fix marionette driver download link.</releaseNotes>
+    <releaseNotes>Refactoring</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016</copyright>
     <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
   </metadata>

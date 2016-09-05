@@ -4,18 +4,18 @@
     {
         public readonly string DefaultDestinationFolder = "Drivers";
 
-        public string architecture { get; set; } = null;
+        public string Architecture { get; set; } = null;
 
-        public string binary { get; set; } = null;
+        public string Binary { get; set; } = null;
 
-        public string release { get; set; } = null;
+        public string Release { get; set; } = null;
 
-        public string version { get; set; } = null;
+        public string Version { get; set; } = null;
 
-        public string url { get; set; } = null;
+        public string Url { get; set; } = null;
 
-        public string destication { get; set; } = null;
+        public string Destication { get; set; } = null;
 
-        public string pathVariable { get; set; } = null;
+        public string PathVariable { get; set; } = null;
     }
 }

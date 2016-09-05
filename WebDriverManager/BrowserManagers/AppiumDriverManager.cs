@@ -9,36 +9,37 @@
 
     public class AppiumDriverManager : Logging, IBaseBrowserManager
     {
-        private readonly string installationCommand = "/SP- /silent /noicons /closeapplications /dir=expand:%1";
+        private const string InstallationCommand = "/SP- /silent /noicons /closeapplications /dir=expand:%1";
 
         /// <summary>
         /// Set target appium driver architecture to x32 by default because of only 32 architecture presented
         /// </summary>
-        WebDriverManagerConfig config = new WebDriverManagerConfig
+        private readonly WebDriverManagerConfig _config = new WebDriverManagerConfig
         {
-            binary = "appium-installer.exe",
-            url = "https://bitbucket.org/appium/appium.app/downloads/AppiumForWindows_<version>.zip",
-            pathVariable = "appium.binary.path",
-            architecture = Architecture.x32.ToString()
+            Binary = "appium-installer.exe",
+            Url = "https://bitbucket.org/appium/appium.app/downloads/AppiumForWindows_<version>.zip",
+            PathVariable = "appium.binary.path",
+            Architecture = Architecture.X32.ToString()
         };
 
         public string GetLatestVersion()
         {
             try
             {
-                using (WebClient client = new WebClient())
+                using (var client = new WebClient())
                 {
-                    string version = null;
                     var doc = new HtmlDocument();
                     var htmlCode = client.DownloadString("https://bitbucket.org/appium/appium.app/downloads");
                     doc.LoadHtml(htmlCode);
-                    var itemList = doc.DocumentNode.SelectNodes("//tr[@class='iterable-item']/td[@class='name']/a[contains(.,'AppiumForWindows_')]").Select(p => p.InnerText).ToList();
+                    var itemList =
+                        doc.DocumentNode.SelectNodes(
+                                "//tr[@class='iterable-item']/td[@class='name']/a[contains(.,'AppiumForWindows_')]")
+                            .Select(p => p.InnerText)
+                            .ToList();
                     var item = itemList.FirstOrDefault();
-                    version = item.Substring(item.IndexOf(item.Split('_')[1])).Split('.')[0];
-                    if (version != null || version != string.Empty)
-                        Log?.Info($"Latest appium driver version is '{version}'");
-                    else
-                        Log?.Warn($"Problem with getting latest appium driver version. Parsed version is '{version}'");
+                    var version = item?.Substring(item.IndexOf(item.Split('_')[1], StringComparison.Ordinal))
+                        .Split('.')[0];
+                    Log?.Info($"Latest appium driver version is '{version}'");
                     return version;
                 }
             }
@@ -50,37 +51,35 @@
         }
 
         public AppiumDriverManager()
-            : base()
         {
-            config.version = GetLatestVersion();
+            _config.Version = GetLatestVersion();
         }
 
         public AppiumDriverManager(string version)
-            : base()
         {
-            config.version = version;
+            _config.Version = version;
             Log?.Info($"Set appium driver version to: '{version}'");
         }
 
         public void Init()
         {
-            config.destication = Path.Combine(Directory.GetCurrentDirectory(), config.DefaultDestinationFolder);
+            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), _config.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            config.destication = destination;
+            _config.Destication = destination;
             Log?.Info($"Set custom appium driver destination path to: '{destination}'");
             Base();
         }
 
         public void Base()
         {
-            WebDriverManager.Download(config);
-            WebDriverManager.Unzip(config);
+            WebDriverManager.Download(_config);
+            WebDriverManager.Unzip(_config);
             WebDriverManager.Clean();
-            WebDriverManager.Install(installationCommand);
+            WebDriverManager.Install(InstallationCommand);
         }
     }
 }

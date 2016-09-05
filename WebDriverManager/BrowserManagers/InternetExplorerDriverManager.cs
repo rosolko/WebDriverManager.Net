@@ -9,37 +9,35 @@
 
     public class InternetExplorerDriverManager : Logging, IBaseBrowserManager
     {
-        WebDriverManagerConfig config = new WebDriverManagerConfig
+        private readonly WebDriverManagerConfig _config = new WebDriverManagerConfig
         {
-            binary = "IEDriverServer.exe",
-            url = "http://selenium-release.storage.googleapis.com/<release>/IEDriverServer_<architecture>_<version>.zip",
-            pathVariable = "webdriver.ie.driver",
-            architecture = Architecture.x32.ToString().Replace("x", "Win")
+            Binary = "IEDriverServer.exe",
+            Url = "http://selenium-release.storage.googleapis.com/<release>/IEDriverServer_<architecture>_<version>.zip",
+            PathVariable = "webdriver.ie.driver",
+            Architecture = Architecture.X32.ToString().Replace("x", "Win")
         };
 
         public string GetLatestVersion()
         {
             try
             {
-                using (WebClient client = new WebClient())
+                using (var client = new WebClient())
                 {
-                    string version = null;
                     var doc = new HtmlDocument();
                     var htmlCode = client.DownloadString("http://www.seleniumhq.org/download");
                     doc.LoadHtml(htmlCode);
-                    var itemList = doc.DocumentNode.SelectNodes("(//div[@id='mainContent']/p)[6]").Select(p => p.InnerText).ToList();
-                    version = itemList.FirstOrDefault().Split(' ')[2];
-                    if (version != null || version != string.Empty)
-                        Log?.Info($"Latest internet explorer driver version is '{version}'");
-                    else
-                        Log?.Warn($"Problem with getting latest internet explorer driver version. Parsed version is '{version}'");
+                    var itemList = doc.DocumentNode.SelectNodes("(//div[@id='mainContent']/p)[6]")
+                        .Select(p => p.InnerText).ToList();
+                    var version = itemList.FirstOrDefault()?.Split(' ')[2];
+                    Log?.Info($"Latest internet explorer driver version is '{version}'");
                     return version;
                 }
             }
             catch (Exception ex)
             {
                 Log?.Error(ex, "Error occurred during getting last internet explorer driver version");
-                throw new WebDriverManagerException("Error occurred during getting last internet explorer driver version", ex);
+                throw new WebDriverManagerException(
+                    "Error occurred during getting last internet explorer driver version", ex);
             }
         }
 
@@ -52,48 +50,43 @@
         {
             try
             {
-                string release = null;
-                release = version.Substring(0, version.LastIndexOf("."));
-                if (release != null || release != string.Empty)
-                    Log?.Debug($"Internet explorer driver release number is '{release}'");
-                else
-                    Log?.Warn($"Problem with getting internet explorer driver release number. Parsed release number is '{release}'");
+                var release = version.Substring(0, version.LastIndexOf(".", StringComparison.Ordinal));
+                Log?.Debug($"Internet explorer driver release number is '{release}'");
                 return release;
             }
             catch (Exception ex)
             {
                 Log?.Error(ex, "Error occurred during getting last internet explorer driver release number");
-                throw new WebDriverManagerException("Error occurred during getting last internet explorer driver release number", ex);
+                throw new WebDriverManagerException(
+                    "Error occurred during getting last internet explorer driver release number", ex);
             }
         }
 
         public InternetExplorerDriverManager()
-            : base()
         {
-            config.version = GetLatestVersion();
-            config.release = GetRelease(config.version);
+            _config.Version = GetLatestVersion();
+            _config.Release = GetRelease(_config.Version);
         }
 
         public InternetExplorerDriverManager(string version)
-            : base()
         {
-            config.version = version;
+            _config.Version = version;
             Log?.Info($"Set internet explorer driver version to: '{version}'");
-            config.release = GetRelease(config.version);
+            _config.Release = GetRelease(_config.Version);
         }
 
         public InternetExplorerDriverManager(Architecture architecture)
         {
-            config.version = GetLatestVersion();
-            config.release = GetRelease(config.version);
+            _config.Version = GetLatestVersion();
+            _config.Release = GetRelease(_config.Version);
             SetArchitecture(architecture);
         }
 
         public InternetExplorerDriverManager(string version, Architecture architecture)
         {
-            config.version = version;
+            _config.Version = version;
             Log?.Info($"Set internet explorer driver version to: '{version}'");
-            config.release = GetRelease(config.version);
+            _config.Release = GetRelease(_config.Version);
             SetArchitecture(architecture);
         }
 
@@ -101,42 +94,43 @@
         {
             switch (architecture)
             {
-                case Architecture.x32:
-                    {
-                        config.architecture = Architecture.x32.ToString().Replace("x", "Win");
-                        break;
-                    }
-                case Architecture.x64:
-                    {
-                        config.architecture = Architecture.x64.ToString();
-                        break;
-                    }
-                default:
+                case Architecture.X32:
+                {
+                    _config.Architecture = Architecture.X32.ToString().Replace("x", "Win");
                     break;
+                }
+                case Architecture.X64:
+                {
+                    _config.Architecture = Architecture.X64.ToString();
+                    break;
+                }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(architecture), architecture,
+                        "Can't recognize architecture");
             }
-            Log?.Info($"Set internet explorer driver architecture to: '{config.architecture}'");
+            Log?.Info($"Set internet explorer driver architecture to: '{_config.Architecture}'");
         }
 
         public void Init()
         {
-            config.destication = Path.Combine(Directory.GetCurrentDirectory(), config.DefaultDestinationFolder);
+            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), _config.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            config.destication = destination;
+            _config.Destication = destination;
             Log?.Info($"Set custom internet explorer driver destination path to: '{destination}'");
             Base();
         }
 
         public void Base()
         {
-            WebDriverManager.Download(config);
-            WebDriverManager.Unzip(config);
+            WebDriverManager.Download(_config);
+            WebDriverManager.Unzip(_config);
             WebDriverManager.Clean();
-            WebDriverManager.AddEnvironmentVariable(config.pathVariable);
-            WebDriverManager.UpdatePath(config.pathVariable);
+            WebDriverManager.AddEnvironmentVariable(_config.PathVariable);
+            WebDriverManager.UpdatePath(_config.PathVariable);
         }
     }
 }

@@ -60,7 +60,8 @@ Then you can let WebDriverManager.Net to do manage WebDriver binaries for your a
             }
 
             [Test]
-            public void Test() {
+            public void Test()
+            {
                 // Using Selenium WebDriver to carry out automated web testing
             }
         }

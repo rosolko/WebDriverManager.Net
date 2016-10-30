@@ -187,16 +187,20 @@
         /// Update browser driver environment variable if it's already exist and different from current
         /// </summary>
         /// <param name="variable">Environment variable</param>
-        // TODO : Temporary disable this functionality because of wrong path override
-        public static void UpdatePath(string variable)
+        /// <param name="extendPath">Extend PATH variable with driver variable</param>
+        public static void UpdatePath(string variable, bool extendPath = false)
         {
             try
             {
-//                const string name = "PATH";
-//                var pathVariable = Environment.GetEnvironmentVariable(name);
-//                var newPathVariable = pathVariable + (pathVariable != null && pathVariable.EndsWith(";") ? string.Empty : ";") + $@"%{variable}%";
-//                if (pathVariable != null && !pathVariable.Contains(DesticationFolder) && !pathVariable.Contains(variable))
-//                    Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
+                if (!extendPath) return;
+                const string name = "PATH";
+                var pathVariable = Environment.GetEnvironmentVariable(name);
+                var newPathVariable = pathVariable +
+                                      (pathVariable != null && pathVariable.EndsWith(";") ? string.Empty : ";") +
+                                      $@"%{variable}%";
+                if (pathVariable != null && !pathVariable.Contains(DesticationFolder) &&
+                    !pathVariable.Contains(variable))
+                    Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {
@@ -213,29 +217,31 @@
         {
             try
             {
-                if (File.Exists(DesticationFile) && IsNew)
+                if (!File.Exists(DesticationFile) || !IsNew) return;
+                var startInfo = new ProcessStartInfo
                 {
-                    ProcessStartInfo startInfo = new ProcessStartInfo
-                    {
-                        UseShellExecute = false,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        FileName = DesticationFile,
-                        Arguments = command
-                    };
-                    Process process = new Process
-                    {
-                        StartInfo = startInfo
-                    };
-                    process.Start();
-                    process.WaitForExit();
-                }
+                    UseShellExecute = false,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = DesticationFile,
+                    Arguments = command
+                };
+                var process = new Process
+                {
+                    StartInfo = startInfo
+                };
+                process.Start();
+                process.WaitForExit();
             }
             catch (Exception ex)
             {
                 HLog.Error(ex,
-                    $"Error occurred during application installation from file '{DesticationFile}' using command '{command}'");
+                    "Error occurred during application installation " +
+                    $"from file '{DesticationFile}' " +
+                    $"using command '{command}'");
                 throw new WebDriverManagerException(
-                    $"Error occurred during application installation from file '{DesticationFile}' using command '{command}'",
+                    "Error occurred during application installation " +
+                    $"from file '{DesticationFile}' " +
+                    $"using command '{command}'",
                     ex);
             }
         }

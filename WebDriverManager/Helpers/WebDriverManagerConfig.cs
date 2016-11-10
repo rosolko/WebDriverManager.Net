@@ -14,7 +14,7 @@
 
         public string Url { get; set; }
 
-        public string Destication { get; set; }
+        public string Destination { get; set; }
 
         public string PathVariable { get; set; }
     }

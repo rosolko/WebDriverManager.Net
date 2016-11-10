@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Refactoring</releaseNotes>
+    <releaseNotes>Fix issue #3 and typos</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016</copyright>
     <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
   </metadata>

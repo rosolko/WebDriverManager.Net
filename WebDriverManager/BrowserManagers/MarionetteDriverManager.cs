@@ -18,7 +18,7 @@
             Binary = "geckodriver.exe",
             Url = "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip",
             PathVariable = "webdriver.gecko.driver",
-            Architecture = Architecture.X64.ToString()
+            Architecture = Architecture.x64.ToString()
         };
 
         public string GetLatestVersion()
@@ -57,13 +57,13 @@
 
         public void Init()
         {
-            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            _config.Destication = destination;
+            _config.Destination = destination;
             Log?.Info($"Set custom marionette driver destination path to: '{destination}'");
             Base();
         }

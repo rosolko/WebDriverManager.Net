@@ -14,7 +14,7 @@
             Binary = "IEDriverServer.exe",
             Url = "http://selenium-release.storage.googleapis.com/<release>/IEDriverServer_<architecture>_<version>.zip",
             PathVariable = "webdriver.ie.driver",
-            Architecture = Architecture.X32.ToString().Replace("x", "Win")
+            Architecture = Architecture.x32.ToString().Replace("x", "Win")
         };
 
         public string GetLatestVersion()
@@ -26,7 +26,7 @@
                     var doc = new HtmlDocument();
                     var htmlCode = client.DownloadString("http://www.seleniumhq.org/download");
                     doc.LoadHtml(htmlCode);
-                    var itemList = doc.DocumentNode.SelectNodes("(//div[@id='mainContent']/p)[6]")
+                    var itemList = doc.DocumentNode.SelectNodes("(//div[@id='mainContent']/p)[7]")
                         .Select(p => p.InnerText).ToList();
                     var version = itemList.FirstOrDefault()?.Split(' ')[2];
                     Log?.Info($"Latest internet explorer driver version is '{version}'");
@@ -94,14 +94,14 @@
         {
             switch (architecture)
             {
-                case Architecture.X32:
+                case Architecture.x32:
                 {
-                    _config.Architecture = Architecture.X32.ToString().Replace("x", "Win");
+                    _config.Architecture = Architecture.x32.ToString().Replace("x", "Win");
                     break;
                 }
-                case Architecture.X64:
+                case Architecture.x64:
                 {
-                    _config.Architecture = Architecture.X64.ToString();
+                    _config.Architecture = Architecture.x64.ToString();
                     break;
                 }
                 default:
@@ -113,13 +113,13 @@
 
         public void Init()
         {
-            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            _config.Destication = destination;
+            _config.Destination = destination;
             Log?.Info($"Set custom internet explorer driver destination path to: '{destination}'");
             Base();
         }

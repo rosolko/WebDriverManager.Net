@@ -19,7 +19,7 @@
             Binary = "appium-installer.exe",
             Url = "https://bitbucket.org/appium/appium.app/downloads/AppiumForWindows_<version>.zip",
             PathVariable = "appium.binary.path",
-            Architecture = Architecture.X32.ToString()
+            Architecture = Architecture.x32.ToString()
         };
 
         public string GetLatestVersion()
@@ -63,13 +63,13 @@
 
         public void Init()
         {
-            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            _config.Destication = destination;
+            _config.Destination = destination;
             Log?.Info($"Set custom appium driver destination path to: '{destination}'");
             Base();
         }

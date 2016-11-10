@@ -15,14 +15,14 @@
             Url =
                 "https://github.com/operasoftware/operachromiumdriver/releases/download/v<version>/operadriver_<architecture>.zip",
             PathVariable = "webdriver.opera.driver",
-            Architecture = Architecture.X32.ToString().Replace("x", "win")
+            Architecture = Architecture.x32.ToString().Replace("x", "win")
         };
 
         public string GetLatestVersion()
         {
             try
             {
-                using (WebClient client = new WebClient())
+                using (var client = new WebClient())
                 {
                     var doc = new HtmlDocument();
                     var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases");
@@ -69,14 +69,14 @@
         {
             switch (architecture)
             {
-                case Architecture.X32:
+                case Architecture.x32:
                 {
-                    _config.Architecture = Architecture.X32.ToString().Replace("x", "win");
+                    _config.Architecture = Architecture.x32.ToString().Replace("x", "win");
                     break;
                 }
-                case Architecture.X64:
+                case Architecture.x64:
                 {
-                    _config.Architecture = Architecture.X64.ToString().Replace("x", "win");
+                    _config.Architecture = Architecture.x64.ToString().Replace("x", "win");
                     break;
                 }
                 default:
@@ -88,13 +88,13 @@
 
         public void Init()
         {
-            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            _config.Destication = destination;
+            _config.Destination = destination;
             Log?.Info($"Set custom opera driver destination path to: '{destination}'");
             Base();
         }

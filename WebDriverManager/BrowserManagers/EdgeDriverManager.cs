@@ -14,7 +14,7 @@
             Binary = "MicrosoftWebDriver.exe",
             Url = string.Empty,
             PathVariable = "webdriver.edge.driver",
-            Architecture = Architecture.X32.ToString()
+            Architecture = Architecture.x32.ToString()
         };
 
         public string GetLatestVersion()
@@ -27,7 +27,7 @@
                     var htmlCode =
                         client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                     doc.LoadHtml(htmlCode);
-                    var itemList = doc.DocumentNode.SelectNodes("//ul[contains(@class, 'subsection__body')]//p[2]")
+                    var itemList = doc.DocumentNode.SelectNodes("//*[@class='driver-download']/p")
                         .Select(p => p.InnerText).ToList();
                     var version = itemList.FirstOrDefault()?.Split(' ')[1].Split(' ')[0];
                     Log?.Info($"Latest edge driver version is '{version}'");
@@ -51,7 +51,7 @@
                     var htmlCode =
                         client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                     doc.LoadHtml(htmlCode);
-                    var itemList = doc.DocumentNode.SelectNodes("//ul[contains(@class, 'subsection__body')]//p[1]/a")
+                    var itemList = doc.DocumentNode.SelectNodes("//*[@class='driver-download']/a")
                         .Select(p => p.GetAttributeValue("href", null)).ToList();
                     var url = itemList.FirstOrDefault();
                     Log?.Info($"Edge driver download url is '{url}'");
@@ -73,13 +73,13 @@
 
         public void Init()
         {
-            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
             Base();
         }
 
         public void Init(string destination)
         {
-            _config.Destication = destination;
+            _config.Destination = destination;
             Log?.Debug($"Set custom edge driver destination path to: '{destination}'");
             Base();
         }

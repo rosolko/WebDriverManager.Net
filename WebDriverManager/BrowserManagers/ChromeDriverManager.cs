@@ -15,7 +15,7 @@
             Binary = "chromedriver.exe",
             Url = "https://chromedriver.storage.googleapis.com/<version>/chromedriver_win<architecture>.zip",
             PathVariable = "webdriver.chrome.driver",
-            Architecture = Architecture.X32.ToString().Replace("x", "")
+            Architecture = Architecture.x32.ToString().Replace("x", "")
         };
 
         public string GetLatestVersion()
@@ -62,14 +62,14 @@
 
         public void Init()
         {
-            _config.Destication = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
-            Log?.Debug($"Use default chrome driver destination path: '{_config.Destication}'");
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            Log?.Debug($"Use default chrome driver destination path: '{_config.Destination}'");
             Base();
         }
 
         public void Init(string destination)
         {
-            _config.Destication = destination;
+            _config.Destination = destination;
             Log?.Info($"Set custom chrome driver destination path to: '{destination}'");
             Base();
         }

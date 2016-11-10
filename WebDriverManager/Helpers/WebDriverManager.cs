@@ -11,11 +11,11 @@
     {
         private static readonly Logger HLog = LogManager.GetCurrentClassLogger();
 
-        private static string DesticationFolder { get; set; }
+        private static string DestinationFolder { get; set; }
 
-        private static string DesticationZip { get; set; }
+        private static string DestinationZip { get; set; }
 
-        private static string DesticationFile { get; set; }
+        private static string DestinationFile { get; set; }
 
         private static string Zip { get; set; }
 
@@ -94,14 +94,14 @@
                 Zip = ZipFileName(url);
                 var bin = Path.GetFileNameWithoutExtension(config.Binary);
                 if (bin != null)
-                    DesticationFolder = Path.Combine(config.Destication, bin, config.Version, config.Architecture);
-                DesticationZip = Path.Combine(DesticationFolder, Zip);
-                DesticationFile = Path.Combine(DesticationFolder, config.Binary);
+                    DestinationFolder = Path.Combine(config.Destination, bin, config.Version, config.Architecture);
+                DestinationZip = Path.Combine(DestinationFolder, Zip);
+                DestinationFile = Path.Combine(DestinationFolder, config.Binary);
                 try
                 {
-                    if (File.Exists(DesticationFile)) return;
-                    PrepareCatalogs(DesticationFolder);
-                    webClient.DownloadFile(url, DesticationZip);
+                    if (File.Exists(DestinationFile)) return;
+                    PrepareCatalogs(DestinationFolder);
+                    webClient.DownloadFile(url, DestinationZip);
                 }
                 catch (Exception ex)
                 {
@@ -119,17 +119,17 @@
         {
             try
             {
-                DesticationFile = Path.Combine(DesticationFolder, config.Binary);
+                DestinationFile = Path.Combine(DestinationFolder, config.Binary);
 
-                if (!File.Exists(DesticationFile))
+                if (!File.Exists(DestinationFile))
                 {
-                    using (var zip = ZipFile.Open(DesticationZip, ZipArchiveMode.Read))
+                    using (var zip = ZipFile.Open(DestinationZip, ZipArchiveMode.Read))
                     {
                         foreach (var entry in zip.Entries)
                         {
                             if (entry.Name == config.Binary)
                             {
-                                entry.ExtractToFile(DesticationFile);
+                                entry.ExtractToFile(DestinationFile);
                             }
                         }
                     }
@@ -152,8 +152,8 @@
         {
             try
             {
-                if (File.Exists(DesticationZip))
-                    File.Delete(DesticationZip);
+                if (File.Exists(DestinationZip))
+                    File.Delete(DestinationZip);
             }
             catch (Exception ex)
             {
@@ -172,8 +172,8 @@
             try
             {
                 var variableValue = Environment.GetEnvironmentVariable(variable);
-                if (variableValue == null || !variableValue.Equals(DesticationFolder))
-                    Environment.SetEnvironmentVariable(variable, DesticationFolder, EnvironmentVariableTarget.Machine);
+                if (variableValue == null || !variableValue.Equals(DestinationFolder))
+                    Environment.SetEnvironmentVariable(variable, DestinationFolder, EnvironmentVariableTarget.Machine);
             }
             catch (Exception ex)
             {
@@ -198,7 +198,7 @@
                 var newPathVariable = pathVariable +
                                       (pathVariable != null && pathVariable.EndsWith(";") ? string.Empty : ";") +
                                       $@"%{variable}%";
-                if (pathVariable != null && !pathVariable.Contains(DesticationFolder) &&
+                if (pathVariable != null && !pathVariable.Contains(DestinationFolder) &&
                     !pathVariable.Contains(variable))
                     Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
             }
@@ -217,12 +217,12 @@
         {
             try
             {
-                if (!File.Exists(DesticationFile) || !IsNew) return;
+                if (!File.Exists(DestinationFile) || !IsNew) return;
                 var startInfo = new ProcessStartInfo
                 {
                     UseShellExecute = false,
                     WindowStyle = ProcessWindowStyle.Hidden,
-                    FileName = DesticationFile,
+                    FileName = DestinationFile,
                     Arguments = command
                 };
                 var process = new Process
@@ -236,11 +236,11 @@
             {
                 HLog.Error(ex,
                     "Error occurred during application installation " +
-                    $"from file '{DesticationFile}' " +
+                    $"from file '{DestinationFile}' " +
                     $"using command '{command}'");
                 throw new WebDriverManagerException(
                     "Error occurred during application installation " +
-                    $"from file '{DesticationFile}' " +
+                    $"from file '{DestinationFile}' " +
                     $"using command '{command}'",
                     ex);
             }

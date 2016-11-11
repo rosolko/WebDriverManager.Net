@@ -1,4 +1,6 @@
-﻿namespace WebDriverManager.Helpers
+﻿using Microsoft.Win32;
+
+namespace WebDriverManager.Helpers
 {
     using NLog;
     using System;
@@ -173,7 +175,7 @@
             {
                 var variableValue = Environment.GetEnvironmentVariable(variable);
                 if (variableValue == null || !variableValue.Equals(DestinationFolder))
-                    Environment.SetEnvironmentVariable(variable, DestinationFolder, EnvironmentVariableTarget.Machine);
+                    Environment.SetEnvironmentVariable(variable, DestinationFolder, EnvironmentVariableTarget.Process);
             }
             catch (Exception ex)
             {
@@ -187,20 +189,18 @@
         /// Update browser driver environment variable if it's already exist and different from current
         /// </summary>
         /// <param name="variable">Environment variable</param>
-        /// <param name="extendPath">Extend PATH variable with driver variable</param>
-        public static void UpdatePath(string variable, bool extendPath = false)
+        public static void UpdatePath(string variable)
         {
             try
             {
-                if (!extendPath) return;
                 const string name = "PATH";
-                var pathVariable = Environment.GetEnvironmentVariable(name);
-                var newPathVariable = pathVariable +
-                                      (pathVariable != null && pathVariable.EndsWith(";") ? string.Empty : ";") +
-                                      $@"%{variable}%";
-                if (pathVariable != null && !pathVariable.Contains(DestinationFolder) &&
-                    !pathVariable.Contains(variable))
-                    Environment.SetEnvironmentVariable(newPathVariable, name, EnvironmentVariableTarget.Machine);
+                const string keyName = @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment";
+                var pathVariable = (string) Registry.LocalMachine.CreateSubKey(keyName)?
+                    .GetValue(name, string.Empty, RegistryValueOptions.DoNotExpandEnvironmentNames);
+                if (pathVariable == null) throw new Exception($"Can't get {name} variable");
+                var newPathVariable = $"%{variable}%;{pathVariable}";
+                if (!pathVariable.Contains(variable))
+                    Environment.SetEnvironmentVariable(name, newPathVariable, EnvironmentVariableTarget.Process);
             }
             catch (Exception ex)
             {

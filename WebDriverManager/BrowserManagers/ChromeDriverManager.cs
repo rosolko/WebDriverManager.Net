@@ -62,7 +62,8 @@
 
         public void Init()
         {
-            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(), WebDriverManagerConfig.DefaultDestinationFolder);
+            _config.Destination = Path.Combine(Directory.GetCurrentDirectory(),
+                WebDriverManagerConfig.DefaultDestinationFolder);
             Log?.Debug($"Use default chrome driver destination path: '{_config.Destination}'");
             Base();
         }

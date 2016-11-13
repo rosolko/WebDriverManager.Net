@@ -2,7 +2,8 @@
 {
     public enum Architecture
     {
-        x32 = 32,
-        x64 = 64
+        X32 = 32,
+        X64 = 64,
+        Auto
     }
 }

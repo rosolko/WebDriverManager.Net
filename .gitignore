@@ -237,6 +237,7 @@ _Pvt_Extensions
 
 # Rider
 .idea
+.DotSettings
 
 # SonarQube
 .sonarqube

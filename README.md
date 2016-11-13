@@ -4,14 +4,9 @@
 [![license](https://img.shields.io/github/license/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE)
 
 # WebDriverManager.Net
-Automatic Selenium WebDriver binaries management for .Net
+This small library aimed to automate the [Selenium WebDriver] binaries management inside a .Net project.
 
-Original application idea is going from - [Boni García].
-Java implementation you can find here - [GitHub Repository].
-
-This piece of software is a small library aimed to automate the [Selenium WebDriver] binaries management inside a .Net project.
-
-If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**, **Internet Explorer**, **Opera**, **Microsoft Edge**, **PhantomJS**, **Marionette** or **Appium**) you need to download a binary which allows WebDriver to handle the browser. 
+If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**) you need to download a binary which allows WebDriver to handle the browser. 
 In addition, the absolute path to this binary must be set as part of the PATH environment variable or manually copied to build output folder (working directory).
 
 This is quite annoying since it forces you to link directly this binary in your source code. In addition, you have to check manually when new versions of the binaries are released. This library comes to the rescue, performing in an automated way all this dirty job for you.
@@ -29,88 +24,113 @@ Use the GUI or the following command in the Package Manager Console:
 
 Then you can let WebDriverManager.Net to do manage WebDriver binaries for your application/test. Take a look to this NUnit example which uses Chrome with Selenium WebDriver:
 
-    namespace BrowserTests
-    {
-        using OpenQA.Selenium;
-        using OpenQA.Selenium.Chrome;
-        using WebDriverManager.BrowserManagers;
+    using NUnit.Framework;
+	using OpenQA.Selenium;
+	using OpenQA.Selenium.Chrome;
+	using WebDriverManager;
+	using WebDriverManager.DriverConfigs.Impl;
 
-        [TestFixture]
-        public class ChromeTest 
-        {
-            protected IWebDriver driver;
+	namespace Test
+	{
+	    [TestFixture]
+	    public class Tests
+	    {
+	        private IWebDriver _webDriver;
 
-            [TestFixtureSetUp]
-            public void FixtureSetUp() 
-            {
-                new ChromeDriverManager().Init();
-            }
+	        [SetUp]
+	        public void SetUp()
+	        {
+	            new DriverManager().SetUpDriver(new ChromeConfig());
+	            _webDriver = new ChromeDriver();
+	        }
 
-            [SetUp]
-            public void TestSetUp() 
-            {
-                driver = new ChromeDriver();
-            }
+	        [TearDown]
+	        public void TearDown()
+	        {
+	            _webDriver.Quit();
+	        }
 
-            [TestFixtureTearDown]
-            public void teardown() 
-            {
-                if (driver != null)
-                    driver.Quit();
-            }
+	        [Test]
+	        public void Test()
+	        {
+	            _webDriver.Navigate().GoToUrl("https://www.google.com");
+	            Assert.True(_webDriver.Title.Contains("Google"));
+	        }
+	    }
+	}
 
-            [Test]
-            public void Test()
-            {
-                // Using Selenium WebDriver to carry out automated web testing
-            }
-        }
-    }
-
-Notice that simple adding ``new ChromeDriverManager().Init();`` WebDriverManager does magic for you:
+Notice that simple adding ``new DriverManager().SetUpDriver(<config>)`` does magic for you:
 
 1. It checks the latest version of the WebDriver binary file
 2. It downloads the binary WebDriver if it is not present in your system
 
-So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Internet Explorer**, **Marionette**, **Opera** or **PhantomJS**  as follows:
+So far, WebDriverManager supports **Appium**, **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (Just change <config> to prefered config):
 
-    new ChromeDriverManager().Init();
-    new EdgeDriverManager().Init();
-    new InternetExplorerDriverManager().Init();
-    new MarionetteDriverManager().Init();
-    new OperaDriverManager().Init();
-    new PhantomJsDriverManager().Init();
-    new AppiumDriverManager().Init();
+    new AppiumConfig();
+    new ChromeConfig();
+    new EdgeConfig();
+    new FirefoxConfig();
+    new IEConfig();
+    new OperaConfig();
+    new PhantomConfig();
 
 ## Advanced
 
-Configuration parameters for WebDriverManager are set in the class **constructor** parameter or **init** method parameter.
+You can use WebDriverManager in two ways:
+1. Automatic
+2. Manual
 
-1. Target version can be specified in class constructor using parameter:
+#### Automatic way: 
+	new DriverManager().SetUpDriver(new <Driver>Config());
 
-    ``new ChromeDriverManager("2.21").Init();``
+You can also specify version:
+	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25")``
 
-    In this case manager try to download ChromeDriver binary with **2.11** version.
+Or architecture:
+	``new DriverManager().SetUpDriver(new ChromeConfig(), "Latest", Architecture.X32)``
 
-2. Also you can specify target binary architecture, for this case you need to include reference and specify architecture in class constructor using paramet
- 
-    ``using WebDriverManager.Helpers;``
+Or version and architecture:
+	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25", Architecture.X64)``
 
-    ``...``
+#### Manual way:
+	new DriverManager().SetUpDriver(
+                "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip", 
+                Directory.GetCurrentDirectory(),
+                "chromedriver.exe"
+            );
 
-    `` new InternetExplorerDriverManager(Architecture.x32).Init();``
+### If you want use your own implementation you need to create driver config and use it for set up:
+	public class CustomDriverConfig : IDriverConfig
+    {
+        public string GetName()
+        {
+            return "CustomDriverName";
+        }
 
-    In this case manager try to download ChromeDriver binary with **x32** architecture.
+        public string GetUrl32()
+        {
+            return "https://someurl/<version>/win32.zip";
+        }
 
-3. Target driver binary destination folder can be specified in class constructor using parameter:
-    
-    ``new ChromeDriverManager().Init(@"C:\Binaries");``
+        public string GetUrl64()
+        {
+            return "https://someurl/<version>/win64.zip";
+        }
 
-    In this case manager try to download latest version of ChromeDriver and put binary to **C:\Binaries** folder.
+        public string GetBinaryName()
+        {
+            return "binary.name.exe";
+        }
 
-NOTE 1: You can mix parameters as you want but *NOTE 2*.
+        public string GetLatestVersion()
+        {
+            <some code that get and return latest version>
+        }
+    }
 
-NOTE 2: Some driver manager doesn't support vesion or architecture managements.
+    ...
+
+    new DriverManager().SetUpDriver(new CustomDriverConfig());
 
 ## About
 
@@ -119,7 +139,5 @@ Comments, questions and suggestions are always very welcome!
 
 [Alexander Rosolko]: https://github.com/rosolko
 [WebDriverManager.Net]: https://www.nuget.org/packages/WebDriverManager
-[Boni García]: http://bonigarcia.github.io
-[GitHub Repository]: https://github.com/bonigarcia/webdrivermanager
 [Selenium Webdriver]: http://docs.seleniumhq.org/projects/webdriver
 [MIT]: https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE

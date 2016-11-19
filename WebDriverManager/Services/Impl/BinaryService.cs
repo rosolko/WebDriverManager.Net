@@ -10,10 +10,7 @@ namespace WebDriverManager.Services.Impl
         public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
         {
             if (File.Exists(binDestination)) return binDestination;
-            if (!File.Exists(zipDestination))
-            {
-                zipDestination = DownloadZip(url, zipDestination);
-            }
+            zipDestination = DownloadZip(url, zipDestination);
             FileHelper.CreateDestinationDirectory(binDestination);
             binDestination = UnZip(zipDestination, binDestination, binaryName);
             RemoveZip(zipDestination);
@@ -22,6 +19,7 @@ namespace WebDriverManager.Services.Impl
 
         protected string DownloadZip(string url, string destination)
         {
+            if (File.Exists(destination)) return destination;
             using (var webClient = new WebClient())
             {
                 webClient.DownloadFile(url, destination);

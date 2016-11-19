@@ -6,6 +6,8 @@
 # WebDriverManager.Net
 This small library aimed to automate the [Selenium WebDriver] binaries management inside a .Net project.
 
+*You need run you IDE/program/tests with Administrator privileges*
+
 If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**) you need to download a binary which allows WebDriver to handle the browser. 
 In addition, the absolute path to this binary must be set as part of the PATH environment variable or manually copied to build output folder (working directory).
 
@@ -64,9 +66,8 @@ Notice that simple adding ``new DriverManager().SetUpDriver(<config>)`` does mag
 1. It checks the latest version of the WebDriver binary file
 2. It downloads the binary WebDriver if it is not present in your system
 
-So far, WebDriverManager supports **Appium**, **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (Just change <config> to prefered config):
+So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (Just change <config> to prefered config):
 
-    new AppiumConfig();
     new ChromeConfig();
     new EdgeConfig();
     new FirefoxConfig();
@@ -99,38 +100,67 @@ Or version and architecture:
                 "chromedriver.exe"
             );
 
-### If you want use your own implementation you need to create driver config and use it for set up:
-	public class CustomDriverConfig : IDriverConfig
+### If you want use your own implementation you need to create driver config and use it for set up(ex get, setup and wotk with phantomjs driver from taobao mirror):
+	public class TaobaoPhantomConfig : IDriverConfig
     {
         public string GetName()
         {
-            return "CustomDriverName";
+            return "TaobaoPhantom";
         }
 
         public string GetUrl32()
         {
-            return "https://someurl/<version>/win32.zip";
+            return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
         }
 
         public string GetUrl64()
         {
-            return "https://someurl/<version>/win64.zip";
+            return GetUrl32();
         }
 
         public string GetBinaryName()
         {
-            return "binary.name.exe";
+            return "phantomjs.exe";
         }
 
         public string GetLatestVersion()
         {
-            <some code that get and return latest version>
+            using (var client = new WebClient())
+            {
+                var doc = new HtmlDocument();
+                var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
+                doc.LoadHtml(htmlCode);
+                var itemList =
+                    doc.DocumentNode.SelectNodes("//tr[@class='iterable-item']/td[@class='name']/a")
+                        .Select(p => p.InnerText)
+                        .ToList();
+                var version = itemList.FirstOrDefault()?.Split('-')[1];
+                return version;
+            }
         }
     }
 
     ...
 
-    new DriverManager().SetUpDriver(new CustomDriverConfig());
+    new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
+
+### Or you can modify existed drivers and change only necessary fields(same example):
+	public class TaobaoPhantomConfig : PhantomConfig
+    {
+        public string GetName()
+        {
+            return "TaobaoPhantom";
+        }
+
+        public string GetUrl32()
+        {
+            return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
+        }
+    }
+
+    ...
+
+    new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
 
 ## About
 

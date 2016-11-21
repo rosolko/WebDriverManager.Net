@@ -7,8 +7,6 @@
 # WebDriverManager.Net
 This small library aimed to automate the [Selenium WebDriver] binaries management inside a .Net project.
 
-*You need run you IDE/program/tests with Administrator privileges*
-
 If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**) you need to download a binary which allows WebDriver to handle the browser. 
 In addition, the absolute path to this binary must be set as part of the PATH environment variable or manually copied to build output folder (working directory).
 

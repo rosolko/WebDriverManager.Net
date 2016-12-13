@@ -34,7 +34,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode =
                     client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                 doc.LoadHtml(htmlCode);
-                var itemList = doc.DocumentNode.SelectNodes("//*[@class='driverConfig-download']/p")
+                var itemList = doc.DocumentNode.SelectNodes("//*[@class='driver-download']/p")
                     .Select(p => p.InnerText).ToList();
                 var version = itemList.FirstOrDefault()?.Split(' ')[1].Split(' ')[0];
                 return version;
@@ -49,7 +49,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode =
                     client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                 doc.LoadHtml(htmlCode);
-                var itemList = doc.DocumentNode.SelectNodes("//*[@class='driverConfig-download']/a")
+                var itemList = doc.DocumentNode.SelectNodes("//*[@class='driver-download']/a")
                     .Select(p => p.GetAttributeValue("href", null)).ToList();
                 var url = itemList.FirstOrDefault();
                 return url;

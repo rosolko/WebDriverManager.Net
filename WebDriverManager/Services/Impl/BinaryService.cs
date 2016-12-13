@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Net;
 using WebDriverManager.Helpers;
@@ -29,6 +30,12 @@ namespace WebDriverManager.Services.Impl
 
         protected string UnZip(string path, string destination, string name)
         {
+            var zipName = Path.GetFileName(path);
+            if (zipName != null && zipName.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+            {
+                File.Copy(path, destination);
+                return destination;
+            }
             using (var zip = ZipFile.Open(path, ZipArchiveMode.Read))
             {
                 foreach (var entry in zip.Entries)

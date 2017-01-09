@@ -10,7 +10,7 @@ namespace IntegrationTests
         [Fact]
         public void DownloadZipResultNotEmpty()
         {
-            var url = "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip";
+            const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
             var destination = FileHelper.GetZipDestination(url);
             var result = DownloadZip(url, destination);
             Assert.NotEmpty(result);
@@ -20,7 +20,7 @@ namespace IntegrationTests
         [Fact]
         public void UnZipResultNotEmpty()
         {
-            var zipPath = Path.Combine(Directory.GetCurrentDirectory(), @"Assets\unzipable.zip");
+            var zipPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "unzipable.zip");
             var destination = FileHelper.GetBinDestination("Files", "2.0.0", Architecture.X32, "file.txt");
             FileHelper.CreateDestinationDirectory(destination);
             var result = UnZip(zipPath, destination, "file.txt");
@@ -31,7 +31,8 @@ namespace IntegrationTests
         [Fact]
         public void RemoveZipTargetMissing()
         {
-            var zipPath = Path.Combine(Directory.GetCurrentDirectory(), @"Assets\removable.zip");
+            var zipPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "removable.zip");
+            Assert.True(File.Exists(zipPath));
             RemoveZip(zipPath);
             Assert.False(File.Exists(zipPath));
         }

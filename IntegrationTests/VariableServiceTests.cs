@@ -10,7 +10,7 @@ namespace IntegrationTests
         [Fact]
         public void UpdatePathResultValid()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"Assets\file.txt");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "file.txt");
             UpdatePath(filePath);
             var pathVariable = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process);
             var variable = Path.GetDirectoryName(filePath);

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
-using HtmlAgilityPack;
+using AngleSharp;
+using AngleSharp.Parser.Html;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -32,12 +33,13 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             using (var client = new WebClient())
             {
-                var doc = new HtmlDocument();
                 var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases");
-                doc.LoadHtml(htmlCode);
-                var itemList = doc.DocumentNode.SelectNodes("//*[@class='release-title']/a")
-                    .Select(p => p.InnerText).ToList();
-                var version = itemList.FirstOrDefault();
+                var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
+                var document = parser.Parse(htmlCode);
+                var version = document
+                    .QuerySelectorAll("[class='release-title'] a")
+                    .Select(element => element.TextContent)
+                    .FirstOrDefault();
                 return version;
             }
         }

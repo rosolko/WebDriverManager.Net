@@ -42,7 +42,7 @@ namespace WebDriverManager.Services.Impl
                 {
                     if (entry.Name == name)
                     {
-                        entry.ExtractToFile(destination);
+                        entry.ExtractToFile(destination, true);
                     }
                 }
             }

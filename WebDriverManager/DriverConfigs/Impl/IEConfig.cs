@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Net;
-using HtmlAgilityPack;
+using System.Text.RegularExpressions;
+using AngleSharp;
+using AngleSharp.Parser.Html;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -28,15 +30,20 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetLatestVersion()
         {
+            var regex = new Regex(@"^\d+\.\d+\.\d+$");
             using (var client = new WebClient())
             {
-                var doc = new HtmlDocument();
                 var htmlCode = client.DownloadString("http://www.seleniumhq.org/download");
-                doc.LoadHtml(htmlCode);
-                var itemList = doc.DocumentNode.SelectNodes("(//div[@id='mainContent']/p)[7]")
-                    .Select(p => p.InnerText).ToList();
-                var version = itemList.FirstOrDefault()?.Split(' ')[2];
-                return version;
+                var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
+                var document = parser.Parse(htmlCode);
+                var version = document
+                    .QuerySelectorAll("#mainContent > p:nth-child(10)")
+                    .Select(element => element.TextContent)
+                    .FirstOrDefault()
+                    ?.Split(' ')[2];
+                return version != null && regex.Match(version).Success
+                    ? version
+                    : $"{version}.0";
             }
         }
     }

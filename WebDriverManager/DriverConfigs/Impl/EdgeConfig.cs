@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
-using HtmlAgilityPack;
+using AngleSharp;
+using AngleSharp.Parser.Html;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -30,28 +31,33 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             using (var client = new WebClient())
             {
-                var doc = new HtmlDocument();
-                var htmlCode =
-                    client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
-                doc.LoadHtml(htmlCode);
-                var itemList = doc.DocumentNode.SelectNodes("//*[@class='driver-download']/p")
-                    .Select(p => p.InnerText).ToList();
-                var version = itemList.FirstOrDefault()?.Split(' ')[1].Split(' ')[0];
+                var htmlCode = client.DownloadString(
+                    "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
+                var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
+                var document = parser.Parse(htmlCode);
+                var version = document
+                    .QuerySelectorAll("[class='driver-download'] p")
+                    .Select(element => element.TextContent)
+                    .FirstOrDefault()
+                    ?.Split(' ')[1]
+                    .Split(' ')[0];
                 return version;
             }
         }
 
-        public static string GetUrl()
+        private static string GetUrl()
         {
             using (var client = new WebClient())
             {
-                var doc = new HtmlDocument();
-                var htmlCode =
-                    client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
-                doc.LoadHtml(htmlCode);
-                var itemList = doc.DocumentNode.SelectNodes("//*[@class='driver-download']/a")
-                    .Select(p => p.GetAttributeValue("href", null)).ToList();
-                var url = itemList.FirstOrDefault();
+                var htmlCode = client.DownloadString(
+                    "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
+                var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
+                var document = parser.Parse(htmlCode);
+                var url = document
+                    .QuerySelectorAll("[class='driver-download'] a")
+                    .Select(element => element.Attributes.GetNamedItem("href"))
+                    .FirstOrDefault()
+                    ?.ToString();
                 return url;
             }
         }

@@ -16,6 +16,12 @@ namespace WebDriverManager
             _variableService = new VariableService();
         }
 
+        public DriverManager(IBinaryService binaryService, IVariableService variableService)
+        {
+            _binaryService = binaryService;
+            _variableService = variableService;
+        }
+
         public void SetUpDriver(string url, string binaryPath, string binaryName)
         {
             var zipPath = FileHelper.GetZipDestination(url);

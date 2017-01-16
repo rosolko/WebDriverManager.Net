@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
@@ -11,8 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Migrate from HtmlAgilityPack to AngleSharp</releaseNotes>
-    <copyright>Copyright © Alexander Rosolko 2016</copyright>
+    <releaseNotes>Add way to use own binary and variable service implementations</releaseNotes>
+    <copyright>Copyright © Alexander Rosolko 2016-2017</copyright>
     <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
   </metadata>
 </package>

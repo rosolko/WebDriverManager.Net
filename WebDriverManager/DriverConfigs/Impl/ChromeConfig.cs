@@ -28,14 +28,15 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetLatestVersion()
         {
-            var webRequest = WebRequest.Create(@"https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            const string url = @"https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
+            var webRequest = WebRequest.Create(url);
             using (var response = webRequest.GetResponse())
             {
                 using (var content = response.GetResponseStream())
                 {
                     if (content == null)
-                        throw new Exception(
-                            "Can't get content from URL", new Exception());
+                        throw new ArgumentNullException(
+                            $"Can't get content from URL: {url}");
                     using (var reader = new StreamReader(content))
                     {
                         var version = reader.ReadToEnd().Trim();

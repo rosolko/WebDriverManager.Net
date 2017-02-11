@@ -14,7 +14,7 @@ namespace WebDriverManager.Services.Impl
         {
             const string name = "PATH";
             var pathVariable = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
-            if (pathVariable == null) throw new Exception($"Can't get {name} variable");
+            if (pathVariable == null) throw new ArgumentNullException($"Can't get {name} variable");
             path = Path.GetDirectoryName(path);
             var newPathVariable = $"{path};{pathVariable}";
             if (!pathVariable.Contains(path))

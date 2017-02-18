@@ -1,72 +1,42 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using WebDriverManager.DriverConfigs;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
 
 namespace IntegrationTests
 {
+    public class IndexOfData : IEnumerable<object[]>
+    {
+        private readonly List<object[]> _data = new List<object[]>
+        {
+            new object[] {new ChromeConfig(), @"^\d+\.\d+$"},
+            new object[] {new EdgeConfig(), @"^\d+\.\d+$"},
+            new object[] {new FirefoxConfig(), @"^\d+\.\d+\.\d+$"},
+            new object[] {new IEConfig(), @"^\d+\.\d+\.\d+$"},
+            new object[] {new OperaConfig(), @"^\d+\.\d+\.\d+$"},
+            new object[] {new PhantomConfig(), @"^\d+\.\d+\.\d+$"}
+        };
+
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            return _data.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
     public class VersionTests
     {
-        [Fact]
-        public void ChromeVersionResultNotEmptyAndMatch()
+        [Theory, ClassData(typeof(IndexOfData))]
+        protected void VersionTest(IDriverConfig driverConfig, string pattern)
         {
-            var chromeConfig = new ChromeConfig();
-            var version = chromeConfig.GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+$");
-            var match = regex.Match(version);
-            Assert.NotEmpty(version);
-            Assert.True(match.Success);
-        }
-
-        [Fact]
-        public void EdgeVersionResultNotEmptyAndMatch()
-        {
-            var edgeConfig = new EdgeConfig();
-            var version = edgeConfig.GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+$");
-            var match = regex.Match(version);
-            Assert.NotEmpty(version);
-            Assert.True(match.Success);
-        }
-
-        [Fact]
-        public void FirefoxVersionResultNotEmptyAndMatch()
-        {
-            var firefoxConfig = new FirefoxConfig();
-            var version = firefoxConfig.GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+\.\d+$");
-            var match = regex.Match(version);
-            Assert.NotEmpty(version);
-            Assert.True(match.Success);
-        }
-
-        [Fact]
-        public void IEVersionResultNotEmptyAndMatch()
-        {
-            var ieConfig = new IEConfig();
-            var version = ieConfig.GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+\.\d+$");
-            var match = regex.Match(version);
-            Assert.NotEmpty(version);
-            Assert.True(match.Success);
-        }
-
-        [Fact]
-        public void OperaVersionResultNotEmptyAndMatch()
-        {
-            var operaConfig = new OperaConfig();
-            var version = operaConfig.GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+\.\d+$");
-            var match = regex.Match(version);
-            Assert.NotEmpty(version);
-            Assert.True(match.Success);
-        }
-
-        [Fact]
-        public void PhantomVersionResultNotEmptyAndMatch()
-        {
-            var phantomConfig = new PhantomConfig();
-            var version = phantomConfig.GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+\.\d+$");
+            var version = driverConfig.GetLatestVersion();
+            var regex = new Regex(pattern);
             var match = regex.Match(version);
             Assert.NotEmpty(version);
             Assert.True(match.Success);

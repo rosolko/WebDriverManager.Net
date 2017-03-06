@@ -14,6 +14,14 @@ This is quite annoying since it forces you to link directly this binary in your 
 
 WebDriverManager is open source, released under the terms of [MIT] license.
 
+
+## Thanks
+Thanks to the following companies for generously providing their services/products to help improve this project:
+
+| Logo  | Description  |
+| -------------- | ----------- |
+| ![BrowserStack](https://raw.githubusercontent.com/rosolko/WebDriverManager.Net/master/img/browserstack.png) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators. |
+
 ## Installation
 
 [WebDriverManager.Net] can be downloaded from NuGet.

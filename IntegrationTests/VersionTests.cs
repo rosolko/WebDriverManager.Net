@@ -7,7 +7,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
-    public class IndexOfData : IEnumerable<object[]>
+    public class VersionData : IEnumerable<object[]>
     {
         private readonly List<object[]> _data = new List<object[]>
         {
@@ -32,7 +32,7 @@ namespace IntegrationTests
 
     public class VersionTests
     {
-        [Theory, ClassData(typeof(IndexOfData)), Trait("Category", "Version")]
+        [Theory, ClassData(typeof(VersionData)), Trait("Category", "Version")]
         protected void VersionTest(IDriverConfig driverConfig, string pattern)
         {
             var version = driverConfig.GetLatestVersion();

@@ -17,23 +17,43 @@ namespace IntegrationTests.BrowserTests
             {
                 case DriverType.Chrome:
                 {
-                    return new ChromeDriver();
+                    var chromeOptions = new ChromeOptions();
+                    chromeOptions.AddArgument("--no-sandbox");
+                    return new ChromeDriver(chromeOptions);
                 }
                 case DriverType.Edge:
                 {
-                    return new EdgeDriver();
+                    var options = new EdgeOptions
+                    {
+                        PageLoadStrategy = EdgePageLoadStrategy.Eager
+                    };
+                    return new EdgeDriver(options);
                 }
                 case DriverType.Firefox:
                 {
-                    return new FirefoxDriver();
+                    var firefoxProfile = new FirefoxProfile
+                    {
+                        AcceptUntrustedCertificates = true,
+                        EnableNativeEvents = true
+                    };
+                    return new FirefoxDriver(firefoxProfile);
                 }
                 case DriverType.IE:
                 {
-                    return new InternetExplorerDriver();
+                    var internetExplorerOptions = new InternetExplorerOptions
+                    {
+                        IntroduceInstabilityByIgnoringProtectedModeSettings = true,
+                        InitialBrowserUrl = "about:blank",
+                        EnableNativeEvents = true,
+                        IgnoreZoomLevel = true
+                    };
+                    return new InternetExplorerDriver(internetExplorerOptions);
                 }
                 case DriverType.Opera:
                 {
-                    return new OperaDriver();
+                    var operaOptions = new OperaOptions();
+                    operaOptions.AddArgument("--no-sandbox");
+                    return new OperaDriver(operaOptions);
                 }
                 case DriverType.Phantom:
                 {

@@ -57,7 +57,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                     .QuerySelectorAll("[class='driver-download'] a")
                     .Select(element => element.Attributes.GetNamedItem("href"))
                     .FirstOrDefault()
-                    ?.ToString();
+                    ?.Value;
                 return url;
             }
         }

@@ -18,9 +18,9 @@ WebDriverManager is open source, released under the terms of [MIT] license.
 ## Thanks
 Thanks to the following companies for generously providing their services/products to help improve this project:
 
-| Logo  | Description  |
+| Logo | Description |
 | -------------- | ----------- |
-| ![BrowserStack](https://raw.githubusercontent.com/rosolko/WebDriverManager.Net/master/img/browserstack.png) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators. |
+| ![BrowserStack](https://cdn.rawgit.com/rosolko/5df6447289fb4f40f14311d0275e7869/raw/01758b5090bf6a95710d703891692567234bfc25/browserstack.svg) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators. |
 
 ## Installation
 

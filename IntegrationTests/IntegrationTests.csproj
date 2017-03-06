@@ -40,6 +40,9 @@
       <HintPath>..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Runtime\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="WebDriver, Version=3.2.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Selenium.WebDriver.3.2.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
       <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
@@ -55,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryServiceTests.cs" />
+    <Compile Include="BrowserTests\BrowserTests.cs" />
+    <Compile Include="BrowserTests\DriverCreator.cs" />
+    <Compile Include="BrowserTests\DriverType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VariableServiceTests.cs" />
     <Compile Include="VersionTests.cs" />
@@ -75,6 +81,7 @@
     <Content Include="Assets\unzipable.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

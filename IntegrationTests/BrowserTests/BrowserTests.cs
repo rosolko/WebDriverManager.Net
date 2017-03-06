@@ -14,7 +14,7 @@ namespace IntegrationTests.BrowserTests
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[] {new ChromeConfig(), DriverType.Chrome},
-            new object[] {new EdgeConfig(), DriverType.Edge},
+//            new object[] {new EdgeConfig(), DriverType.Edge},
             new object[] {new FirefoxConfig(), DriverType.Firefox},
             new object[] {new IEConfig(), DriverType.IE},
             new object[] {new OperaConfig(), DriverType.Opera},
@@ -37,7 +37,7 @@ namespace IntegrationTests.BrowserTests
         private IWebDriver _webDriver;
 
         [Theory, ClassData(typeof(BrowserData))]
-        protected void VersionTest(IDriverConfig driverConfig, DriverType driverType)
+        protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType)
         {
             new DriverManager().SetUpDriver(driverConfig);
             _webDriver = new DriverCreator().Create(driverType);

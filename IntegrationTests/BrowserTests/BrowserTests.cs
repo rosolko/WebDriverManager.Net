@@ -14,10 +14,10 @@ namespace IntegrationTests.BrowserTests
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[] {new ChromeConfig(), DriverType.Chrome},
-//            new object[] {new EdgeConfig(), DriverType.Edge},
+            new object[] {new EdgeConfig(), DriverType.Edge},
             new object[] {new FirefoxConfig(), DriverType.Firefox},
             new object[] {new IEConfig(), DriverType.IE},
-//            new object[] {new OperaConfig(), DriverType.Opera},
+            new object[] {new OperaConfig(), DriverType.Opera},
             new object[] {new PhantomConfig(), DriverType.Phantom}
         };
 
@@ -36,7 +36,7 @@ namespace IntegrationTests.BrowserTests
     {
         private IWebDriver _webDriver;
 
-        [Theory, ClassData(typeof(BrowserData))]
+        [Theory, ClassData(typeof(BrowserData)), Trait("Category", "Browser")]
         protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType)
         {
             if (driverType == DriverType.Phantom)

@@ -17,7 +17,7 @@ namespace IntegrationTests.BrowserTests
 //            new object[] {new EdgeConfig(), DriverType.Edge},
             new object[] {new FirefoxConfig(), DriverType.Firefox},
             new object[] {new IEConfig(), DriverType.IE},
-            new object[] {new OperaConfig(), DriverType.Opera},
+//            new object[] {new OperaConfig(), DriverType.Opera},
             new object[] {new PhantomConfig(), DriverType.Phantom}
         };
 
@@ -39,7 +39,14 @@ namespace IntegrationTests.BrowserTests
         [Theory, ClassData(typeof(BrowserData))]
         protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType)
         {
-            new DriverManager().SetUpDriver(driverConfig);
+            if (driverType == DriverType.Phantom)
+            {
+                new DriverManager().SetUpDriver(driverConfig, "2.1.1");
+            }
+            else
+            {
+                new DriverManager().SetUpDriver(driverConfig);
+            }
             _webDriver = new DriverCreator().Create(driverType);
             _webDriver.Navigate().GoToUrl("https://www.google.com/ncr");
             Assert.True(_webDriver.Title.Contains("Google"));

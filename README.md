@@ -5,6 +5,17 @@
 [![license](https://img.shields.io/github/license/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE)
 
 # WebDriverManager.Net
+
+## Table of contents
+
+  * [Info](#info)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Advanced](#advanced)
+  * [Thanks](#thanks)
+  * [About](#about)
+
+## Info
 This small library aimed to automate the [Selenium WebDriver] binaries management inside a .Net project.
 
 If you have ever used [Selenium WebDriver], you probably know that in order to use some browsers (for example **Chrome**) you need to download a binary which allows WebDriver to handle the browser. 
@@ -13,16 +24,6 @@ In addition, the absolute path to this binary must be set as part of the PATH en
 This is quite annoying since it forces you to link directly this binary in your source code. In addition, you have to check manually when new versions of the binaries are released. This library comes to the rescue, performing in an automated way all this dirty job for you.
 
 WebDriverManager is open source, released under the terms of [MIT] license.
-
-
-## Thanks
-Thanks to the following companies for generously providing their services/products to help improve this project:
-
-| Logo | Description |
-| -------------- | ----------- |
-| ![BrowserStack](https://cdn.rawgit.com/rosolko/5df6447289fb4f40f14311d0275e7869/raw/01758b5090bf6a95710d703891692567234bfc25/browserstack.svg) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators. |
-| ![GitHub](https://cdn.rawgit.com/rosolko/3ab6cb55f21009a2bc8eb1749170958e/raw/bf0cf26772bea67340c4a600b5339b25839e0696/github.svg) | [GitHub](https://github.com) is a web-based Git repository hosting service. It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding several collaboration features such as bug tracking, feature requests, task management, and wikis for every project. |
-| ![AppVeyor](https://cdn.rawgit.com/rosolko/97d00e90fa68763bbd28462b17bda903/raw/71a23a11b4efdafbc31356e19cbbb1c155ff62fb/appveyor.svg) | [AppVeyor](https://appveyor.com) is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub on a Microsoft Windows virtual machine. |
 
 ## Installation
 
@@ -170,6 +171,15 @@ Or version and architecture:
     ...
 
     new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
+
+## Thanks
+Thanks to the following companies for generously providing their services/products to help improve this project:
+
+ Logo | Description 
+------------ | -------------
+ ![BrowserStack](https://cdn.rawgit.com/rosolko/5df6447289fb4f40f14311d0275e7869/raw/01758b5090bf6a95710d703891692567234bfc25/browserstack.svg) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
+![GitHub](https://cdn.rawgit.com/rosolko/3ab6cb55f21009a2bc8eb1749170958e/raw/bf0cf26772bea67340c4a600b5339b25839e0696/github.svg) | [GitHub](https://github.com) is a web-based Git repository hosting service. It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding several collaboration features such as bug tracking, feature requests, task management, and wikis for every project.
+![AppVeyor](https://cdn.rawgit.com/rosolko/97d00e90fa68763bbd28462b17bda903/raw/71a23a11b4efdafbc31356e19cbbb1c155ff62fb/appveyor.svg) | [AppVeyor](https://appveyor.com) is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub on a Microsoft Windows virtual machine.
 
 ## About
 

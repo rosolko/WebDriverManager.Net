@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebDriverManager</RootNamespace>
     <AssemblyName>WebDriverManager</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -52,7 +52,7 @@
     <Compile Include="DriverConfigs\Impl\ChromeConfig.cs" />
     <Compile Include="DriverConfigs\Impl\EdgeConfig.cs" />
     <Compile Include="DriverConfigs\Impl\FirefoxConfig.cs" />
-    <Compile Include="DriverConfigs\Impl\IEConfig.cs" />
+    <Compile Include="DriverConfigs\Impl\InternetExplorerConfig.cs" />
     <Compile Include="DriverConfigs\Impl\OperaConfig.cs" />
     <Compile Include="DriverConfigs\Impl\PhantomConfig.cs" />
     <Compile Include="Helpers\Architecture.cs" />

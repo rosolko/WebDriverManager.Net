@@ -5,7 +5,7 @@
         Chrome,
         Edge,
         Firefox,
-        IE,
+        InternetExplorer,
         Opera,
         Phantom
     }

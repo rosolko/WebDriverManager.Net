@@ -6,7 +6,7 @@ using AngleSharp.Parser.Html;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
-    public class IEConfig : IDriverConfig
+    public class InternetExplorerConfig : IDriverConfig
     {
         public string GetName()
         {

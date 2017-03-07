@@ -81,7 +81,7 @@ So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Mari
     new ChromeConfig();
     new EdgeConfig();
     new FirefoxConfig();
-    new IEConfig();
+    new InternetExplorerConfig();
     new OperaConfig();
     new PhantomConfig();
 

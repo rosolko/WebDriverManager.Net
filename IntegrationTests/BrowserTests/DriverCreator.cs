@@ -38,7 +38,7 @@ namespace IntegrationTests.BrowserTests
                     };
                     return new FirefoxDriver(firefoxProfile);
                 }
-                case DriverType.IE:
+                case DriverType.InternetExplorer:
                 {
                     var internetExplorerOptions = new InternetExplorerOptions
                     {

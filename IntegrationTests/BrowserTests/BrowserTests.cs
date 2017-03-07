@@ -16,7 +16,7 @@ namespace IntegrationTests.BrowserTests
             new object[] {new ChromeConfig(), DriverType.Chrome},
             new object[] {new EdgeConfig(), DriverType.Edge},
             new object[] {new FirefoxConfig(), DriverType.Firefox},
-            new object[] {new IEConfig(), DriverType.IE},
+            new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer},
             new object[] {new OperaConfig(), DriverType.Opera},
             new object[] {new PhantomConfig(), DriverType.Phantom}
         };

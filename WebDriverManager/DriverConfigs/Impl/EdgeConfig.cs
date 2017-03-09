@@ -31,12 +31,10 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             using (var client = new WebClient())
             {
-                var htmlCode = client.DownloadString(
-                    "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
+                var htmlCode = client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var version = document
-                    .QuerySelectorAll("[class='driver-download'] p")
+                var version = document.QuerySelectorAll("[class='driver-download'] p")
                     .Select(element => element.TextContent)
                     .FirstOrDefault()
                     ?.Split(' ')[1]
@@ -49,12 +47,10 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             using (var client = new WebClient())
             {
-                var htmlCode = client.DownloadString(
-                    "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
+                var htmlCode = client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var url = document
-                    .QuerySelectorAll("[class='driver-download'] a")
+                var url = document.QuerySelectorAll("[class='driver-download'] a")
                     .Select(element => element.Attributes.GetNamedItem("href"))
                     .FirstOrDefault()
                     ?.Value;

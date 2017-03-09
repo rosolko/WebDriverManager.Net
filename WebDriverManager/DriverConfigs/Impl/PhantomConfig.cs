@@ -34,11 +34,12 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var version = document
-                    .QuerySelectorAll("tr[class='iterable-item'] td[class='name'] a")
+                var version = document.QuerySelectorAll("tr[class='iterable-item'] td[class='name'] a")
                     .Select(element => element.TextContent)
-                    .FirstOrDefault()
-                    ?.Split('-')[1];
+                    .FirstOrDefault();
+                version = version != null && version.Contains("beta")
+                    ? $"{version.Split('-')[1]}-{version.Split('-')[2]}"
+                    : version?.Split('-')[1];
                 return version;
             }
         }

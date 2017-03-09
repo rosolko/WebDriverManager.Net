@@ -19,8 +19,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetUrl64()
         {
-            return
-                "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip";
+            return "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip";
         }
 
         public string GetBinaryName()
@@ -35,8 +34,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode = client.DownloadString("https://github.com/mozilla/geckodriver/releases");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var version = document
-                    .QuerySelectorAll("[class='release-title'] a")
+                var version = document.QuerySelectorAll("[class='release-title'] a")
                     .Select(element => element.TextContent)
                     .FirstOrDefault()
                     ?.Remove(0, 1);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace WebDriverManager.Helpers
 {
@@ -8,6 +9,7 @@ namespace WebDriverManager.Helpers
         {
             var tempDirectory = Path.GetTempPath();
             var zipName = Path.GetFileName(url);
+            if (zipName == null) throw new ArgumentNullException($"Can't get zip name from URL: {url}");
             return Path.Combine(tempDirectory, zipName);
         }
 
@@ -20,7 +22,7 @@ namespace WebDriverManager.Helpers
         public static void CreateDestinationDirectory(string path)
         {
             var directory = Path.GetDirectoryName(path);
-            Directory.CreateDirectory(directory);
+            if (directory != null) Directory.CreateDirectory(directory);
         }
     }
 }

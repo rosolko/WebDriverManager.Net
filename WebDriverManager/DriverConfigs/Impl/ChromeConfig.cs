@@ -34,9 +34,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             {
                 using (var content = response.GetResponseStream())
                 {
-                    if (content == null)
-                        throw new ArgumentNullException(
-                            $"Can't get content from URL: {url}");
+                    if (content == null) throw new ArgumentNullException($"Can't get content from URL: {url}");
                     using (var reader = new StreamReader(content))
                     {
                         var version = reader.ReadToEnd().Trim();

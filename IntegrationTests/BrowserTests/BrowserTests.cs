@@ -14,10 +14,10 @@ namespace IntegrationTests.BrowserTests
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[] {new ChromeConfig(), DriverType.Chrome},
-            new object[] {new EdgeConfig(), DriverType.Edge},
+//            new object[] {new EdgeConfig(), DriverType.Edge},
             new object[] {new FirefoxConfig(), DriverType.Firefox},
             new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer},
-            new object[] {new OperaConfig(), DriverType.Opera},
+//            new object[] {new OperaConfig(), DriverType.Opera},
             new object[] {new PhantomConfig(), DriverType.Phantom}
         };
 
@@ -39,14 +39,7 @@ namespace IntegrationTests.BrowserTests
         [Theory, ClassData(typeof(BrowserData)), Trait("Category", "Browser")]
         protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType)
         {
-            if (driverType == DriverType.Phantom)
-            {
-                new DriverManager().SetUpDriver(driverConfig, "2.1.1");
-            }
-            else
-            {
-                new DriverManager().SetUpDriver(driverConfig);
-            }
+            new DriverManager().SetUpDriver(driverConfig);
             _webDriver = new DriverCreator().Create(driverType);
             _webDriver.Navigate().GoToUrl("https://www.google.com/ncr");
             Assert.True(_webDriver.Title.Contains("Google"));

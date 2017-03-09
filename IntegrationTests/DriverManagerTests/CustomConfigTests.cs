@@ -10,7 +10,7 @@ namespace IntegrationTests.DriverManagerTests
     {
         private IWebDriver _webDriver;
 
-        [Fact]
+        [Fact, Trait("Category", "Browser")]
         protected void CustomConfigTest()
         {
             new DriverManager().SetUpDriver(new TaobaoChromeConfig());

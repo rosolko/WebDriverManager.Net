@@ -20,7 +20,7 @@ namespace IntegrationTests.DriverManagerTests
             _customVariableService = new VariableService();
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Browser")]
         protected void CustomServiceTest()
         {
             new DriverManager(_customBinaryService, _customVariableService).SetUpDriver(new FirefoxConfig());

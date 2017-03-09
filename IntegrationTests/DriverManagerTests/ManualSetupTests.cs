@@ -21,7 +21,7 @@ namespace IntegrationTests.DriverManagerTests
             _driverName = "chromedriver.exe";
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Browser")]
         protected void ManualSetupTest()
         {
             new DriverManager().SetUpDriver(_url, _binaryOutput, _driverName);

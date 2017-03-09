@@ -41,8 +41,9 @@ namespace IntegrationTests.BrowserTests
         {
             new DriverManager().SetUpDriver(driverConfig);
             _webDriver = new DriverCreator().Create(driverType);
-            _webDriver.Navigate().GoToUrl("https://www.google.com/ncr");
-            Assert.True(_webDriver.Title.Contains("Google"));
+            _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
+            _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
+            Assert.Equal("Wikipedia", _webDriver.Title);
         }
 
         public void Dispose()

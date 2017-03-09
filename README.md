@@ -106,12 +106,37 @@ Or version and architecture:
 #### Manual way:
 	new DriverManager().SetUpDriver(
                 "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip", 
-                Directory.GetCurrentDirectory(),
+                Path.Combine(Directory.GetCurrentDirectory(), "chromedriver.exe"),
                 "chromedriver.exe"
             );
 
 ### If you want use your own implementation you need to create driver config and use it for set up(ex get, setup and work with phantomjs driver from taobao mirror):
-	public class TaobaoPhantomConfig : IDriverConfig
+    public class CustomBinaryService : IBinaryService
+    {
+        public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
+        {
+            ...
+            // your implementation
+            ...
+        }
+    }
+    
+    public class CustomVariableService : IVariableService
+    {
+        public void SetupVariable(string path)
+        {
+            ...
+            // your implementation
+            ...
+        }
+    }
+	
+    ...
+
+    new DriverManager(new CustomBinaryService(), new CustomVariableService()).SetUpDriver(new FirefoxConfig());
+
+### Or you can modify existed drivers and change only necessary fields(same example):
+	public class TaobaoPhantomConfig : PhantomConfig
     {
         public string GetName()
         {
@@ -122,39 +147,13 @@ Or version and architecture:
         {
             return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
         }
-
-        public string GetUrl64()
-        {
-            return GetUrl32();
-        }
-
-        public string GetBinaryName()
-        {
-            return "phantomjs.exe";
-        }
-
-        public string GetLatestVersion()
-        {
-            using (var client = new WebClient())
-            {
-                var doc = new HtmlDocument();
-                var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
-                doc.LoadHtml(htmlCode);
-                var itemList =
-                    doc.DocumentNode.SelectNodes("//tr[@class='iterable-item']/td[@class='name']/a")
-                        .Select(p => p.InnerText)
-                        .ToList();
-                var version = itemList.FirstOrDefault()?.Split('-')[1];
-                return version;
-            }
-        }
     }
 
     ...
 
     new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
 
-### Or you can modify existed drivers and change only necessary fields(same example):
+### Also you can implement your own services for download binaries and manage variables:
 	public class TaobaoPhantomConfig : PhantomConfig
     {
         public string GetName()

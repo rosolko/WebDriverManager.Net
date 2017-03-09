@@ -110,7 +110,7 @@ Or version and architecture:
                 "chromedriver.exe"
             );
 
-### If you want use your own implementation you need to create driver config and use it for set up(ex get, setup and wotk with phantomjs driver from taobao mirror):
+### If you want use your own implementation you need to create driver config and use it for set up(ex get, setup and work with phantomjs driver from taobao mirror):
 	public class TaobaoPhantomConfig : IDriverConfig
     {
         public string GetName()

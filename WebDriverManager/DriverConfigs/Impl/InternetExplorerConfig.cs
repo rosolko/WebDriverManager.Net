@@ -10,7 +10,7 @@ namespace WebDriverManager.DriverConfigs.Impl
     {
         public string GetName()
         {
-            return "IE";
+            return "InternetExplorer";
         }
 
         public string GetUrl32()

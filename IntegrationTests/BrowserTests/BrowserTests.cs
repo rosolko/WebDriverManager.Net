@@ -13,12 +13,12 @@ namespace IntegrationTests.BrowserTests
     {
         private readonly List<object[]> _data = new List<object[]>
         {
-            new object[] {new ChromeConfig(), DriverType.Chrome},
-//            new object[] {new EdgeConfig(), DriverType.Edge},
-            new object[] {new FirefoxConfig(), DriverType.Firefox},
-            new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer},
-//            new object[] {new OperaConfig(), DriverType.Opera},
-            new object[] {new PhantomConfig(), DriverType.Phantom}
+            new object[] {new ChromeConfig(), DriverType.Chrome, "chromedriver"},
+//            new object[] {new EdgeConfig(), DriverType.Edge, "MicrosoftWebDriver"},
+            new object[] {new FirefoxConfig(), DriverType.Firefox, "geckodriver"},
+            new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer, "IEDriverServer"},
+//            new object[] {new OperaConfig(), DriverType.Opera, "operadriver"},
+            new object[] {new PhantomConfig(), DriverType.Phantom, "phantomjs"}
         };
 
         public IEnumerator<object[]> GetEnumerator()
@@ -35,20 +35,39 @@ namespace IntegrationTests.BrowserTests
     public class BrowserTests : IDisposable
     {
         private IWebDriver _webDriver;
+        private string _driverExe;
 
         [Theory, ClassData(typeof(BrowserData)), Trait("Category", "Browser")]
-        protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType)
+        protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType, string driverExe)
         {
-            new DriverManager().SetUpDriver(driverConfig);
+            _driverExe = driverExe;
+            if (driverType == DriverType.Phantom)
+            {
+                new DriverManager().SetUpDriver(driverConfig, "2.1.1");
+            }
+            else
+            {
+                new DriverManager().SetUpDriver(driverConfig);
+            }
             _webDriver = new DriverCreator().Create(driverType);
-            _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
             _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
             Assert.Equal("Wikipedia", _webDriver.Title);
         }
 
         public void Dispose()
         {
-            _webDriver.Quit();
+            try
+            {
+                _webDriver.Quit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, ex);
+            }
+            finally
+            {
+                Helper.KillProcesses(_driverExe);
+            }
         }
     }
 }

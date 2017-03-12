@@ -18,7 +18,7 @@ namespace IntegrationTests.DriverManagerTests
         {
             _url = "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip";
             _binaryOutput = Path.Combine(Directory.GetCurrentDirectory(), "Chrome", "2.25", "X32", "chromedriver.exe");
-            _driverName = "chromedriver.exe";
+            _driverName = "chromedriver";
         }
 
         [Fact, Trait("Category", "Browser")]
@@ -32,7 +32,18 @@ namespace IntegrationTests.DriverManagerTests
 
         public void Dispose()
         {
-            _webDriver.Quit();
+            try
+            {
+                _webDriver.Quit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, ex);
+            }
+            finally
+            {
+                Helper.KillProcesses(_driverName);
+            }
         }
     }
 }

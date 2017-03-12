@@ -9,10 +9,12 @@ namespace IntegrationTests.DriverManagerTests
     public class CustomConfigTests: IDisposable
     {
         private IWebDriver _webDriver;
+        private string _driverExe;
 
         [Fact, Trait("Category", "Browser")]
         protected void CustomConfigTest()
         {
+            _driverExe = "chromedriver";
             new DriverManager().SetUpDriver(new TaobaoChromeConfig());
             _webDriver = new DriverCreator().Create(DriverType.Chrome);
             _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
@@ -21,7 +23,18 @@ namespace IntegrationTests.DriverManagerTests
 
         public void Dispose()
         {
-            _webDriver.Quit();
+            try
+            {
+                _webDriver.Quit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, ex);
+            }
+            finally
+            {
+                Helper.KillProcesses(_driverExe);
+            }
         }
     }
 }

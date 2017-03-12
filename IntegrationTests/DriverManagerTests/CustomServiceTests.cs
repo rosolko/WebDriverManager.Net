@@ -13,6 +13,7 @@ namespace IntegrationTests.DriverManagerTests
         private IWebDriver _webDriver;
         private readonly BinaryService _customBinaryService;
         private readonly VariableService _customVariableService;
+        private string _driverExe;
 
         public CustomServiceTests()
         {
@@ -23,6 +24,7 @@ namespace IntegrationTests.DriverManagerTests
         [Fact, Trait("Category", "Browser")]
         protected void CustomServiceTest()
         {
+            _driverExe = "geckodriver";
             new DriverManager(_customBinaryService, _customVariableService).SetUpDriver(new FirefoxConfig());
             _webDriver = new DriverCreator().Create(DriverType.Firefox);
             _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
@@ -31,7 +33,18 @@ namespace IntegrationTests.DriverManagerTests
 
         public void Dispose()
         {
-            _webDriver.Quit();
+            try
+            {
+                _webDriver.Quit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, ex);
+            }
+            finally
+            {
+                Helper.KillProcesses(_driverExe);
+            }
         }
     }
 }

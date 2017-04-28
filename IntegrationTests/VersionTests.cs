@@ -15,7 +15,7 @@ namespace IntegrationTests
             new object[] {new EdgeConfig(), @"^\d+\.\d+$"},
             new object[] {new FirefoxConfig(), @"^\d+\.\d+\.\d+$"},
             new object[] {new InternetExplorerConfig(), @"^\d+\.\d+\.\d+$"},
-            new object[] {new OperaConfig(), @"^\d+\.\d+\.\d+$"},
+            new object[] {new OperaConfig(), @"^\d+\.\d+$"},
 //            new object[] {new PhantomConfig(), @"^\d+\.\d+\.\d+$"}
         };
 

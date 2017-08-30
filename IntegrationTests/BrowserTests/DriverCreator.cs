@@ -18,7 +18,7 @@ namespace IntegrationTests.BrowserTests
                 case DriverType.Chrome:
                 {
                     var chromeOptions = new ChromeOptions();
-                    chromeOptions.AddArgument("--no-sandbox");
+                    chromeOptions.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
                     return new ChromeDriver(chromeOptions);
                 }
                 case DriverType.Edge:
@@ -52,7 +52,7 @@ namespace IntegrationTests.BrowserTests
                 case DriverType.Opera:
                 {
                     var operaOptions = new OperaOptions();
-                    operaOptions.AddArgument("--no-sandbox");
+                    operaOptions.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
                     return new OperaDriver(operaOptions);
                 }
                 case DriverType.Phantom:

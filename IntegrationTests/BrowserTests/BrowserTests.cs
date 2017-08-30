@@ -14,10 +14,10 @@ namespace IntegrationTests.BrowserTests
         private readonly List<object[]> _data = new List<object[]>
         {
             new object[] {new ChromeConfig(), DriverType.Chrome, "chromedriver"},
-//            new object[] {new EdgeConfig(), DriverType.Edge, "MicrosoftWebDriver"},
+            new object[] {new EdgeConfig(), DriverType.Edge, "MicrosoftWebDriver"},
             new object[] {new FirefoxConfig(), DriverType.Firefox, "geckodriver"},
             new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer, "IEDriverServer"},
-//            new object[] {new OperaConfig(), DriverType.Opera, "operadriver"},
+            new object[] {new OperaConfig(), DriverType.Opera, "operadriver"},
             new object[] {new PhantomConfig(), DriverType.Phantom, "phantomjs"}
         };
 
@@ -41,14 +41,7 @@ namespace IntegrationTests.BrowserTests
         protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType, string driverExe)
         {
             _driverExe = driverExe;
-            if (driverType == DriverType.Phantom)
-            {
-                new DriverManager().SetUpDriver(driverConfig, "2.1.1");
-            }
-            else
-            {
-                new DriverManager().SetUpDriver(driverConfig);
-            }
+            new DriverManager().SetUpDriver(driverConfig);
             _webDriver = new DriverCreator().Create(driverType);
             _webDriver.Navigate().GoToUrl("https://www.wikipedia.org");
             Assert.Equal("Wikipedia", _webDriver.Title);

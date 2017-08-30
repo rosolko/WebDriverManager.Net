@@ -36,10 +36,8 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var document = parser.Parse(htmlCode);
                 var version = document.QuerySelectorAll("tr[class='iterable-item'] td[class='name'] a")
                     .Select(element => element.TextContent)
-                    .FirstOrDefault();
-                version = version != null && version.Contains("beta")
-                    ? $"{version.Split('-')[1]}-{version.Split('-')[2]}"
-                    : version?.Split('-')[1];
+                    .FirstOrDefault(item => !item.Contains("beta"));
+                version = version?.Split('-')[1];
                 return version;
             }
         }

@@ -13,12 +13,12 @@ namespace IntegrationTests.BrowserTests
     {
         private readonly List<object[]> _data = new List<object[]>
         {
-//            new object[] {new ChromeConfig(), DriverType.Chrome, "chromedriver"},
+            new object[] {new ChromeConfig(), DriverType.Chrome, "chromedriver"},
             new object[] {new EdgeConfig(), DriverType.Edge, "MicrosoftWebDriver"},
-//            new object[] {new FirefoxConfig(), DriverType.Firefox, "geckodriver"},
-//            new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer, "IEDriverServer"},
-//            new object[] {new OperaConfig(), DriverType.Opera, "operadriver"},
-//            new object[] {new PhantomConfig(), DriverType.Phantom, "phantomjs"}
+            new object[] {new FirefoxConfig(), DriverType.Firefox, "geckodriver"},
+            new object[] {new InternetExplorerConfig(), DriverType.InternetExplorer, "IEDriverServer"},
+            new object[] {new OperaConfig(), DriverType.Opera, "operadriver"},
+            new object[] {new PhantomConfig(), DriverType.Phantom, "phantomjs"}
         };
 
         public IEnumerator<object[]> GetEnumerator()

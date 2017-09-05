@@ -7,27 +7,27 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class EdgeConfig : IDriverConfig
     {
-        public string GetName()
+        public virtual string GetName()
         {
             return "Edge";
         }
 
-        public string GetUrl32()
+        public virtual string GetUrl32()
         {
             return GetUrl();
         }
 
-        public string GetUrl64()
+        public virtual string GetUrl64()
         {
             return GetUrl32();
         }
 
-        public string GetBinaryName()
+        public virtual string GetBinaryName()
         {
             return "MicrosoftWebDriver.exe";
         }
 
-        public string GetLatestVersion()
+        public virtual string GetLatestVersion()
         {
             using (var client = new WebClient())
             {
@@ -43,7 +43,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             }
         }
 
-        private static string GetUrl()
+        public virtual string GetUrl()
         {
             using (var client = new WebClient())
             {

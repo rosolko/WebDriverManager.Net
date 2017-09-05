@@ -6,27 +6,27 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class ChromeConfig : IDriverConfig
     {
-        public string GetName()
+        public virtual string GetName()
         {
             return "Chrome";
         }
 
-        public string GetUrl32()
+        public virtual string GetUrl32()
         {
             return "https://chromedriver.storage.googleapis.com/<version>/chromedriver_win32.zip";
         }
 
-        public string GetUrl64()
+        public virtual string GetUrl64()
         {
             return GetUrl32();
         }
 
-        public string GetBinaryName()
+        public virtual string GetBinaryName()
         {
             return "chromedriver.exe";
         }
 
-        public string GetLatestVersion()
+        public virtual string GetLatestVersion()
         {
             const string url = @"https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
             var webRequest = WebRequest.Create(url);

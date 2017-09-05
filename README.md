@@ -182,12 +182,12 @@ Or version and architecture:
 ### Or you can modify existed drivers and change only necessary fields(same example):
 	public class TaobaoPhantomConfig : PhantomConfig
     {
-        public string GetName()
+        public override string GetName()
         {
             return "TaobaoPhantom";
         }
 
-        public string GetUrl32()
+        public override string GetUrl32()
         {
             return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
         }
@@ -202,7 +202,7 @@ Thanks to the following companies for generously providing their services/produc
 
  Logo | Description 
 ------------ | -------------
- ![BrowserStack](https://cdn.rawgit.com/rosolko/5df6447289fb4f40f14311d0275e7869/raw/01758b5090bf6a95710d703891692567234bfc25/browserstack.svg) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
+![BrowserStack](https://cdn.rawgit.com/rosolko/5df6447289fb4f40f14311d0275e7869/raw/01758b5090bf6a95710d703891692567234bfc25/browserstack.svg) | [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
 ![GitHub](https://cdn.rawgit.com/rosolko/3ab6cb55f21009a2bc8eb1749170958e/raw/bf0cf26772bea67340c4a600b5339b25839e0696/github.svg) | [GitHub](https://github.com) is a web-based Git repository hosting service. It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding several collaboration features such as bug tracking, feature requests, task management, and wikis for every project.
 ![AppVeyor](https://cdn.rawgit.com/rosolko/97d00e90fa68763bbd28462b17bda903/raw/71a23a11b4efdafbc31356e19cbbb1c155ff62fb/appveyor.svg) | [AppVeyor](https://appveyor.com) is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub on a Microsoft Windows virtual machine.
 

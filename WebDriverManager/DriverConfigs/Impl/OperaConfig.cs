@@ -7,27 +7,27 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class OperaConfig : IDriverConfig
     {
-        public string GetName()
+        public virtual string GetName()
         {
             return "Opera";
         }
 
-        public string GetUrl32()
+        public virtual string GetUrl32()
         {
             return "https://github.com/operasoftware/operachromiumdriver/releases/download/v<version>/operadriver_win32.zip";
         }
 
-        public string GetUrl64()
+        public virtual string GetUrl64()
         {
             return "https://github.com/operasoftware/operachromiumdriver/releases/download/v<version>/operadriver_win64.zip";
         }
 
-        public string GetBinaryName()
+        public virtual string GetBinaryName()
         {
             return "operadriver.exe";
         }
 
-        public string GetLatestVersion()
+        public virtual string GetLatestVersion()
         {
             using (var client = new WebClient())
             {

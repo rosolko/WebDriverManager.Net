@@ -8,27 +8,27 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class InternetExplorerConfig : IDriverConfig
     {
-        public string GetName()
+        public virtual string GetName()
         {
             return "InternetExplorer";
         }
 
-        public string GetUrl32()
+        public virtual string GetUrl32()
         {
             return "http://selenium-release.storage.googleapis.com/<release>/IEDriverServer_Win32_<version>.zip";
         }
 
-        public string GetUrl64()
+        public virtual string GetUrl64()
         {
             return "http://selenium-release.storage.googleapis.com/<release>/IEDriverServer_x64_<version>.zip";
         }
 
-        public string GetBinaryName()
+        public virtual string GetBinaryName()
         {
             return "IEDriverServer.exe";
         }
 
-        public string GetLatestVersion()
+        public virtual string GetLatestVersion()
         {
             var regex = new Regex(@"^\d+\.\d+\.\d+$");
             using (var client = new WebClient())

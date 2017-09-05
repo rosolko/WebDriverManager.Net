@@ -7,27 +7,27 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class FirefoxConfig : IDriverConfig
     {
-        public string GetName()
+        public virtual string GetName()
         {
             return "Firefox";
         }
 
-        public string GetUrl32()
+        public virtual string GetUrl32()
         {
             return GetUrl64();
         }
 
-        public string GetUrl64()
+        public virtual string GetUrl64()
         {
             return "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip";
         }
 
-        public string GetBinaryName()
+        public virtual string GetBinaryName()
         {
             return "geckodriver.exe";
         }
 
-        public string GetLatestVersion()
+        public virtual string GetLatestVersion()
         {
             using (var client = new WebClient())
             {

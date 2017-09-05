@@ -7,27 +7,27 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class PhantomConfig : IDriverConfig
     {
-        public string GetName()
+        public virtual string GetName()
         {
             return "Phantom";
         }
 
-        public string GetUrl32()
+        public virtual string GetUrl32()
         {
             return "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-<version>-windows.zip";
         }
 
-        public string GetUrl64()
+        public virtual string GetUrl64()
         {
             return GetUrl32();
         }
 
-        public string GetBinaryName()
+        public virtual string GetBinaryName()
         {
             return "phantomjs.exe";
         }
 
-        public string GetLatestVersion()
+        public virtual string GetLatestVersion()
         {
             using (var client = new WebClient())
             {

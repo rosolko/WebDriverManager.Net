@@ -18,7 +18,7 @@ namespace IntegrationTests.DriverManagerTests
         {
             _url = "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip";
             _binaryOutput = Path.Combine(Directory.GetCurrentDirectory(), "Chrome", "2.25", "X32", "chromedriver.exe");
-            _driverName = "chromedriver";
+            _driverName = "chromedriver.exe";
         }
 
         [Fact, Trait("Category", "Browser")]

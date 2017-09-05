@@ -2,11 +2,12 @@
 using IntegrationTests.BrowserTests;
 using OpenQA.Selenium;
 using WebDriverManager;
+using WebDriverManager.DriverConfigs;
 using Xunit;
 
 namespace IntegrationTests.DriverManagerTests
 {
-    public class CustomConfigTests: IDisposable
+    public class CustomConfigTests : IDisposable
     {
         private IWebDriver _webDriver;
         private string _driverExe;

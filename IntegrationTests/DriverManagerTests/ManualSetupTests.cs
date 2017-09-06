@@ -40,6 +40,10 @@ namespace IntegrationTests.DriverManagerTests
             {
                 Console.WriteLine(ex.Message, ex);
             }
+            finally
+            {
+                Helper.KillProcesses(_driverName);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace IntegrationTests.BrowserTests
     {
         public static void KillProcesses(string driverExe)
         {
-            Thread.Sleep(1500);
+            Thread.Sleep(1000);
             var driverProcesses = Process.GetProcessesByName(driverExe);
             foreach (var driverProcess in driverProcesses)
             {

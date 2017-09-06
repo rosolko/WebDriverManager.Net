@@ -53,6 +53,7 @@ namespace IntegrationTests.BrowserTests
                 {
                     var operaOptions = new OperaOptions();
                     operaOptions.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
+                    operaOptions.BinaryLocation = @"C:\Program Files\Opera\launcher.exe";
                     return new OperaDriver(operaOptions);
                 }
                 case DriverType.Phantom:

@@ -1,5 +1,5 @@
 [![AppVeyor](https://img.shields.io/appveyor/ci/rosolko/webdrivermanager-net.svg?maxAge=3600)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
-[![Quality Gate](https://sonarqube.com/api/badges/gate?key=rosolko:webdrivermanager)](https://sonarqube.com/dashboard/index/rosolko%3Awebdrivermanager)
+[![Quality Gate](https://sonarqube.com/api/badges/gate?key=rosolko:webdrivermanager)](https://sonarcloud.io/dashboard?id=rosolko%3Awebdrivermanager)
 [![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg?maxAge=3600)](https://www.nuget.org/packages/WebDriverManager)
 [![GitHub release](https://img.shields.io/github/release/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/releases/latest)
 [![license](https://img.shields.io/github/license/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE)
@@ -34,7 +34,9 @@ Use the GUI or the following command in the Package Manager Console:
 
 ## Usage
 
-Then you can let WebDriverManager.Net to do manage WebDriver binaries for your application/test. Take a look to this NUnit example which uses Chrome with Selenium WebDriver:
+Target framework version is **4.5.2**.
+
+After installation you can let WebDriverManager.Net to do manage WebDriver binaries for your application/test. Take a look to this NUnit example which uses Chrome with Selenium WebDriver:
 
     using NUnit.Framework;
 	using OpenQA.Selenium;

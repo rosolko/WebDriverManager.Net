@@ -62,7 +62,7 @@
     <Compile Include="BrowserTests\BrowserTests.cs" />
     <Compile Include="BrowserTests\DriverCreator.cs" />
     <Compile Include="BrowserTests\DriverType.cs" />
-    <Compile Include="BrowserTests\Helper.cs" />
+    <Compile Include="DriverDownloadTests.cs" />
     <Compile Include="DriverManagerTests\CustomConfigTests.cs" />
     <Compile Include="DriverManagerTests\ManualSetupTests.cs" />
     <Compile Include="DriverManagerTests\CustomServiceTests.cs" />

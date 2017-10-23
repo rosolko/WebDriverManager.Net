@@ -2,7 +2,6 @@
 using IntegrationTests.BrowserTests;
 using OpenQA.Selenium;
 using WebDriverManager;
-using WebDriverManager.DriverConfigs;
 using Xunit;
 
 namespace IntegrationTests.DriverManagerTests

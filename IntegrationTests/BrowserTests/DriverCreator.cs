@@ -17,44 +17,43 @@ namespace IntegrationTests.BrowserTests
             {
                 case DriverType.Chrome:
                 {
-                    var chromeOptions = new ChromeOptions();
-                    chromeOptions.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
-                    return new ChromeDriver(chromeOptions);
+                    var options = new ChromeOptions();
+                    options.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
+                    return new ChromeDriver(options);
                 }
                 case DriverType.Edge:
                 {
                     var options = new EdgeOptions
                     {
-                        PageLoadStrategy = EdgePageLoadStrategy.Eager
+                        PageLoadStrategy = PageLoadStrategy.Eager
                     };
                     return new EdgeDriver(options);
                 }
                 case DriverType.Firefox:
                 {
-                    var firefoxProfile = new FirefoxProfile
+                    var options = new FirefoxOptions
                     {
-                        AcceptUntrustedCertificates = true,
-                        EnableNativeEvents = true
+                        AcceptInsecureCertificates = true
                     };
-                    return new FirefoxDriver(firefoxProfile);
+                    return new FirefoxDriver(options);
                 }
                 case DriverType.InternetExplorer:
                 {
-                    var internetExplorerOptions = new InternetExplorerOptions
+                    var options = new InternetExplorerOptions
                     {
                         IntroduceInstabilityByIgnoringProtectedModeSettings = true,
                         InitialBrowserUrl = "about:blank",
                         EnableNativeEvents = true,
                         IgnoreZoomLevel = true
                     };
-                    return new InternetExplorerDriver(internetExplorerOptions);
+                    return new InternetExplorerDriver(options);
                 }
                 case DriverType.Opera:
                 {
-                    var operaOptions = new OperaOptions();
-                    operaOptions.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
-                    operaOptions.BinaryLocation = @"C:\Program Files\Opera\launcher.exe";
-                    return new OperaDriver(operaOptions);
+                    var options = new OperaOptions();
+                    options.AddArguments("--no-sandbox", "--disable-infobars", "--disable-save-password-bubble");
+                    options.BinaryLocation = @"C:\Program Files\Opera\launcher.exe";
+                    return new OperaDriver(options);
                 }
                 case DriverType.Phantom:
                 {

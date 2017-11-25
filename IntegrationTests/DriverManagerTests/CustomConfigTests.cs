@@ -25,6 +25,7 @@ namespace IntegrationTests.DriverManagerTests
         {
             try
             {
+                _webDriver.Close();
                 _webDriver.Quit();
             }
             catch (Exception ex)

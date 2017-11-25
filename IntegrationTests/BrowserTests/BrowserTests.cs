@@ -54,6 +54,7 @@ namespace IntegrationTests.BrowserTests
         {
             try
             {
+                _webDriver.Close();
                 _webDriver.Quit();
             }
             catch (Exception ex)

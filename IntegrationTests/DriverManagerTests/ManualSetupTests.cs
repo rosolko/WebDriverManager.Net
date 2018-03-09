@@ -7,7 +7,7 @@ using Xunit;
 
 namespace IntegrationTests.DriverManagerTests
 {
-    public class ManualSetupTests : IDisposable
+    public sealed class ManualSetupTests : IDisposable
     {
         private IWebDriver _webDriver;
         private readonly string _url;
@@ -22,7 +22,7 @@ namespace IntegrationTests.DriverManagerTests
         }
 
         [Fact, Trait("Category", "Browser")]
-        protected void ManualSetupTest()
+        public void ManualSetupTest()
         {
             new DriverManager().SetUpDriver(_url, _binaryOutput, _driverName);
             _webDriver = new DriverCreator().Create(DriverType.Chrome);

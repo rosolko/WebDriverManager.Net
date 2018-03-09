@@ -6,13 +6,13 @@ using Xunit;
 
 namespace IntegrationTests.DriverManagerTests
 {
-    public class CustomConfigTests : IDisposable
+    public sealed class CustomConfigTests : IDisposable
     {
         private IWebDriver _webDriver;
         private string _driverExe;
 
         [Fact, Trait("Category", "Browser")]
-        protected void CustomConfigTest()
+        public void CustomConfigTest()
         {
             _driverExe = "chromedriver";
             new DriverManager().SetUpDriver(new TaobaoChromeConfig());

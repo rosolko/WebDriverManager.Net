@@ -33,14 +33,14 @@ namespace IntegrationTests.BrowserTests
         }
     }
 
-    public class BrowserTests : IDisposable
+    public sealed class BrowserTests : IDisposable
     {
         private IWebDriver _webDriver;
         private string _driverExe;
         private string _browserExe;
 
         [Theory, ClassData(typeof(BrowserData)), Trait("Category", "Browser")]
-        protected void BrowserTest(IDriverConfig driverConfig, DriverType driverType, string driverExe, string browserExe)
+        public void BrowserTest(IDriverConfig driverConfig, DriverType driverType, string driverExe, string browserExe)
         {
             _driverExe = driverExe;
             _browserExe = browserExe;

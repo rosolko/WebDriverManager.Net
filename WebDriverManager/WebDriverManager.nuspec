@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Fix compression library reference</releaseNotes>
+    <releaseNotes>Fix locators for firefox and opera. Create SecurityProtocol for github based driver location.</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016-2017</copyright>
     <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
   </metadata>

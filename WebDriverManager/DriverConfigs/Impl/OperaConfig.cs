@@ -29,6 +29,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             using (var client = new WebClient())
             {
                 var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases");

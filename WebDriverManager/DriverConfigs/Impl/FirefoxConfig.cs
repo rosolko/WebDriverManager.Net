@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using AngleSharp;
 using AngleSharp.Parser.Html;
 
@@ -19,7 +21,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl64()
         {
-            return "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip";
+            return
+                "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip";
         }
 
         public virtual string GetBinaryName()
@@ -29,6 +32,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             using (var client = new WebClient())
             {
                 var htmlCode = client.DownloadString("https://github.com/mozilla/geckodriver/releases");

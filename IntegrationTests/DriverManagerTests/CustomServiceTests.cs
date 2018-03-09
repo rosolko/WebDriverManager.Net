@@ -8,7 +8,7 @@ using Xunit;
 
 namespace IntegrationTests.DriverManagerTests
 {
-    public class CustomServiceTests: IDisposable
+    public sealed class CustomServiceTests: IDisposable
     {
         private IWebDriver _webDriver;
         private readonly BinaryService _customBinaryService;
@@ -22,7 +22,7 @@ namespace IntegrationTests.DriverManagerTests
         }
 
         [Fact, Trait("Category", "Browser")]
-        protected void CustomServiceTest()
+        public void CustomServiceTest()
         {
             _driverExe = "geckodriver";
             new DriverManager(_customBinaryService, _customVariableService).SetUpDriver(new FirefoxConfig());

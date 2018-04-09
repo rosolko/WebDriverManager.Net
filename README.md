@@ -1,5 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=webdrivermanager.net&metric=alert_status)](https://sonarcloud.io/dashboard?id=webdrivermanager.net)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=webdrivermanager.net&metric=coverage)](https://sonarcloud.io/dashboard?id=webdrivermanager.net)
 [![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg)](https://www.nuget.org/packages/WebDriverManager)
 
 # WebDriverManager.Net

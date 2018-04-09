@@ -28,12 +28,13 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var webRequest = WebRequest.Create("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            var uri = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {
                 using (var content = response.GetResponseStream())
                 {
-                    if (content == null) throw new Exception("Unable to get latest chrome version");
+                    if (content == null) throw new ArgumentNullException($"Can't get content from URL: {uri}");
                     using (var reader = new StreamReader(content))
                     {
                         var version = reader.ReadToEnd().Trim();

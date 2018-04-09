@@ -6,6 +6,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class ChromeConfig : IDriverConfig
     {
+        private const string ReleaseUrl = @"https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
+
         public virtual string GetName()
         {
             return "Chrome";
@@ -28,13 +30,12 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            const string url = @"https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
-            var webRequest = WebRequest.Create(url);
+            var webRequest = WebRequest.Create(ReleaseUrl);
             using (var response = webRequest.GetResponse())
             {
                 using (var content = response.GetResponseStream())
                 {
-                    if (content == null) throw new ArgumentNullException($"Can't get content from URL: {url}");
+                    if (content == null) throw new ArgumentNullException($"Can't get content from URL: {ReleaseUrl}");
                     using (var reader = new StreamReader(content))
                     {
                         var version = reader.ReadToEnd().Trim();

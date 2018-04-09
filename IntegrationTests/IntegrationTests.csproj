@@ -59,6 +59,7 @@
     <Compile Include="BinaryServiceTests.cs" />
     <Compile Include="DriverDownloadTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceTests.cs" />
     <Compile Include="VariableServiceTests.cs" />
     <Compile Include="VersionTests.cs" />
   </ItemGroup>

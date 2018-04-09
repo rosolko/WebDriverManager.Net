@@ -1,8 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=webdrivermanager.net&metric=alert_status)](https://sonarcloud.io/dashboard?id=webdrivermanager.net)
-[![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg?maxAge=3600)](https://www.nuget.org/packages/WebDriverManager)
-[![GitHub release](https://img.shields.io/github/release/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/releases/latest)
-[![license](https://img.shields.io/github/license/rosolko/WebDriverManager.Net.svg?maxAge=3600)](https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg?maxAge=2592000)](https://www.nuget.org/packages/WebDriverManager)
 
 # WebDriverManager.Net
 

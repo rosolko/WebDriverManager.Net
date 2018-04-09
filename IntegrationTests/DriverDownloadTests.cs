@@ -32,7 +32,7 @@ namespace IntegrationTests
 
     public class DriverDownloadTests
     {
-        [Theory, ClassData(typeof(DriverData)), Trait("Category", "Config")]
+        [Theory, ClassData(typeof(DriverData))]
         protected void DriverDownloadTest(IDriverConfig driverConfig)
         {
             new DriverManager().SetUpDriver(driverConfig);

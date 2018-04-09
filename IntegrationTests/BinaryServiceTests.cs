@@ -7,7 +7,7 @@ namespace IntegrationTests
 {
     public class BinaryServiceTests : BinaryService
     {
-        [Fact, Trait("Category", "Binary")]
+        [Fact]
         public void DownloadZipResultNotEmpty()
         {
             const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
@@ -17,7 +17,7 @@ namespace IntegrationTests
             Assert.True(File.Exists(result));
         }
 
-        [Fact, Trait("Category", "Binary")]
+        [Fact]
         public void UnZipResultNotEmpty()
         {
             var zipPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "unzipable.zip");
@@ -28,7 +28,7 @@ namespace IntegrationTests
             Assert.True(File.Exists(result));
         }
 
-        [Fact, Trait("Category", "Binary")]
+        [Fact]
         public void RemoveZipTargetMissing()
         {
             var zipPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "removable.zip");

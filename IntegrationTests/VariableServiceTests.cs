@@ -7,7 +7,7 @@ namespace IntegrationTests
 {
     public class VariableServiceTests : VariableService
     {
-        [Fact, Trait("Category", "Variable")]
+        [Fact]
         public void UpdatePathResultValid()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "file.txt");

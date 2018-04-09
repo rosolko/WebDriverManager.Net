@@ -32,7 +32,7 @@ namespace IntegrationTests
 
     public class VersionTests
     {
-        [Theory, ClassData(typeof(VersionData)), Trait("Category", "Version")]
+        [Theory, ClassData(typeof(VersionData))]
         protected void VersionTest(IDriverConfig driverConfig, string pattern)
         {
             var version = driverConfig.GetLatestVersion();

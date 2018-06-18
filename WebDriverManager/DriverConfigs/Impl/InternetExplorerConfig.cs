@@ -36,7 +36,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode = client.DownloadString("http://www.seleniumhq.org/download");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var version = document.QuerySelectorAll("#mainContent > p:nth-child(11)")
+                var version = document.QuerySelectorAll("#mainContent > p:nth-child(10)")
                     .Select(element => element.TextContent)
                     .FirstOrDefault()
                     ?.Split(' ')[2];

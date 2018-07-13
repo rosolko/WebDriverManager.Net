@@ -34,7 +34,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var version = document.QuerySelectorAll("tr[class='iterable-item'] td[class='name'] a")
+                var version = document.QuerySelectorAll(".iterable-item > .name > a")
                     .Select(element => element.TextContent)
                     .FirstOrDefault(item => !item.Contains("beta"));
                 version = version?.Split('-')[1];

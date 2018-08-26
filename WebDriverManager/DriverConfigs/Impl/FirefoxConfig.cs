@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using AngleSharp;
 using AngleSharp.Parser.Html;
 
@@ -39,7 +37,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode = client.DownloadString("https://github.com/mozilla/geckodriver/releases");
                 var parser = new HtmlParser(Configuration.Default.WithDefaultLoader());
                 var document = parser.Parse(htmlCode);
-                var version = document.QuerySelectorAll(".release-title > a")
+                var version = document.QuerySelectorAll(".release-header .f1 a")
                     .Select(element => element.TextContent)
                     .FirstOrDefault()
                     ?.Remove(0, 1);

@@ -11,8 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Update edge and interner explorer version selector.</releaseNotes>
+    <releaseNotes>Update firefox and opera version seletors.</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016-2018</copyright>
-    <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver AppiumDriver</tags>
+    <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</tags>
   </metadata>
 </package>

@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Alexander Rosolko")]
 [assembly: AssemblyProduct("WebDriverManager.Net")]
-[assembly: AssemblyCopyright("Copyright © Alexander Rosolko 2016-2018")]
+[assembly: AssemblyCopyright("Copyright © Alexander Rosolko 2016-2019")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -39,5 +39,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("2.2.7")]
-[assembly: AssemblyFileVersion("2.2.7")]
+[assembly: AssemblyVersion("2.2.8")]
+[assembly: AssemblyFileVersion("2.2.8")]

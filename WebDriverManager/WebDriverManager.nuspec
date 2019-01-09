@@ -11,8 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
-    <releaseNotes>Update firefox and opera version seletors.</releaseNotes>
-    <copyright>Copyright © Alexander Rosolko 2016-2018</copyright>
-    <tags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</tags>
+    <releaseNotes>Update anglesharp to 0.10.1 xunit to 2.4.1 versions. Target 4.6.2 .net version since anglesharp required it.</releaseNotes>
+    <copyright>Copyright © Alexander Rosolko 2016-2019</copyright>
+    <tags>Selenium WebDriver CghromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</tags>
   </metadata>
 </package>

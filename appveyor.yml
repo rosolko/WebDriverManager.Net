@@ -12,8 +12,6 @@ branches:
     - appveyor
 
 image: Visual Studio 2017
-configuration: Release
-platform: Any CPU
 
 environment:
   SONAR_LOGIN:
@@ -25,11 +23,12 @@ install:
 test: off
 
 before_build:
-  - ps: SonarScanner.MSBuild.exe begin /k:"rosolko_WebDriverManager.Net" /d:sonar.organization="rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.cs.opencover.reportsPaths="coverage.opencover.xml"
+  - ps: SonarScanner.MSBuild.exe begin /k:"rosolko_WebDriverManager.Net" /d:sonar.organization="rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.language="cs" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.coverage.exclusions="WebDriverManager.Tests/**,**/*Tests.cs" /d:sonar.cs.opencover.reportsPaths="%cd%\opencover.xml"
 
 build_script:
-  - ps: dotnet build -c Release
-  - ps: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat="opencover"
+  - ps: dotnet restore
+  - ps: dotnet build
+  - ps: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" /p:CoverletOutput="opencover.xml"
 
 after_build:
   - ps: SonarScanner.MSBuild.exe end /d:sonar.login=$env:SONAR_LOGIN

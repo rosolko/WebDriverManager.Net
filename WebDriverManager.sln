@@ -1,11 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverManager", "WebDriverManager\WebDriverManager.csproj", "{DDF73921-D0CD-4B7F-BAFB-021CEAC5FF73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverManager", "WebDriverManager\WebDriverManager.csproj", "{4AB1A17E-F75F-4A23-B986-7C3DE797B068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{511CE4F3-DC62-41F9-8700-CA798302C4E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverManager.Tests", "WebDriverManager.Tests\WebDriverManager.Tests.csproj", "{9C18F531-D338-4610-8CE7-697D7C7DE225}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DDF73921-D0CD-4B7F-BAFB-021CEAC5FF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDF73921-D0CD-4B7F-BAFB-021CEAC5FF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDF73921-D0CD-4B7F-BAFB-021CEAC5FF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDF73921-D0CD-4B7F-BAFB-021CEAC5FF73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{511CE4F3-DC62-41F9-8700-CA798302C4E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{511CE4F3-DC62-41F9-8700-CA798302C4E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{511CE4F3-DC62-41F9-8700-CA798302C4E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{511CE4F3-DC62-41F9-8700-CA798302C4E7}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{4AB1A17E-F75F-4A23-B986-7C3DE797B068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB1A17E-F75F-4A23-B986-7C3DE797B068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB1A17E-F75F-4A23-B986-7C3DE797B068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB1A17E-F75F-4A23-B986-7C3DE797B068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,7 +5,7 @@ using WebDriverManager.DriverConfigs;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
 
-namespace IntegrationTests
+namespace WebDriverManager.Tests
 {
     public class VersionData : IEnumerable<object[]>
     {

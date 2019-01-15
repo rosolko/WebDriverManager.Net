@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Services.Impl;
 using Xunit;
 
-namespace IntegrationTests
+namespace WebDriverManager.Tests
 {
     public class ServiceTests
     {

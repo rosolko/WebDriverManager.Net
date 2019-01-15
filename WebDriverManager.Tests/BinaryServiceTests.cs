@@ -3,7 +3,7 @@ using WebDriverManager.Helpers;
 using WebDriverManager.Services.Impl;
 using Xunit;
 
-namespace IntegrationTests
+namespace WebDriverManager.Tests
 {
     public class BinaryServiceTests : BinaryService
     {

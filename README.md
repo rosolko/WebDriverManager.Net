@@ -1,6 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=webdrivermanager.net&metric=alert_status)](https://sonarcloud.io/dashboard?id=webdrivermanager.net)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=webdrivermanager.net&metric=coverage)](https://sonarcloud.io/dashboard?id=webdrivermanager.net)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=rosolko_WebDriverManager.Net&metric=alert_status)](https://sonarcloud.io/dashboard?id=rosolko_WebDriverManager.Net)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=rosolko_WebDriverManager.Net&metric=coverage)](https://sonarcloud.io/dashboard?id=rosolko_WebDriverManager.Net)
 [![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg)](https://www.nuget.org/packages/WebDriverManager)
 
 # WebDriverManager.Net
@@ -33,7 +33,7 @@ Use the GUI or the following command in the Package Manager Console:
 
 ## Usage
 
-Target framework version is **4.5.2**.
+Target is **netstandard2.0**.
 
 After installation you can let WebDriverManager.Net to do manage WebDriver binaries for your application/test. Take a look to this NUnit example which uses Chrome with Selenium WebDriver:
 

@@ -25,7 +25,7 @@ before_build:
 
 build_script:
   - ps: dotnet build -c Release
-  - ps: OpenCover.Console.exe -output:"opencover.xml" -register:appveyor -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"WebDriverManager.Tests\bin\Release\WebDriverManager.Tests.dll -noshadow"
+  - ps: OpenCover.Console.exe -output:"opencover.xml" -register:appveyor -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"WebDriverManager.Tests\bin\Release\netcoreapp2.2\WebDriverManager.Tests.dll -noshadow"
 
 after_build:
   - SonarScanner.MSBuild.exe end /d:sonar.login=$env:SONAR_LOGIN

@@ -21,11 +21,11 @@ install:
   - cinst msbuild-sonarqube-runner
 
 before_build:
-  - ps: SonarScanner.MSBuild.exe begin /k:"rosolko_WebDriverManager.Net" /d:sonar.organization="rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN
+  - ps: SonarScanner.MSBuild.exe begin /k:"rosolko_WebDriverManager.Net" /d:sonar.organization="rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.test.exclusions=**/*.zip /d:sonar.cs.opencover.reportsPaths="opencover.xml"
 
 build_script:
   - ps: dotnet build -c Release
-  - ps: OpenCover.Console.exe -output:"opencover.xml" -register:appveyor -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"WebDriverManager.Tests\bin\Release\netcoreapp2.2\WebDriverManager.Tests.dll -noshadow"
+  - ps: OpenCover.Console.exe -output:"opencover.xml" -register:appveyor -target:"%xunit20%\xunit.console" -targetargs:"WebDriverManager.Tests\bin\Release\netcoreapp2.2\WebDriverManager.Tests.dll -noshadow"
 
 after_build:
   - SonarScanner.MSBuild.exe end /d:sonar.login=$env:SONAR_LOGIN

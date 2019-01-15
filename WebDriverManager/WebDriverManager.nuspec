@@ -2,17 +2,21 @@
 <package>
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <version>2.2.9</version>
+    <title>WebDriverManager.Net</title>
+    <authors>Alexander Rosolko</authors>
+    <owners>Alexander Rosolko</owners>
     <licenseUrl>https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/rosolko/WebDriverManager.Net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
+    <description>Automatic Selenium WebDriver binaries management for .Net</description>
     <summary>$description$</summary>
-    <releaseNotes>Update anglesharp to 0.10.1 xunit to 2.4.1 versions. Target 4.6.2 .net version since anglesharp required it.</releaseNotes>
+    <releaseNotes>New target: netstandard2.0.</releaseNotes>
     <copyright>Copyright © Alexander Rosolko 2016-2019</copyright>
     <tags>Selenium WebDriver CghromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</tags>
+
+    <dependencies>
+      <dependency id="AngleSharp" version="0.10.1" />
+    </dependencies>
   </metadata>
 </package>

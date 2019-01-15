@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>$id$</id>
-    <version>2.2.9</version>
+    <version>$version$</version>
     <title>WebDriverManager.Net</title>
     <authors>Alexander Rosolko</authors>
     <owners>Alexander Rosolko</owners>

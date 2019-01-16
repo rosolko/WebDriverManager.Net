@@ -14,7 +14,7 @@ test: off
 
 before_build:
   - ps: dotnet sonarscanner begin /k:"rosolko_WebDriverManager.Net" /v:$env:LIBRARY_VERSION `
-        /d:sonar.organization="rosolko-github" /d:sonar.branch.name=$APPVEYOR_REPO_BRANCH `
+        /d:sonar.organization="rosolko-github" /d:sonar.branch=$APPVEYOR_REPO_BRANCH `
         /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.language="cs" `
         /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.coverage.exclusions="WebDriverManager.Tests/**,**/*Tests.cs" `
         /d:sonar.cs.opencover.reportsPaths="C:\projects\webdrivermanager-net\WebDriverManager.Tests\opencover.xml"

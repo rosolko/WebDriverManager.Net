@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Threading;
 using WebDriverManager.Helpers;
 
 namespace WebDriverManager.Services.Impl
@@ -23,7 +24,9 @@ namespace WebDriverManager.Services.Impl
             if (File.Exists(destination)) return destination;
             using (var webClient = new WebClient())
             {
-                webClient.DownloadFile(url, destination);
+                Thread.Sleep(200);
+                webClient.DownloadFile(new Uri(url), destination);
+                Thread.Sleep(200);
             }
             return destination;
         }

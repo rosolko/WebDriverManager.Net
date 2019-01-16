@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using WebDriverManager;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
 
-namespace IntegrationTests
+namespace WebDriverManager.Tests
 {
     public class DriverData : IEnumerable<object[]>
     {

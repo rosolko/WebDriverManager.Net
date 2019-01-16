@@ -241,3 +241,6 @@ _Pvt_Extensions
 
 # SonarQube
 .sonarqube
+
+# Coverage
+opencover.xml

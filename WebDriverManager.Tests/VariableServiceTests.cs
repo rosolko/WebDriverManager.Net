@@ -3,7 +3,7 @@ using System.IO;
 using WebDriverManager.Services.Impl;
 using Xunit;
 
-namespace IntegrationTests
+namespace WebDriverManager.Tests
 {
     public class VariableServiceTests : VariableService
     {

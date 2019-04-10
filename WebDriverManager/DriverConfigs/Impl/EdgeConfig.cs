@@ -30,7 +30,8 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             using (var client = new WebClient())
             {
-                var htmlCode = client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
+                var htmlCode =
+                    client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                 var parser = new HtmlParser();
                 var document = parser.ParseDocument(htmlCode);
                 var version = document.QuerySelectorAll(".driver-download > a + p")
@@ -46,7 +47,8 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             using (var client = new WebClient())
             {
-                var htmlCode = client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
+                var htmlCode =
+                    client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
                 var parser = new HtmlParser();
                 var document = parser.ParseDocument(htmlCode);
                 var url = document.QuerySelectorAll(".driver-download > a")

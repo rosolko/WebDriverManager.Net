@@ -13,12 +13,14 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return "https://github.com/operasoftware/operachromiumdriver/releases/download/v.<version>/operadriver_win32.zip";
+            return
+                "https://github.com/operasoftware/operachromiumdriver/releases/download/v.<version>/operadriver_win32.zip";
         }
 
         public virtual string GetUrl64()
         {
-            return "https://github.com/operasoftware/operachromiumdriver/releases/download/v.<version>/operadriver_win64.zip";
+            return
+                "https://github.com/operasoftware/operachromiumdriver/releases/download/v.<version>/operadriver_win64.zip";
         }
 
         public virtual string GetBinaryName()

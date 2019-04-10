@@ -12,6 +12,7 @@ namespace WebDriverManager.Tests
         {
             const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
             var destination = FileHelper.GetZipDestination(url);
+            FileHelper.CreateDestinationDirectory(destination);
             var result = DownloadZip(url, destination);
             Assert.NotEmpty(result);
             Assert.True(File.Exists(result));

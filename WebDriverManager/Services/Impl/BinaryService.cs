@@ -16,7 +16,11 @@ namespace WebDriverManager.Services.Impl
             FileHelper.CreateDestinationDirectory(zipDestination);
             zipDestination = DownloadZip(url, zipDestination);
             FileHelper.CreateDestinationDirectory(binDestination);
-            binDestination = UnZip(zipDestination, binDestination, binaryName);
+            if (!zipDestination.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+            {
+                binDestination = UnZip(zipDestination, binDestination, binaryName);
+            }
+
             RemoveZip(zipDestination);
             return binDestination;
         }

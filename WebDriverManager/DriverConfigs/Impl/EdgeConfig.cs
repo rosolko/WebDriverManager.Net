@@ -13,17 +13,17 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return GetUrl();
+            return "https://az813057.vo.msecnd.net/webdriver/msedgedriver_x86/msedgedriver.exe";
         }
 
         public virtual string GetUrl64()
         {
-            return GetUrl32();
+            return "https://az813057.vo.msecnd.net/webdriver/msedgedriver_x64/msedgedriver.exe";
         }
 
         public virtual string GetBinaryName()
         {
-            return "MicrosoftWebDriver.exe";
+            return "msedgedriver.exe";
         }
 
         public virtual string GetLatestVersion()
@@ -40,22 +40,6 @@ namespace WebDriverManager.DriverConfigs.Impl
                     ?.Split(' ')[1]
                     .Split(' ')[0];
                 return version;
-            }
-        }
-
-        public virtual string GetUrl()
-        {
-            using (var client = new WebClient())
-            {
-                var htmlCode =
-                    client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
-                var parser = new HtmlParser();
-                var document = parser.ParseDocument(htmlCode);
-                var url = document.QuerySelectorAll(".driver-download > a")
-                    .Select(element => element.Attributes.GetNamedItem("href"))
-                    .FirstOrDefault()
-                    ?.Value;
-                return url;
             }
         }
     }

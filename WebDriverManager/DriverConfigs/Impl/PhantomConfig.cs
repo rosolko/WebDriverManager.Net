@@ -13,7 +13,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-<version>-windows.zip";
+            return "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-windows.zip";
         }
 
         public virtual string GetUrl64()
@@ -28,17 +28,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            using (var client = new WebClient())
-            {
-                var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
-                var parser = new HtmlParser();
-                var document = parser.ParseDocument(htmlCode);
-                var version = document.QuerySelectorAll(".iterable-item > .name > a")
-                    .Select(element => element.TextContent)
-                    .FirstOrDefault(item => !item.Contains("beta"));
-                version = version?.Split('-')[1];
-                return version;
-            }
+            return "2.1.1";
         }
     }
 }

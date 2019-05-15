@@ -6,6 +6,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class ChromeConfig : IDriverConfig
     {
+        private const string BaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/<version>/";
+
         public virtual string GetName()
         {
             return "Chrome";
@@ -13,17 +15,34 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return "https://chromedriver.storage.googleapis.com/<version>/chromedriver_win32.zip";
+            return GetUrl();
         }
 
         public virtual string GetUrl64()
         {
-            return GetUrl32();
+            return GetUrl();
+        }
+
+        private string GetUrl()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return $"{BaseVersionPatternUrl}chromedriver_mac64.zip";
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
+            }
+
+            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
         }
 
         public virtual string GetBinaryName()
         {
-            return "chromedriver.exe";
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var suffix = isWindows ? ".exe" : string.Empty;
+            return $"chromedriver{suffix}";
         }
 
         public virtual string GetLatestVersion()

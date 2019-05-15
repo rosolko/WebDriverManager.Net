@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
+using WebDriverManager.DriverConfigs;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {

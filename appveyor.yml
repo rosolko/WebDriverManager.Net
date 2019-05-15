@@ -13,7 +13,7 @@ install:
 test: off
 
 before_build:
-  - ps: dotnet sonarscanner begin /k:"rosolko_WebDriverManager.Net" /v:$env:LIBRARY_VERSION /o:"rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.language="cs" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.coverage.exclusions="WebDriverManager.Tests/**,**/*Tests.cs" /d:sonar.cs.opencover.reportsPaths="C:\projects\webdrivermanager-net\WebDriverManager.Tests\opencover.xml"
+  - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) dotnet sonarscanner begin /k:"rosolko_WebDriverManager.Net" /v:$env:LIBRARY_VERSION /o:"rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.language="cs" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.coverage.exclusions="WebDriverManager.Tests/**,**/*Tests.cs" /d:sonar.cs.opencover.reportsPaths="C:\projects\webdrivermanager-net\WebDriverManager.Tests\opencover.xml"
 
 build_script:
   - ps: dotnet restore
@@ -21,7 +21,7 @@ build_script:
   - ps: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" /p:CoverletOutput="opencover.xml"
 
 after_build:
-  - ps: dotnet sonarscanner end /d:sonar.login=$env:SONAR_LOGIN
+  - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) dotnet sonarscanner end /d:sonar.login=$env:SONAR_LOGIN
 
 artifacts:
   - path: '**\*.nupkg'

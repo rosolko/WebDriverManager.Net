@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Runtime.InteropServices;
 using WebDriverManager.Helpers;
 
 namespace WebDriverManager.Services.Impl
@@ -19,6 +21,13 @@ namespace WebDriverManager.Services.Impl
             if (!zipDestination.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
             {
                 binDestination = UnZip(zipDestination, binDestination, binaryName);
+            }
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                var chmod = Process.Start("chmod", $"+x {binDestination}");
+                chmod.WaitForExit();
             }
 
             RemoveZip(zipDestination);

@@ -8,7 +8,7 @@ environment:
     secure: JNopXLZtkO5PD8yEj2+W1BZnbhq9oegXmTFgvVWQw67z5PtWwd+ngjv5O7xFetCZ
 
 install:
-  - ps: dotnet tool install --global dotnet-sonarscanner
+  - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { dotnet tool install --global dotnet-sonarscanner }
 
 test: off
 

@@ -49,7 +49,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var uri = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE_74");
+            var uri = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
             var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {

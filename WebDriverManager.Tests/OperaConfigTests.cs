@@ -10,7 +10,7 @@ namespace WebDriverManager.Tests
         public void VersionTest()
         {
             var version = GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+$");
+            var regex = new Regex(@"^\d+\.\d+.\d+.\d+$");
             Assert.NotEmpty(version);
             Assert.Matches(regex, version);
         }

@@ -19,6 +19,7 @@ namespace WebDriverManager.Tests
         public void DriverDownloadTest()
         {
             new DriverManager().SetUpDriver(new ChromeConfig());
+            Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
     }
 }

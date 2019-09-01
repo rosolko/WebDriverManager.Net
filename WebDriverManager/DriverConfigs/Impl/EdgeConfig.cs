@@ -1,7 +1,7 @@
-using System.Linq;
+using System;
+using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
-using AngleSharp.Html.Parser;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -21,11 +21,9 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl64()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                return $"{BaseVersionPatternUrl}edgedriver_mac64.zip";
-            }
-            return $"{BaseVersionPatternUrl}edgedriver_win64.zip";
+            return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+                ? $"{BaseVersionPatternUrl}edgedriver_mac64.zip"
+                : $"{BaseVersionPatternUrl}edgedriver_win64.zip";
         }
 
         public virtual string GetBinaryName()
@@ -35,17 +33,19 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            using (var client = new WebClient())
+            var uri = new Uri("https://msedgedriver.azureedge.net/LATEST_BETA");
+            var webRequest = WebRequest.Create(uri);
+            using (var response = webRequest.GetResponse())
             {
-                var htmlCode =
-                    client.DownloadString("https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver");
-                var parser = new HtmlParser();
-                var document = parser.ParseDocument(htmlCode);
-                var version = document.QuerySelectorAll(".driver-download > p.driver-download__meta")
-                    .Select(element => element.TextContent).ToList()[2]
-                    ?.Split(' ')[1]
-                    .Split(' ')[0];
-                return version;
+                using (var content = response.GetResponseStream())
+                {
+                    if (content == null) throw new ArgumentNullException($"Can't get content from URL: {uri}");
+                    using (var reader = new StreamReader(content))
+                    {
+                        var version = reader.ReadToEnd().Trim();
+                        return version;
+                    }
+                }
             }
         }
     }

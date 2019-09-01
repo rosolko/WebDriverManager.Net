@@ -1,5 +1,3 @@
-
-
 using System.Reflection;
 using OpenQA.Selenium;
 

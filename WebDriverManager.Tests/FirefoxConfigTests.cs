@@ -19,6 +19,7 @@ namespace WebDriverManager.Tests
         public void DriverDownloadTest()
         {
             new DriverManager().SetUpDriver(new FirefoxConfig());
+            Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using AngleSharp.Html.Parser;
-
-namespace WebDriverManager.DriverConfigs.Impl
+﻿namespace WebDriverManager.DriverConfigs.Impl
 {
     public class InternetExplorerConfig : IDriverConfig
     {

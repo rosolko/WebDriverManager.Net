@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Net;
-using AngleSharp.Html.Parser;
-
-namespace WebDriverManager.DriverConfigs.Impl
+﻿namespace WebDriverManager.DriverConfigs.Impl
 {
     public class PhantomConfig : IDriverConfig
     {

@@ -1,4 +1,6 @@
-﻿using WebDriverManager.DriverConfigs;
+using System;
+using WebDriverManager.DriverConfigs;
+using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services;
 using WebDriverManager.Services.Impl;
@@ -29,11 +31,16 @@ namespace WebDriverManager
             _variableService.SetupVariable(binaryPath);
         }
 
-        public void SetUpDriver(IDriverConfig config, string version = "Latest",
-            Architecture architecture = Architecture.Auto)
+        public void SetUpDriver(IDriverConfig config, string version = "Latest", Architecture architecture = Architecture.Auto)
         {
             architecture = architecture.Equals(Architecture.Auto) ? ArchitectureHelper.GetArchitecture() : architecture;
             version = version.Equals("Latest") ? config.GetLatestVersion() : version;
+
+            if (version.StartsWith("LATEST_RELEASE_", StringComparison.OrdinalIgnoreCase) && config is ChromeConfig)
+            {
+                version = ((ChromeConfig) config).GetVersion(version);
+            }
+
             var url = architecture.Equals(Architecture.X32) ? config.GetUrl32() : config.GetUrl64();
             url = UrlHelper.BuildUrl(url, version);
             var binaryPath = FileHelper.GetBinDestination(config.GetName(), version, architecture,

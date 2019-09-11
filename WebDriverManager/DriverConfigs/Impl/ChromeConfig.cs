@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -48,7 +48,12 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var uri = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            return GetVersion("LATEST_RELEASE");
+        }
+
+        public string GetVersion(string versionString)
+        {
+            var uri = new Uri(new Uri("https://chromedriver.storage.googleapis.com/"), versionString);
             var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {

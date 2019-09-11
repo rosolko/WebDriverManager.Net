@@ -21,5 +21,19 @@ namespace WebDriverManager.Tests
             new DriverManager().SetUpDriver(new ChromeConfig());
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
+
+        [Fact]
+        public void DriverOldReleaseDownloadTest()
+        {
+            new DriverManager().SetUpDriver(new ChromeConfig(), "LATEST_RELEASE_76");
+            Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
+        }
+
+        [Fact]
+        public void DriverOldReleaseDownloadTest2()
+        {
+            new DriverManager().SetUpDriver(new ChromeConfig(), "LATEST_RELEASE_72.0.3626");
+            Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
+        }
     }
 }

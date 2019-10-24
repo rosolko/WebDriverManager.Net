@@ -18,11 +18,16 @@ namespace WebDriverManager.Services.Impl
             FileHelper.CreateDestinationDirectory(zipDestination);
             zipDestination = DownloadZip(url, zipDestination);
             FileHelper.CreateDestinationDirectory(binDestination);
-            if (!zipDestination.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+
+            if (zipDestination.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
             {
-                binDestination = UnZip(zipDestination, binDestination, binaryName);
+                File.Copy(zipDestination, binDestination);
             }
-            
+            else
+            {
+                UnZip(zipDestination, binDestination, binaryName);
+            }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {

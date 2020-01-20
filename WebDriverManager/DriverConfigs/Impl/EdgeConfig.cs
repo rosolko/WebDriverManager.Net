@@ -29,8 +29,8 @@ namespace WebDriverManager.DriverConfigs.Impl
         public virtual string GetBinaryName()
         {
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? "msedgedriver.exe"
-                : "msedgedriver";
+                ? "msedgedriver"
+                : "msedgedriver.exe";
         }
 
         public virtual string GetLatestVersion()

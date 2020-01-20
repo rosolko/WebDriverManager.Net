@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>2.7.0</PackageVersion>
+        <PackageVersion>2.8.0</PackageVersion>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
         <Copyright>© 2016-2019, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/rosolko/WebDriverManager.Net</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes>Add support of legacy (non chromium) edge</PackageReleaseNotes>
+        <PackageReleaseNotes>Lock full SetUpDriver method not only unzip. Fix dge driver name on mac os.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

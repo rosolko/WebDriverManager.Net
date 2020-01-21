@@ -1,11 +1,15 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using AngleSharp.Html.Parser;
+using Architecture = WebDriverManager.Helpers.Architecture;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
     public class FirefoxConfig : IDriverConfig
     {
+        private const string DownloadUrl = "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-";
+
         public virtual string GetName()
         {
             return "Firefox";
@@ -13,19 +17,17 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return
-                "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win32.zip";
+            return GetUrl(Architecture.X32);
         }
 
         public virtual string GetUrl64()
         {
-            return
-                "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-win64.zip";
+            return GetUrl(Architecture.X64);
         }
 
         public virtual string GetBinaryName()
         {
-            return "geckodriver.exe";
+            return "geckodriver" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : string.Empty);
         }
 
         public virtual string GetLatestVersion()
@@ -42,6 +44,18 @@ namespace WebDriverManager.DriverConfigs.Impl
                     ?.Remove(0, 1);
                 return version;
             }
+        }
+
+        private static string GetUrl(Architecture architecture)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return $"{DownloadUrl}macos.tar.gz";
+            }
+
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                ? $"{DownloadUrl}linux{((int)architecture).ToString()}.tar.gz"
+                : $"{DownloadUrl}win{((int)architecture).ToString()}.zip";
         }
     }
 }

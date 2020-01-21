@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services.Impl;
 using Xunit;
@@ -27,6 +27,16 @@ namespace WebDriverManager.Tests
             var result = UnZip(zipPath, destination, "file.txt");
             Assert.NotEmpty(result);
             Assert.True(File.Exists(result));
+        }
+
+        [Fact]
+        public void UnZipTgzResultNotEmpty()
+        {
+            var zipPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "gzip.tar.gz");
+            var destination = FileHelper.GetBinDestination("Files", "2.0.0", Architecture.X32, "gzip.txt");
+            FileHelper.CreateDestinationDirectory(destination);
+            UnZipTgz(zipPath, destination);
+            Assert.True(File.Exists(destination));
         }
 
         [Fact]

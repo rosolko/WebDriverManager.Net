@@ -33,4 +33,10 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Assets\gzip.tar.gz">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace WebDriverManager.Helpers
 {
@@ -6,9 +6,9 @@ namespace WebDriverManager.Helpers
     {
         public static Architecture GetArchitecture()
         {
-            return string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))
-                ? Architecture.X32
-                : Architecture.X64;
+            return Environment.Is64BitOperatingSystem
+                ? Architecture.X64
+                : Architecture.X32;
         }
     }
 }

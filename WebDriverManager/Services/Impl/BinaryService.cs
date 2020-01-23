@@ -1,9 +1,11 @@
-﻿using System;
+using ICSharpCode.SharpZipLib.GZip;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Runtime.InteropServices;
+using ICSharpCode.SharpZipLib.Tar;
 using WebDriverManager.Helpers;
 
 namespace WebDriverManager.Services.Impl
@@ -21,9 +23,13 @@ namespace WebDriverManager.Services.Impl
             {
                 File.Copy(zipDestination, binDestination);
             }
-            else
+            else if (zipDestination.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
             {
                 UnZip(zipDestination, binDestination, binaryName);
+            }
+            else if (zipDestination.EndsWith(".tar.gz", StringComparison.OrdinalIgnoreCase))
+            {
+                UnZipTgz(zipDestination, binDestination);
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
@@ -69,6 +75,21 @@ namespace WebDriverManager.Services.Impl
             }
 
             return destination;
+        }
+
+        protected void UnZipTgz(string gzArchiveName, string destination)
+        {
+            using (var inStream = File.OpenRead(gzArchiveName))
+            {
+                using (var gzipStream = new GZipInputStream(inStream))
+                {
+                    var destFolder = Path.GetDirectoryName(destination);
+                    using (var tarArchive = TarArchive.CreateInputTarArchive(gzipStream))
+                    {
+                        tarArchive.ExtractContents(destFolder);
+                    }
+                }
+            }
         }
 
         protected void RemoveZip(string path)

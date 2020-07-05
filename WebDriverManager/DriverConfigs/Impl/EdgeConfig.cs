@@ -35,7 +35,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var uri = new Uri("https://msedgedriver.azureedge.net/LATEST_CANARY");
+            var uri = new Uri("https://msedgedriver.azureedge.net/LATEST_STABLE");
             var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {

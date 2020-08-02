@@ -40,7 +40,8 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var document = parser.ParseDocument(htmlCode);
                 var version = document.QuerySelectorAll(".release-header .f1 a")
                     .Select(element => element.TextContent)
-                    .FirstOrDefault();
+                    .FirstOrDefault()
+                    ?.Replace("v", "");
                 return version;
             }
         }

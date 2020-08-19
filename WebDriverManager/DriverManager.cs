@@ -1,4 +1,5 @@
-﻿using WebDriverManager.DriverConfigs;
+using System.Net;
+using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services;
 using WebDriverManager.Services.Impl;
@@ -24,9 +25,12 @@ namespace WebDriverManager
             _variableService = variableService;
         }
 
+        public IWebProxy Proxy { get; set; }
+
         public void SetUpDriver(string url, string binaryPath, string binaryName)
         {
             var zipPath = FileHelper.GetZipDestination(url);
+            _binaryService.Proxy = Proxy;
             binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath, binaryName);
             _variableService.SetupVariable(binaryPath);
         }

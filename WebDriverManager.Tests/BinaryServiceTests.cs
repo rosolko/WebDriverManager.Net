@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Net;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services.Impl;
 using Xunit;
@@ -46,6 +48,32 @@ namespace WebDriverManager.Tests
             Assert.True(File.Exists(zipPath));
             RemoveZip(zipPath);
             Assert.False(File.Exists(zipPath));
+        }
+
+        [Fact]
+        public void DownloadZipFileWithProxy()
+        {
+            const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
+            WebProxyStub proxy = new WebProxyStub();
+            Proxy = proxy;
+            var destination = FileHelper.GetZipDestination(url);
+            FileHelper.CreateDestinationDirectory(destination);
+            var result = DownloadZip(url, destination);
+            Assert.Equal(new Uri(url), proxy.RequestedUri);
+            Assert.NotEmpty(result);
+            Assert.True(File.Exists(result));
+        }
+
+        public class WebProxyStub : IWebProxy
+        {
+            public Uri RequestedUri { get; set; }
+            public ICredentials Credentials { get; set; }
+            public Uri GetProxy(Uri destination) => new Uri("http://localhost");
+            public bool IsBypassed(Uri host)
+            {
+                RequestedUri = host;
+                return true;
+            }
         }
     }
 }

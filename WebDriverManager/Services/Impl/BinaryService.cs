@@ -12,13 +12,11 @@ namespace WebDriverManager.Services.Impl
 {
     public class BinaryService : IBinaryService
     {
-        public IWebProxy Proxy { get; set; }
-
-        public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
+        public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName, IWebProxy proxy)
         {
             if (File.Exists(binDestination)) return binDestination;
             FileHelper.CreateDestinationDirectory(zipDestination);
-            zipDestination = DownloadZip(url, zipDestination);
+            zipDestination = DownloadZip(url, zipDestination, proxy);
             FileHelper.CreateDestinationDirectory(binDestination);
 
             if (zipDestination.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
@@ -45,10 +43,10 @@ namespace WebDriverManager.Services.Impl
             return binDestination;
         }
 
-        protected string DownloadZip(string url, string destination)
+        protected string DownloadZip(string url, string destination, IWebProxy proxy)
         {
             if (File.Exists(destination)) return destination;
-            using (var webClient = new WebClient() { Proxy = Proxy })
+            using (var webClient = new WebClient() { Proxy = proxy })
             {
                 webClient.DownloadFile(new Uri(url), destination);
             }

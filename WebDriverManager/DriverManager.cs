@@ -29,14 +29,24 @@ namespace WebDriverManager
 
         public void SetUpDriver(string url, string binaryPath, string binaryName)
         {
+            IWebProxy proxy = WebRequest.DefaultWebProxy;
+            SetUpDriver(url, binaryPath, binaryName, proxy);
+        }
+        public void SetUpDriver(string url, string binaryPath, string binaryName, IWebProxy proxy)
+        {
             var zipPath = FileHelper.GetZipDestination(url);
-            _binaryService.Proxy = Proxy;
-            binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath, binaryName);
+            binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath, binaryName, proxy);
             _variableService.SetupVariable(binaryPath);
         }
 
         public void SetUpDriver(IDriverConfig config, string version = "Latest",
             Architecture architecture = Architecture.Auto)
+        {
+            IWebProxy proxy = WebRequest.DefaultWebProxy;
+            SetUpDriver(config, proxy, version, architecture);
+        }
+        public void SetUpDriver(IDriverConfig config, IWebProxy proxy, string version = "Latest",
+                Architecture architecture = Architecture.Auto)
         {
             lock (_object)
             {
@@ -48,7 +58,7 @@ namespace WebDriverManager
                 url = UrlHelper.BuildUrl(url, version);
                 var binaryPath = FileHelper.GetBinDestination(config.GetName(), version, architecture,
                     config.GetBinaryName());
-                SetUpDriver(url, binaryPath, config.GetBinaryName());
+                SetUpDriver(url, binaryPath, config.GetBinaryName(), proxy);
             }
         }
     }

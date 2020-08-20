@@ -15,7 +15,7 @@ namespace WebDriverManager.Tests
             const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
             var destination = FileHelper.GetZipDestination(url);
             FileHelper.CreateDestinationDirectory(destination);
-            var result = DownloadZip(url, destination);
+            var result = DownloadZip(url, destination, WebRequest.DefaultWebProxy);
             Assert.NotEmpty(result);
             Assert.True(File.Exists(result));
         }
@@ -55,10 +55,9 @@ namespace WebDriverManager.Tests
         {
             const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
             WebProxyStub proxy = new WebProxyStub();
-            Proxy = proxy;
             var destination = FileHelper.GetZipDestination(url);
             FileHelper.CreateDestinationDirectory(destination);
-            var result = DownloadZip(url, destination);
+            var result = DownloadZip(url, destination, proxy);
             Assert.Equal(new Uri(url), proxy.RequestedUri);
             Assert.NotEmpty(result);
             Assert.True(File.Exists(result));

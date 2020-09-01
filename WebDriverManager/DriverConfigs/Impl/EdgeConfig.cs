@@ -50,5 +50,10 @@ namespace WebDriverManager.DriverConfigs.Impl
                 }
             }
         }
+
+        public virtual string GetMatchingBrowserInstalledVersion()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,3 +1,5 @@
+using System;
+
 namespace WebDriverManager.DriverConfigs.Impl
 {
     public class LegacyEdgeConfig : IDriverConfig
@@ -26,6 +28,11 @@ namespace WebDriverManager.DriverConfigs.Impl
         public virtual string GetLatestVersion()
         {
             return "6.17134";
+        }
+
+        public virtual string GetMatchingBrowserInstalledVersion()
+        {
+            throw new NotImplementedException();
         }
     }
 }

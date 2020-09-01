@@ -1,4 +1,6 @@
-﻿namespace WebDriverManager.DriverConfigs.Impl
+using System;
+
+namespace WebDriverManager.DriverConfigs.Impl
 {
     public class InternetExplorerConfig : IDriverConfig
     {
@@ -25,6 +27,11 @@
         public virtual string GetLatestVersion()
         {
             return "3.141.59";
+        }
+
+        public virtual string GetMatchingBrowserInstalledVersion()
+        {
+            throw new NotImplementedException();
         }
     }
 }

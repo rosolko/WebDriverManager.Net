@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -44,6 +45,11 @@ namespace WebDriverManager.DriverConfigs.Impl
                     ?.Replace("v", "");
                 return version;
             }
+        }
+
+        public virtual string GetMatchingBrowserInstalledVersion()
+        {
+            throw new NotImplementedException();
         }
 
         private static string GetUrl(Architecture architecture)

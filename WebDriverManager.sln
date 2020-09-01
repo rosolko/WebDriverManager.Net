@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverManager", "WebDriverManager\WebDriverManager.csproj", "{4AB1A17E-F75F-4A23-B986-7C3DE797B068}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverManager", "WebDriverManager\WebDriverManager.csproj", "{4AB1A17E-F75F-4A23-B986-7C3DE797B068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverManager.Tests", "WebDriverManager.Tests\WebDriverManager.Tests.csproj", "{9C18F531-D338-4610-8CE7-697D7C7DE225}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverManager.Tests", "WebDriverManager.Tests\WebDriverManager.Tests.csproj", "{9C18F531-D338-4610-8CE7-697D7C7DE225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverManager.MSTests", "WebDriverManager.MSTests\WebDriverManager.MSTests.csproj", "{6A72CD75-AECE-4296-99F8-5E60112834E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,15 @@ Global
 		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C18F531-D338-4610-8CE7-697D7C7DE225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A72CD75-AECE-4296-99F8-5E60112834E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A72CD75-AECE-4296-99F8-5E60112834E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A72CD75-AECE-4296-99F8-5E60112834E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A72CD75-AECE-4296-99F8-5E60112834E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9388057F-7595-485B-8564-77F96E217DE4}
 	EndGlobalSection
 EndGlobal

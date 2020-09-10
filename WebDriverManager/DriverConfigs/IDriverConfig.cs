@@ -1,4 +1,4 @@
-﻿namespace WebDriverManager.DriverConfigs
+namespace WebDriverManager.DriverConfigs
 {
     public interface IDriverConfig
     {
@@ -7,5 +7,6 @@
         string GetUrl64();
         string GetBinaryName();
         string GetLatestVersion();
+        string GetMatchingBrowserVersion();
     }
 }

@@ -1,13 +1,20 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+using WebDriverManager.Helpers;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
     public class ChromeConfig : IDriverConfig
     {
         private const string BaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/<version>/";
+        private const string LatestReleaseVersionUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
+
+        private const string ExactReleaseVersionPatternUrl =
+            "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
+
+        private const string BrowserExecutableFileName = "chrome.exe";
 
         public virtual string GetName()
         {
@@ -48,7 +55,20 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var uri = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
+            return GetLatestVersion(LatestReleaseVersionUrl);
+        }
+
+        public virtual string GetMatchingBrowserVersion()
+        {
+            var rawChromeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
+            var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
+            var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
+            return GetLatestVersion(url);
+        }
+
+        private static string GetLatestVersion(string url)
+        {
+            var uri = new Uri(url);
             var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {

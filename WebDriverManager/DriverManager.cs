@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services;
@@ -38,7 +38,7 @@ namespace WebDriverManager
             _variableService.SetupVariable(binaryPath);
         }
 
-        public void SetUpDriver(IDriverConfig config, string version = "Latest",
+        public void SetUpDriver(IDriverConfig config, string version = VersionResolveStrategy.Latest,
             Architecture architecture = Architecture.Auto)
         {
             lock (Object)
@@ -46,12 +46,22 @@ namespace WebDriverManager
                 architecture = architecture.Equals(Architecture.Auto)
                     ? ArchitectureHelper.GetArchitecture()
                     : architecture;
-                version = version.Equals("Latest") ? config.GetLatestVersion() : version;
+                version = GetVersionToDownload(config, version);
                 var url = architecture.Equals(Architecture.X32) ? config.GetUrl32() : config.GetUrl64();
                 url = UrlHelper.BuildUrl(url, version);
                 var binaryPath = FileHelper.GetBinDestination(config.GetName(), version, architecture,
                     config.GetBinaryName());
                 SetUpDriver(url, binaryPath, config.GetBinaryName());
+            }
+        }
+
+        private static string GetVersionToDownload(IDriverConfig config, string version)
+        {
+            switch (version)
+            {
+                case VersionResolveStrategy.MatchingBrowser: return config.GetMatchingBrowserVersion();
+                case VersionResolveStrategy.Latest: return config.GetLatestVersion();
+                default: return version;
             }
         }
     }

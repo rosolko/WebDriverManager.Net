@@ -72,7 +72,7 @@ After installation you can let WebDriverManager.Net to do manage WebDriver binar
 	    }
 	}
 
-Notice that simple adding ``new DriverManager().SetUpDriver(<config>)`` does magic for you:
+Notice that simply adding ``new DriverManager().SetUpDriver(<config>)`` does magic for you:
 
 1. It checks the latest version of the WebDriver binary file
 2. It downloads the binary WebDriver if it is not present in your system

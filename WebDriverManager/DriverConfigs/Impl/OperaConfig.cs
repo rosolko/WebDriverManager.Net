@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
 using System.Net;
 using AngleSharp.Html.Parser;
 
@@ -41,6 +42,11 @@ namespace WebDriverManager.DriverConfigs.Impl
                     .FirstOrDefault();
                 return version;
             }
+        }
+
+        public virtual string GetMatchingBrowserVersion()
+        {
+            throw new NotImplementedException();
         }
     }
 }

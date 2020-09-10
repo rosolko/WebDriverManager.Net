@@ -1,4 +1,6 @@
-﻿namespace WebDriverManager.DriverConfigs.Impl
+using System;
+
+namespace WebDriverManager.DriverConfigs.Impl
 {
     public class PhantomConfig : IDriverConfig
     {
@@ -25,6 +27,11 @@
         public virtual string GetLatestVersion()
         {
             return "2.1.1";
+        }
+
+        public virtual string GetMatchingBrowserVersion()
+        {
+            throw new NotImplementedException();
         }
     }
 }

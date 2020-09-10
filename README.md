@@ -104,6 +104,9 @@ Or architecture:
 Or version and architecture:
 	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25", Architecture.X64)``
 
+Only for Google Chrome so far, you can specify to automatically download a ```chromedriver.exe``` matching the version of the browser that is installed in your machine:
+    ``new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser); ``
+
 #### Manual way:
 	new DriverManager().SetUpDriver(
                 "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip", 

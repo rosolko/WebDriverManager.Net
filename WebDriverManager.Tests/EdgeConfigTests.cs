@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
@@ -20,6 +21,12 @@ namespace WebDriverManager.Tests
         {
             new DriverManager().SetUpDriver(new EdgeConfig());
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
+        }
+
+        [Fact]
+        public void GetMatchingBrowserVersionTest()
+        {
+            Assert.Throws<NotImplementedException>(() => GetMatchingBrowserVersion());
         }
     }
 }

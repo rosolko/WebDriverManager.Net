@@ -9,7 +9,11 @@ namespace WebDriverManager.DriverConfigs.Impl
     public class ChromeConfig : IDriverConfig
     {
         private const string BaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/<version>/";
-        private const string DriverQueryVersionUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
+        private const string LatestReleaseVersionUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
+
+        private const string ExactReleaseVersionPatternUrl =
+            "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
+
         private const string BrowserExecutableFileName = "chrome.exe";
 
         public virtual string GetName()
@@ -51,27 +55,20 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var uri = new Uri("https://chromedriver.storage.googleapis.com/LATEST_RELEASE");
-            var webRequest = WebRequest.Create(uri);
-            using (var response = webRequest.GetResponse())
-            {
-                using (var content = response.GetResponseStream())
-                {
-                    if (content == null) throw new ArgumentNullException($"Can't get content from URL: {uri}");
-                    using (var reader = new StreamReader(content))
-                    {
-                        var version = reader.ReadToEnd().Trim();
-                        return version;
-                    }
-                }
-            }
+            return GetLatestVersion(LatestReleaseVersionUrl);
         }
 
-        public virtual string GetMatchingBrowserInstalledVersion()
+        public virtual string GetMatchingBrowserVersion()
         {
-            string chromeVersionInstalled = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
-            chromeVersionInstalled = VersionHelper.GetVersionSkippingRevision(chromeVersionInstalled);
-            var uri = new Uri(DriverQueryVersionUrl.Replace("<version>", chromeVersionInstalled));
+            var rawChromeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
+            var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
+            var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
+            return GetLatestVersion(url);
+        }
+
+        private static string GetLatestVersion(string url)
+        {
+            var uri = new Uri(url);
             var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {

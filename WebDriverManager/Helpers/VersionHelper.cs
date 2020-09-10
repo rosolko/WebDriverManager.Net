@@ -4,20 +4,17 @@ using System.Text;
 
 namespace WebDriverManager.Helpers
 {
-    internal class VersionHelper
+    public static class VersionHelper
     {
         /*
          * Returns a version number without the revision part.
          *
          * Example: 85.0.4183.83 -> 85.0.4183
          */
-        public static string GetVersionSkippingRevision(string version)
+        public static string GetVersionWithoutRevision(string version)
         {
-            Version versionParsed = Version.Parse(version);
-
-            return versionParsed.Major
-                + "." + versionParsed.Minor
-                + "." + versionParsed.Build;
+            var parsedVersion = Version.Parse(version);
+            return $"{parsedVersion.Major}.{parsedVersion.Minor}.{parsedVersion.Build}";
         }
     }
 }

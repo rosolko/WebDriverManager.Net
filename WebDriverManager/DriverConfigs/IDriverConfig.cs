@@ -7,6 +7,6 @@ namespace WebDriverManager.DriverConfigs
         string GetUrl64();
         string GetBinaryName();
         string GetLatestVersion();
-        string GetMatchingBrowserInstalledVersion();
+        string GetMatchingBrowserVersion();
     }
 }

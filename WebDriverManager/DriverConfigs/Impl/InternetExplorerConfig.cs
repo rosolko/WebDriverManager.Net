@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -29,7 +29,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             return "3.141.59";
         }
 
-        public virtual string GetMatchingBrowserInstalledVersion()
+        public virtual string GetMatchingBrowserVersion()
         {
             throw new NotImplementedException();
         }

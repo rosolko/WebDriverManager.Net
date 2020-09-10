@@ -30,7 +30,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             return "6.17134";
         }
 
-        public virtual string GetMatchingBrowserInstalledVersion()
+        public virtual string GetMatchingBrowserVersion()
         {
             throw new NotImplementedException();
         }

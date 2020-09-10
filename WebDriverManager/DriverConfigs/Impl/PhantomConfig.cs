@@ -29,7 +29,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             return "2.1.1";
         }
 
-        public virtual string GetMatchingBrowserInstalledVersion()
+        public virtual string GetMatchingBrowserVersion()
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
-﻿using WebDriverManager.DriverConfigs;
+﻿using System.Net;
+using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services;
 using WebDriverManager.Services.Impl;
@@ -7,9 +8,9 @@ namespace WebDriverManager
 {
     public class DriverManager
     {
-        static readonly object _object = new object();
+        private static readonly object Object = new object();
 
-        private readonly IBinaryService _binaryService;
+        private IBinaryService _binaryService;
         private readonly IVariableService _variableService;
 
         public DriverManager()
@@ -24,6 +25,12 @@ namespace WebDriverManager
             _variableService = variableService;
         }
 
+        public DriverManager WithProxy(IWebProxy proxy)
+        {
+            _binaryService = new BinaryService {Proxy = proxy};
+            return this;
+        }
+
         public void SetUpDriver(string url, string binaryPath, string binaryName)
         {
             var zipPath = FileHelper.GetZipDestination(url);
@@ -34,7 +41,7 @@ namespace WebDriverManager
         public void SetUpDriver(IDriverConfig config, string version = "Latest",
             Architecture architecture = Architecture.Auto)
         {
-            lock (_object)
+            lock (Object)
             {
                 architecture = architecture.Equals(Architecture.Auto)
                     ? ArchitectureHelper.GetArchitecture()

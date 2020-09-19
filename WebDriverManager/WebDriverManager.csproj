@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>2.9.3</PackageVersion>
+        <PackageVersion>2.10.0</PackageVersion>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
         <Copyright>© 2016-2020, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/rosolko/WebDriverManager.Net</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes>Fix geckowebdriver download</PackageReleaseNotes>
+        <PackageReleaseNotes>Download chrome driver version matching with chrome browser version. Add ability to use manager with proxy.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

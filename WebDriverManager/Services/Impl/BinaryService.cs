@@ -12,6 +12,8 @@ namespace WebDriverManager.Services.Impl
 {
     public class BinaryService : IBinaryService
     {
+        public IWebProxy Proxy { get; set; }
+
         public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
         {
             if (File.Exists(binDestination)) return binDestination;
@@ -36,19 +38,29 @@ namespace WebDriverManager.Services.Impl
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 var chmod = Process.Start("chmod", $"+x {binDestination}");
-                chmod.WaitForExit();
+                chmod?.WaitForExit();
             }
 
             RemoveZip(zipDestination);
             return binDestination;
         }
 
-        protected string DownloadZip(string url, string destination)
+        public string DownloadZip(string url, string destination)
         {
             if (File.Exists(destination)) return destination;
-            using (var webClient = new WebClient())
+            if (Proxy != null)
             {
-                webClient.DownloadFile(new Uri(url), destination);
+                using (var webClient = new WebClient() {Proxy = Proxy})
+                {
+                    webClient.DownloadFile(new Uri(url), destination);
+                }
+            }
+            else
+            {
+                using (var webClient = new WebClient())
+                {
+                    webClient.DownloadFile(new Uri(url), destination);
+                }
             }
 
             return destination;

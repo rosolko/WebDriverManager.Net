@@ -1,4 +1,4 @@
-using System;
+using System.Net;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services;
@@ -10,7 +10,7 @@ namespace WebDriverManager
     {
         private static readonly object Object = new object();
 
-        private readonly IBinaryService _binaryService;
+        private IBinaryService _binaryService;
         private readonly IVariableService _variableService;
 
         public DriverManager()
@@ -23,6 +23,12 @@ namespace WebDriverManager
         {
             _binaryService = binaryService;
             _variableService = variableService;
+        }
+
+        public DriverManager WithProxy(IWebProxy proxy)
+        {
+            _binaryService = new BinaryService {Proxy = proxy};
+            return this;
         }
 
         public void SetUpDriver(string url, string binaryPath, string binaryName)

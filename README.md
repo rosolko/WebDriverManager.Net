@@ -201,6 +201,10 @@ Only for Google Chrome so far, you can specify to automatically download a ```ch
 
     new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
 
+
+### Using with proxy:
+	new DriverManager().WithProxy(previouslyInitializedProxy).SetUpDriver(new ChromeConfig());
+
 ## Thanks
 Thanks to the following companies for generously providing their services/products to help improve this project:
 

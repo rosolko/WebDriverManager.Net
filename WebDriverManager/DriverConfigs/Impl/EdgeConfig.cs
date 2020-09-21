@@ -2,12 +2,16 @@ using System;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+using WebDriverManager.Helpers;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
     public class EdgeConfig : IDriverConfig
     {
         private const string BaseVersionPatternUrl = "https://msedgedriver.azureedge.net/<version>/";
+        private const string LatestReleaseVersionUrl = "https://msedgedriver.azureedge.net/LATEST_STABLE";
+
+        private const string BrowserExecutableFileName = "msedge.exe";
 
         public virtual string GetName()
         {
@@ -35,7 +39,12 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var uri = new Uri("https://msedgedriver.azureedge.net/LATEST_STABLE");
+            return GetLatestVersion(LatestReleaseVersionUrl);
+        }
+
+        public virtual string GetLatestVersion(String url)
+        {
+            var uri = new Uri(url);
             var webRequest = WebRequest.Create(uri);
             using (var response = webRequest.GetResponse())
             {
@@ -53,7 +62,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetMatchingBrowserVersion()
         {
-            throw new NotImplementedException();
+            var rawEdgeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
+            return rawEdgeBrowserVersion;
         }
     }
 }

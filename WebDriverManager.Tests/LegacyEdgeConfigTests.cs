@@ -26,7 +26,7 @@ namespace WebDriverManager.Tests
         [Fact]
         public void GetMatchingBrowserVersionTest()
         {
-            Assert.Throws<NotImplementedException>(() => GetMatchingBrowserVersion());
+            Assert.Throws<NotImplementedException>(GetMatchingBrowserVersion);
         }
     }
 }

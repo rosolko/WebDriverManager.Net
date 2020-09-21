@@ -58,14 +58,6 @@ namespace WebDriverManager.DriverConfigs.Impl
             return GetLatestVersion(LatestReleaseVersionUrl);
         }
 
-        public virtual string GetMatchingBrowserVersion()
-        {
-            var rawChromeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
-            var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
-            var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
-            return GetLatestVersion(url);
-        }
-
         private static string GetLatestVersion(string url)
         {
             var uri = new Uri(url);
@@ -82,6 +74,14 @@ namespace WebDriverManager.DriverConfigs.Impl
                     }
                 }
             }
+        }
+
+        public virtual string GetMatchingBrowserVersion()
+        {
+            var rawChromeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
+            var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
+            var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
+            return GetLatestVersion(url);
         }
     }
 }

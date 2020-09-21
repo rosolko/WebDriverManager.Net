@@ -39,7 +39,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            return GetLatestVersion(LatestReleaseVersionUrl); // 
+            return GetLatestVersion(LatestReleaseVersionUrl);
         }
 
         public virtual string GetLatestVersion(String url)

@@ -38,7 +38,7 @@ namespace WebDriverManager
             _variableService.SetupVariable(binaryPath);
         }
 
-        public void SetUpDriver(IDriverConfig config, string version = VersionResolveStrategy.Latest,
+        public void SetUpDriver(IDriverConfig config, string version = VersionResolveStrategy.MatchingBrowser,
             Architecture architecture = Architecture.Auto)
         {
             lock (Object)

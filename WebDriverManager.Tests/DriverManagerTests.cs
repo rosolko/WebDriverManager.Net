@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
@@ -20,6 +21,13 @@ namespace WebDriverManager.Tests
             var webProxyStub = new WebProxyStub();
             new DriverManager().WithProxy(webProxyStub).SetUpDriver(new ChromeConfig());
             Assert.True(webProxyStub.IsBypassed(webProxyStub.RequestedUri));
+        }
+
+        [Fact]
+        public void ReturnPathOnSetup()
+        {
+            var driverPath = new DriverManager().SetUpDriver(new FirefoxConfig());
+            Assert.True(File.Exists(driverPath));
         }
 
         private class WebProxyStub : IWebProxy

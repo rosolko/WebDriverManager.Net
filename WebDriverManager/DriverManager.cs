@@ -31,14 +31,15 @@ namespace WebDriverManager
             return this;
         }
 
-        public void SetUpDriver(string url, string binaryPath, string binaryName)
+        public string SetUpDriver(string url, string binaryPath, string binaryName)
         {
             var zipPath = FileHelper.GetZipDestination(url);
             binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath, binaryName);
             _variableService.SetupVariable(binaryPath);
+            return binaryPath;
         }
 
-        public void SetUpDriver(IDriverConfig config, string version = VersionResolveStrategy.Latest,
+        public string SetUpDriver(IDriverConfig config, string version = VersionResolveStrategy.Latest,
             Architecture architecture = Architecture.Auto)
         {
             lock (Object)
@@ -51,7 +52,7 @@ namespace WebDriverManager
                 url = UrlHelper.BuildUrl(url, version);
                 var binaryPath = FileHelper.GetBinDestination(config.GetName(), version, architecture,
                     config.GetBinaryName());
-                SetUpDriver(url, binaryPath, config.GetBinaryName());
+                return SetUpDriver(url, binaryPath, config.GetBinaryName());
             }
         }
 

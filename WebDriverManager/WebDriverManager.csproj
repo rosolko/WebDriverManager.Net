@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/rosolko/WebDriverManager.Net</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes> Implement GetMatchingBrowserVersion method for EdgeConfig</PackageReleaseNotes>
+        <PackageReleaseNotes>Implement GetMatchingBrowserVersion method for EdgeConfig</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

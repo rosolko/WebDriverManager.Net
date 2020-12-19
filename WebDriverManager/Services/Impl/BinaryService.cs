@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using ICSharpCode.SharpZipLib.Tar;
 using WebDriverManager.Helpers;
 
@@ -96,7 +97,7 @@ namespace WebDriverManager.Services.Impl
                 using (var gzipStream = new GZipInputStream(inStream))
                 {
                     var destFolder = Path.GetDirectoryName(destination);
-                    using (var tarArchive = TarArchive.CreateInputTarArchive(gzipStream))
+                    using (var tarArchive = TarArchive.CreateInputTarArchive(gzipStream, Encoding.Default))
                     {
                         tarArchive.ExtractContents(destFolder);
                     }

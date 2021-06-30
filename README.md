@@ -101,16 +101,16 @@ You can use WebDriverManager in two ways:
 new DriverManager().SetUpDriver(new <Driver>Config());
 ```
 
-You can also specify version:
+You can also specify version:  
 	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25")``
 
-Or architecture:
+Or architecture:  
 	``new DriverManager().SetUpDriver(new ChromeConfig(), "Latest", Architecture.X32)``
 
-Or version and architecture:
+Or version and architecture:  
 	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25", Architecture.X64)``
 
-Only for Google Chrome so far, you can specify to automatically download a ```chromedriver.exe``` matching the version of the browser that is installed in your machine:
+Only for Google Chrome so far, you can specify to automatically download a ```chromedriver.exe``` matching the version of the browser that is installed in your machine:  
     ``new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser); ``
 
 #### Manual way:

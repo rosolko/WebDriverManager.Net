@@ -37,40 +37,42 @@ Target is **netstandard2.0**.
 
 After installation you can let WebDriverManager.Net to do manage WebDriver binaries for your application/test. Take a look to this NUnit example which uses Chrome with Selenium WebDriver:
 
-    using NUnit.Framework;
-	using OpenQA.Selenium;
-	using OpenQA.Selenium.Chrome;
-	using WebDriverManager;
-	using WebDriverManager.DriverConfigs.Impl;
+```csharp
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
-	namespace Test
-	{
-	    [TestFixture]
-	    public class Tests
-	    {
-	        private IWebDriver _webDriver;
+namespace Test
+{
+    [TestFixture]
+    public class Tests
+    {
+        private IWebDriver _webDriver;
 
-	        [SetUp]
-	        public void SetUp()
-	        {
-	            new DriverManager().SetUpDriver(new ChromeConfig());
-	            _webDriver = new ChromeDriver();
-	        }
+        [SetUp]
+        public void SetUp()
+        {
+            new DriverManager().SetUpDriver(new ChromeConfig());
+            _webDriver = new ChromeDriver();
+        }
 
-	        [TearDown]
-	        public void TearDown()
-	        {
-	            _webDriver.Quit();
-	        }
+        [TearDown]
+        public void TearDown()
+        {
+            _webDriver.Quit();
+        }
 
-	        [Test]
-	        public void Test()
-	        {
-	            _webDriver.Navigate().GoToUrl("https://www.google.com");
-	            Assert.True(_webDriver.Title.Contains("Google"));
-	        }
-	    }
-	}
+        [Test]
+        public void Test()
+        {
+            _webDriver.Navigate().GoToUrl("https://www.google.com");
+            Assert.True(_webDriver.Title.Contains("Google"));
+        }
+    }
+}
+```
 
 Notice that simply adding ``new DriverManager().SetUpDriver(<config>)`` does magic for you:
 
@@ -79,12 +81,14 @@ Notice that simply adding ``new DriverManager().SetUpDriver(<config>)`` does mag
 
 So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (Just change <config> to prefered config):
 
-    new ChromeConfig();
-    new EdgeConfig();
-    new FirefoxConfig();
-    new InternetExplorerConfig();
-    new OperaConfig();
-    new PhantomConfig();
+```csharp
+new ChromeConfig();
+new EdgeConfig();
+new FirefoxConfig();
+new InternetExplorerConfig();
+new OperaConfig();
+new PhantomConfig();
+```
 
 ## Advanced
 
@@ -93,7 +97,9 @@ You can use WebDriverManager in two ways:
 2. Manual
 
 #### Automatic way: 
-	new DriverManager().SetUpDriver(new <Driver>Config());
+```csharp
+new DriverManager().SetUpDriver(new <Driver>Config());
+```
 
 You can also specify version:
 	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25")``
@@ -108,102 +114,111 @@ Only for Google Chrome so far, you can specify to automatically download a ```ch
     ``new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser); ``
 
 #### Manual way:
-	new DriverManager().SetUpDriver(
-                "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip", 
-                Path.Combine(Directory.GetCurrentDirectory(), "chromedriver.exe"),
-                "chromedriver.exe"
-            );
+```csharp
+new DriverManager().SetUpDriver(
+    "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip",
+    Path.Combine(Directory.GetCurrentDirectory(), "chromedriver.exe"),
+    "chromedriver.exe"
+);
+```
 
 ### If you want use your own implementation you need to create driver config and use it for set up(ex get, setup and work with phantomjs driver from taobao mirror):
-	public class TaobaoPhantomConfig : IDriverConfig
+```csharp
+public class TaobaoPhantomConfig : IDriverConfig
+{
+    public string GetName()
     {
-        public string GetName()
-        {
-            return "TaobaoPhantom";
-        }
-
-        public string GetUrl32()
-        {
-            return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
-        }
-
-        public string GetUrl64()
-        {
-            return GetUrl32();
-        }
-
-        public string GetBinaryName()
-        {
-            return "phantomjs.exe";
-        }
-
-        public string GetLatestVersion()
-        {
-            using (var client = new WebClient())
-            {
-                var doc = new HtmlDocument();
-                var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
-                doc.LoadHtml(htmlCode);
-                var itemList =
-                    doc.DocumentNode.SelectNodes("//tr[@class='iterable-item']/td[@class='name']/a")
-                        .Select(p => p.InnerText)
-                        .ToList();
-                var version = itemList.FirstOrDefault()?.Split('-')[1];
-                return version;
-            }
-        }
+        return "TaobaoPhantom";
     }
 
-    ...
+    public string GetUrl32()
+    {
+        return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
+    }
 
-    new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
+    public string GetUrl64()
+    {
+        return GetUrl32();
+    }
+
+    public string GetBinaryName()
+    {
+        return "phantomjs.exe";
+    }
+
+    public string GetLatestVersion()
+    {
+        using (var client = new WebClient())
+        {
+            var doc = new HtmlDocument();
+            var htmlCode = client.DownloadString("https://bitbucket.org/ariya/phantomjs/downloads");
+            doc.LoadHtml(htmlCode);
+            var itemList =
+                doc.DocumentNode.SelectNodes("//tr[@class='iterable-item']/td[@class='name']/a")
+                    .Select(p => p.InnerText)
+                    .ToList();
+            var version = itemList.FirstOrDefault()?.Split('-')[1];
+            return version;
+        }
+    }
+}
+
+...
+
+new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
+```
 
 ### Also you can implement your own services for download binaries and manage variables:
-    public class CustomBinaryService : IBinaryService
+```csharp
+public class CustomBinaryService : IBinaryService
+{
+    public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
     {
-        public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
-        {
-            ...
-            // your implementation
-            ...
-        }
+        ...
+        // your implementation
+        ...
     }
-    
-    public class CustomVariableService : IVariableService
-    {
-        public void SetupVariable(string path)
-        {
-            ...
-            // your implementation
-            ...
-        }
-    }
-	
-    ...
+}
 
-    new DriverManager(new CustomBinaryService(), new CustomVariableService()).SetUpDriver(new FirefoxConfig());
+public class CustomVariableService : IVariableService
+{
+    public void SetupVariable(string path)
+    {
+        ...
+        // your implementation
+        ...
+    }
+}
+
+...
+
+new DriverManager(new CustomBinaryService(), new CustomVariableService()).SetUpDriver(new FirefoxConfig());
+```
 
 ### Or you can modify existed drivers and change only necessary fields(same example):
-	public class TaobaoPhantomConfig : PhantomConfig
+```csharp
+public class TaobaoPhantomConfig : PhantomConfig
+{
+    public override string GetName()
     {
-        public override string GetName()
-        {
-            return "TaobaoPhantom";
-        }
-
-        public override string GetUrl32()
-        {
-            return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
-        }
+        return "TaobaoPhantom";
     }
 
-    ...
+    public override string GetUrl32()
+    {
+        return "https://npm.taobao.org/mirrors/phantomjs/phantomjs-<version>-windows.zip";
+    }
+}
 
-    new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
+...
 
+new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
+```
 
 ### Using with proxy:
-	new DriverManager().WithProxy(previouslyInitializedProxy).SetUpDriver(new ChromeConfig());
+```csharp
+new DriverManager().WithProxy(previouslyInitializedProxy).SetUpDriver(new ChromeConfig());
+```
 
 ## Thanks
 Thanks to the following companies for generously providing their services/products to help improve this project:

@@ -1,28 +1,34 @@
-using System.Diagnostics;
-using Microsoft.Win32;
+using System;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace WebDriverManager.Helpers
 {
     public static class RegistryHelper
     {
-        private const string CurrentUserRegistryPathPattern = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\<executableFileName>";
-        private const string LocalMachineRegistryPathPattern = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\<executableFileName>";
-
-        public static string GetInstalledBrowserVersion(string executableFileName)
+        public static string GetInstalledBrowserVersion(string executableFileName, string arguments)
         {
-            var currentUserPath = Registry.GetValue(CurrentUserRegistryPathPattern.Replace("<executableFileName>", executableFileName), "", null);
-            if (currentUserPath != null)
+            try
             {
-                return FileVersionInfo.GetVersionInfo(currentUserPath.ToString()).FileVersion;
-            }
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    return WindowsRegistryHelper.GetInstalledBrowserVersion(executableFileName);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    return Task.Run(() => OSXRegistryHelper.GetInstalledBrowserVersion(executableFileName, arguments)).Result;
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    return Task.Run(() => LinuxRegistryHelper.GetInstalledBrowserVersion(executableFileName, arguments)).Result;
+                }
 
-            var localMachinePath = Registry.GetValue(LocalMachineRegistryPathPattern.Replace("<executableFileName>", executableFileName), "", null);
-            if (localMachinePath != null)
+                throw new NotImplementedException($"Runtime platform {Environment.OSVersion.Platform} not supported");
+            }
+            catch (Exception e)
             {
-                return FileVersionInfo.GetVersionInfo(localMachinePath.ToString()).FileVersion;
+                throw new Exception($"An error occured trying to locate installed browser version for runtime platform {Environment.OSVersion.Platform}", e);
             }
-
-            return null;
         }
     }
 }

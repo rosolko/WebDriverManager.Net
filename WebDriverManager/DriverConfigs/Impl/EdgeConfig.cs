@@ -61,7 +61,7 @@ namespace WebDriverManager.DriverConfigs.Impl
         public string GetMatchingBrowserVersion()
         {
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? RegistryHelper.GetInstalledBrowserVersion("Microsoft Edge", "--product-version")
+                ? RegistryHelper.GetInstalledBrowserVersion("Microsoft Edge", "--version")
                 : RegistryHelper.GetInstalledBrowserVersion("msedge.exe", null);
         }
     }

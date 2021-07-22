@@ -86,11 +86,11 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return RegistryHelper.GetInstalledBrowserVersion("Google Chrome", "--product-version");
+                return RegistryHelper.GetInstalledBrowserVersion("Google Chrome", "--version");
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                return RegistryHelper.GetInstalledBrowserVersion("google-chrome", "--version");
+                return RegistryHelper.GetInstalledBrowserVersion("google-chrome", "--product-version");
             }
 
             return RegistryHelper.GetInstalledBrowserVersion("chrome.exe", null);

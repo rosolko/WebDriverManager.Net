@@ -6,11 +6,12 @@ namespace WebDriverManager.Helpers
 {
     public static class VersionHelper
     {
-        /*
-         * Returns a version number without the revision part.
-         *
-         * Example: 85.0.4183.83 -> 85.0.4183
-         */
+        /// <summary>
+        /// Returns a version number without the revision part.
+        /// Example: 85.0.4183.83 -> 85.0.4183
+        /// </summary>
+        /// <param name="version">Version to process</param>
+        /// <returns>Processed version</returns>
         public static string GetVersionWithoutRevision(string version)
         {
             var parsedVersion = Version.Parse(version);
@@ -20,9 +21,9 @@ namespace WebDriverManager.Helpers
         /// <summary>
         /// Gets the current browser version on the executing system by running a process
         /// </summary>
-        /// <param name="executableFileName"></param>
-        /// <param name="arguments"></param>
-        /// <returns></returns>
+        /// <param name="executableFileName">Browser executable file name</param>
+        /// <param name="arguments">Execution command line arguments</param>
+        /// <returns>Browser version received from browser started instance</returns>
         public static async Task<string> GetVersionFromProcess(string executableFileName, string arguments)
         {
             var process = Process.Start(
@@ -36,9 +37,10 @@ namespace WebDriverManager.Helpers
                     RedirectStandardError = true
                 }
             );
+            if (process == null) throw new Exception("The process did not start");
 
-            string output = await process.StandardOutput.ReadToEndAsync();
-            string error = await process.StandardError.ReadToEndAsync();
+            var output = await process.StandardOutput.ReadToEndAsync();
+            var error = await process.StandardError.ReadToEndAsync();
             process.WaitForExit();
             process.Kill();
 

@@ -60,9 +60,17 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetMatchingBrowserVersion()
         {
-            return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? RegistryHelper.GetInstalledBrowserVersionOSX("Microsoft Edge", "--version")
-                : RegistryHelper.GetInstalledBrowserVersionWin("msedge.exe");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionOsx("Microsoft Edge", "--version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionWin("msedge.exe");
+            }
+
+            throw new PlatformNotSupportedException("Your operating system is not supported");
         }
     }
 }

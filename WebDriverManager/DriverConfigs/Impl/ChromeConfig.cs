@@ -86,14 +86,20 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return RegistryHelper.GetInstalledBrowserVersionOSX("Google Chrome", "--version");
+                return RegistryHelper.GetInstalledBrowserVersionOsx("Google Chrome", "--version");
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 return RegistryHelper.GetInstalledBrowserVersionLinux("google-chrome", "--product-version");
             }
 
-            return RegistryHelper.GetInstalledBrowserVersionWin("chrome.exe");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionWin("chrome.exe");
+            }
+
+            throw new PlatformNotSupportedException("Your operating system is not supported");
         }
     }
 }

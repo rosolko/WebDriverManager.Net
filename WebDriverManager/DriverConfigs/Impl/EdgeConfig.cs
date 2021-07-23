@@ -11,8 +11,6 @@ namespace WebDriverManager.DriverConfigs.Impl
         private const string BaseVersionPatternUrl = "https://msedgedriver.azureedge.net/<version>/";
         private const string LatestReleaseVersionUrl = "https://msedgedriver.azureedge.net/LATEST_STABLE";
 
-        private const string BrowserExecutableFileName = "msedge.exe";
-
         public virtual string GetName()
         {
             return "Edge";
@@ -42,7 +40,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             return GetLatestVersion(LatestReleaseVersionUrl);
         }
 
-        public virtual string GetLatestVersion(String url)
+        public virtual string GetLatestVersion(string url)
         {
             var uri = new Uri(url);
             var webRequest = WebRequest.Create(uri);
@@ -62,8 +60,17 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetMatchingBrowserVersion()
         {
-            var rawEdgeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
-            return rawEdgeBrowserVersion;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionOsx("Microsoft Edge", "--version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionWin("msedge.exe");
+            }
+
+            throw new PlatformNotSupportedException("Your operating system is not supported");
         }
     }
 }

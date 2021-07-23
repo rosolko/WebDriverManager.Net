@@ -14,8 +14,6 @@ namespace WebDriverManager.DriverConfigs.Impl
         private const string ExactReleaseVersionPatternUrl =
             "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
 
-        private const string BrowserExecutableFileName = "chrome.exe";
-
         public virtual string GetName()
         {
             return "Chrome";
@@ -78,10 +76,30 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetMatchingBrowserVersion()
         {
-            var rawChromeBrowserVersion = RegistryHelper.GetInstalledBrowserVersion(BrowserExecutableFileName);
+            var rawChromeBrowserVersion = GetRawBrowserVersion();
             var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
             var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
             return GetLatestVersion(url);
+        }
+
+        private string GetRawBrowserVersion()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionOsx("Google Chrome", "--version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionLinux("google-chrome", "--product-version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionWin("chrome.exe");
+            }
+
+            throw new PlatformNotSupportedException("Your operating system is not supported");
         }
     }
 }

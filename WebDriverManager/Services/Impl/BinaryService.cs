@@ -7,7 +7,6 @@ using System.IO.Compression;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
-using WebDriverManager.Helpers;
 
 namespace WebDriverManager.Services.Impl
 {
@@ -15,37 +14,113 @@ namespace WebDriverManager.Services.Impl
     {
         public IWebProxy Proxy { get; set; }
 
+        [Obsolete("binaryName parameter is redundant, use SetupBinary(url, zipDestination, binDestination)")]
         public string SetupBinary(string url, string zipDestination, string binDestination, string binaryName)
         {
-            if (File.Exists(binDestination)) return binDestination;
-            FileHelper.CreateDestinationDirectory(zipDestination);
-            zipDestination = DownloadZip(url, zipDestination);
-            FileHelper.CreateDestinationDirectory(binDestination);
+            return SetupBinary(url, zipDestination, binDestination);
+        }
 
-            if (zipDestination.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+        public string SetupBinary(string url, string zipPath, string binaryPath)
+        {
+            var zipDir = Path.GetDirectoryName(zipPath);
+            var binaryDir = Path.GetDirectoryName(binaryPath);
+            var binaryName = Path.GetFileName(binaryPath);
+
+            //
+            // If the destination already exists, we don't have to do anything
+            //
+            if (Directory.Exists(binaryDir)) return binaryPath;
+
+            //
+            // Download the driver
+            //
+            Directory.CreateDirectory(zipDir);
+            zipPath = DownloadZip(url, zipPath);
+
+            //
+            // Copy or extract binary(s) into a staging directory
+            //
+            var stagingDir = Path.Combine(zipDir, "staging");
+            var stagingPath = Path.Combine(stagingDir, binaryName);
+
+            Directory.CreateDirectory(stagingDir);
+
+            if (zipPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
             {
-                File.Copy(zipDestination, binDestination);
+                File.Copy(zipPath, stagingPath);
             }
-            else if (zipDestination.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+            else if (zipPath.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
             {
-                UnZip(zipDestination, binDestination, binaryName);
+                UnZip(zipPath, stagingPath, binaryName);
             }
-            else if (zipDestination.EndsWith(".tar.gz", StringComparison.OrdinalIgnoreCase))
+            else if (zipPath.EndsWith(".tar.gz", StringComparison.OrdinalIgnoreCase))
             {
-                UnZipTgz(zipDestination, binDestination);
+                UnZipTgz(zipPath, stagingPath);
             }
 
 #if NETSTANDARD
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
-                RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            var needsChmod =
+                RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
+            if (needsChmod)
             {
-                var chmod = Process.Start("chmod", $"+x {binDestination}");
+                var chmod = Process.Start("chmod", $"+x {stagingPath}");
                 chmod?.WaitForExit();
             }
 #endif
 
-            RemoveZip(zipDestination);
-            return binDestination;
+            //
+            // Create the destination parent directory if it doesn't exist
+            //
+            var binaryParentDir = Path.GetDirectoryName(binaryDir);
+            Directory.CreateDirectory(binaryParentDir);
+
+            //
+            // Atomically rename the staging directory to the destination directory
+            //
+            // If a parallel thread or process races us and wins, the destination will already exist and this will fail
+            // with an IOException.
+            //
+            Exception renameException = null;
+            try
+            {
+                Directory.Move(stagingDir, binaryDir);
+            }
+            catch (Exception ex)
+            {
+                renameException = ex;
+            }
+
+            //
+            // Regardless of what happens, do a best-effort clean up
+            //
+            try
+            {
+                if (Directory.Exists(stagingDir)) Directory.Delete(stagingDir, true);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
+            try
+            {
+                RemoveZip(zipPath);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
+
+            //
+            // If the destination still doesn't exist, it means the rename failed in an unexpected way
+            //
+            if (!Directory.Exists(binaryDir))
+            {
+                throw new Exception($"Error writing {binaryDir}", renameException);
+            }
+
+            return binaryPath;
         }
 
         public string DownloadZip(string url, string destination)

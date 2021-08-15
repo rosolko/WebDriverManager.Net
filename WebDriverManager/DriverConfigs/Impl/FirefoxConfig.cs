@@ -28,7 +28,11 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetBinaryName()
         {
+#if NETSTANDARD2_0
             return "geckodriver" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : string.Empty);
+#else
+            return "geckodriver.exe";
+#endif
         }
 
         public virtual string GetLatestVersion()
@@ -54,14 +58,18 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         private static string GetUrl(Architecture architecture)
         {
+#if NETSTANDARD2_0
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 return $"{DownloadUrl}macos.tar.gz";
             }
 
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                ? $"{DownloadUrl}linux{((int)architecture).ToString()}.tar.gz"
-                : $"{DownloadUrl}win{((int)architecture).ToString()}.zip";
+                ? $"{DownloadUrl}linux{((int)architecture)}.tar.gz"
+                : $"{DownloadUrl}win{((int)architecture)}.zip";
+#else
+            return $"{DownloadUrl}win{(int)architecture}.zip";
+#endif
         }
     }
 }

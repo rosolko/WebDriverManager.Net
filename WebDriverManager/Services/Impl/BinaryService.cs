@@ -35,7 +35,7 @@ namespace WebDriverManager.Services.Impl
                 UnZipTgz(zipDestination, binDestination);
             }
 
-#if NETSTANDARD2_0
+#if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {

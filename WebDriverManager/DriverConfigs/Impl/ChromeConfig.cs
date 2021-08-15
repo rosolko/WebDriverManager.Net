@@ -31,7 +31,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         private string GetUrl()
         {
-#if NETSTANDARD2_0
+#if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 return $"{BaseVersionPatternUrl}chromedriver_mac64.zip";
@@ -48,7 +48,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetBinaryName()
         {
-#if NETSTANDARD2_0
+#if NETSTANDARD
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 #else
             var isWindows = true;
@@ -90,7 +90,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         private string GetRawBrowserVersion()
         {
-#if NETSTANDARD2_0
+#if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 return RegistryHelper.GetInstalledBrowserVersionOsx("Google Chrome", "--version");

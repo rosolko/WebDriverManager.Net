@@ -23,7 +23,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl64()
         {
-#if NETSTANDARD2_0
+#if NETSTANDARD
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                 ? $"{BaseVersionPatternUrl}edgedriver_mac64.zip"
                 : $"{BaseVersionPatternUrl}edgedriver_win64.zip";
@@ -34,7 +34,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetBinaryName()
         {
-#if NETSTANDARD2_0
+#if NETSTANDARD
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
                 ? "msedgedriver"
                 : "msedgedriver.exe";
@@ -68,7 +68,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public string GetMatchingBrowserVersion()
         {
-#if NETSTANDARD2_0
+#if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 return RegistryHelper.GetInstalledBrowserVersionOsx("Microsoft Edge", "--version");

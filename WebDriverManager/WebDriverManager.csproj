@@ -14,7 +14,6 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</PackageTags>
         <PackageReleaseNotes>Update IE version. Add cross platform chrome matching support</PackageReleaseNotes>
-        <PackageLicenseUrl>https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
 
     <ItemGroup>

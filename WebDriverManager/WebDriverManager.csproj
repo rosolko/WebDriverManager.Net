@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        
+
         <TargetFrameworks>netstandard2.0;netstandard2.1;net46</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>2.11.3</PackageVersion>
@@ -14,6 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</PackageTags>
         <PackageReleaseNotes>Update IE version. Add cross platform chrome matching support</PackageReleaseNotes>
+        <PackageLicenseUrl>https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
 
     <ItemGroup>

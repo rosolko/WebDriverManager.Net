@@ -1,42 +1,44 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
-
+        <TargetFrameworks>net46;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="coverlet.msbuild" Version="3.1.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-        <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-        <PackageReference Include="xunit" Version="2.4.1" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+        <PackageReference Include="coverlet.msbuild" Version="3.1.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0"/>
+        <PackageReference Include="Selenium.WebDriver" Version="3.141.0"/>
+        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\WebDriverManager\WebDriverManager.csproj" />
+        <ProjectReference Include="..\WebDriverManager\WebDriverManager.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Assets\file.txt" />
+        <None Remove="Assets\file.txt"/>
         <Content Include="Assets\file.txt">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\removable.zip" />
+        <None Remove="Assets\removable.zip"/>
         <Content Include="Assets\removable.zip">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\unzipable.zip" />
+        <None Remove="Assets\unzipable.zip"/>
         <Content Include="Assets\unzipable.zip">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Assets\gzip.tar.gz">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+        <None Update="Assets\gzip.tar.gz">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
+    <PropertyGroup>
+        <VSTestLogger>trx%3bLogFileName=Results$(TargetFramework).trx</VSTestLogger>
+    </PropertyGroup>
 </Project>

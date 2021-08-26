@@ -1,14 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+
+        <TargetFrameworks>netstandard2.0;netstandard2.1;net46</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>2.11.3</PackageVersion>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
         <Copyright>© 2016-2021, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
         <PackageProjectUrl>https://github.com/rosolko/WebDriverManager.Net</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/rosolko/WebDriverManager.Net/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/rosolko/WebDriverManager.Net</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver MarionetteDriver OperaDriver PhantomJsDriver</PackageTags>
@@ -19,6 +20,10 @@
         <PackageReference Include="AngleSharp" Version="0.16.0" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
         <PackageReference Include="SharpZipLib" Version="1.3.2" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+        <Reference Include="System.IO.Compression" />
     </ItemGroup>
 
 </Project>

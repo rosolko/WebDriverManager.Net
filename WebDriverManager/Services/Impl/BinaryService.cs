@@ -1,4 +1,5 @@
 using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -6,7 +7,6 @@ using System.IO.Compression;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
-using ICSharpCode.SharpZipLib.Tar;
 using WebDriverManager.Helpers;
 
 namespace WebDriverManager.Services.Impl
@@ -35,12 +35,14 @@ namespace WebDriverManager.Services.Impl
                 UnZipTgz(zipDestination, binDestination);
             }
 
+#if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 var chmod = Process.Start("chmod", $"+x {binDestination}");
                 chmod?.WaitForExit();
             }
+#endif
 
             RemoveZip(zipDestination);
             return binDestination;

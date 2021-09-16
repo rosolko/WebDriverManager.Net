@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
@@ -31,12 +32,21 @@ namespace WebDriverManager
             return this;
         }
 
+        [Obsolete("binaryName parameter is redundant, use SetUpDriver(url, binaryPath)")]
         public string SetUpDriver(string url, string binaryPath, string binaryName)
         {
-            var zipPath = FileHelper.GetZipDestination(url);
-            binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath, binaryName);
-            _variableService.SetupVariable(binaryPath);
-            return binaryPath;
+            lock (Object)
+            {
+                return SetUpDriverImpl(url, binaryPath);
+            }
+        }
+
+        public string SetUpDriver(string url, string binaryPath)
+        {
+            lock (Object)
+            {
+                return SetUpDriverImpl(url, binaryPath);
+            }
         }
 
         public string SetUpDriver(IDriverConfig config, string version = VersionResolveStrategy.Latest,
@@ -52,8 +62,16 @@ namespace WebDriverManager
                 url = UrlHelper.BuildUrl(url, version);
                 var binaryPath = FileHelper.GetBinDestination(config.GetName(), version, architecture,
                     config.GetBinaryName());
-                return SetUpDriver(url, binaryPath, config.GetBinaryName());
+                return SetUpDriverImpl(url, binaryPath);
             }
+        }
+
+        private string SetUpDriverImpl(string url, string binaryPath)
+        {
+            var zipPath = FileHelper.GetZipDestination(url);
+            binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath);
+            _variableService.SetupVariable(binaryPath);
+            return binaryPath;
         }
 
         private static string GetVersionToDownload(IDriverConfig config, string version)

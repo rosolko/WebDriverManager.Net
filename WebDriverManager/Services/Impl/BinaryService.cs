@@ -71,10 +71,9 @@ namespace WebDriverManager.Services.Impl
 #endif
 
             //
-            // Create the destination parent directory if it doesn't exist
+            // Create the destination directory if it doesn't exist
             //
-            var binaryParentDir = Path.GetDirectoryName(binaryDir);
-            Directory.CreateDirectory(binaryParentDir);
+            Directory.CreateDirectory(binaryDir);
 
             //
             // Atomically rename the staging directory to the destination directory
@@ -85,7 +84,16 @@ namespace WebDriverManager.Services.Impl
             Exception renameException = null;
             try
             {
-                Directory.Move(stagingDir, binaryDir);
+                string[] files = Directory.GetFiles(stagingDir);
+
+                // Copy the files and overwrite destination files if they already exist.
+                foreach (string s in files)
+                {
+                    // Use static Path methods to extract only the file name from the path.
+                    var fileName = Path.GetFileName(s);
+                    var destFile = Path.Combine(binaryDir, fileName);
+                    File.Copy(s, destFile, true);
+                }
             }
             catch (Exception ex)
             {

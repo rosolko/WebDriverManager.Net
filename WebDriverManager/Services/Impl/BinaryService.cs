@@ -87,12 +87,12 @@ namespace WebDriverManager.Services.Impl
                 string[] files = Directory.GetFiles(stagingDir);
 
                 // Copy the files and overwrite destination files if they already exist.
-                foreach (string s in files)
+                foreach (string file in files)
                 {
                     // Use static Path methods to extract only the file name from the path.
-                    var fileName = Path.GetFileName(s);
+                    var fileName = Path.GetFileName(file);
                     var destFile = Path.Combine(binaryDir, fileName);
-                    File.Copy(s, destFile, true);
+                    File.Copy(file, destFile, true);
                 }
             }
             catch (Exception ex)

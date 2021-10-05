@@ -12,6 +12,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/rosolko/WebDriverManager.Net</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver FirefoxDriver OperaDriver PhantomJsDriver</PackageTags>
         <PackageReleaseNotes>Fix concurrency issue</PackageReleaseNotes>
     </PropertyGroup>

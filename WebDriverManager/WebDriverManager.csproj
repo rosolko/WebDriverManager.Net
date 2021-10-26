@@ -4,7 +4,7 @@
 
         <TargetFrameworks>netstandard2.0;netstandard2.1;net46</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>2.12.1</PackageVersion>
+        <PackageVersion>2.12.2</PackageVersion>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
         <Copyright>© 2016-2021, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
@@ -14,7 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver FirefoxDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes>Fix concurrency issue</PackageReleaseNotes>
+        <PackageReleaseNotes>Fix firefox and opera configs</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,6 +28,6 @@
     </ItemGroup>
     
     <ItemGroup>
-        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 </Project>

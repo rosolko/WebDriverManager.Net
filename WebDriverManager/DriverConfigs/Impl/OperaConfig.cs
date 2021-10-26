@@ -37,7 +37,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases");
                 var parser = new HtmlParser();
                 var document = parser.ParseDocument(htmlCode);
-                var version = document.QuerySelectorAll(".Link--primary")
+                var version = document.QuerySelectorAll("[class='Link--primary']")
                     .Select(element => element.TextContent)
                     .FirstOrDefault();
                 return version;

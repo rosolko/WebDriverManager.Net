@@ -22,14 +22,13 @@ namespace WebDriverManager.Services.Impl
 
         public string SetupBinary(string url, string zipPath, string binaryPath)
         {
-            var zipDir = Path.GetDirectoryName(zipPath);
-            var binaryDir = Path.GetDirectoryName(binaryPath);
-            var binaryName = Path.GetFileName(binaryPath);
-
             //
             // If the destination already exists, we don't have to do anything
             //
-            if (Directory.Exists(binaryDir)) return binaryPath;
+            if (File.Exists(binaryPath)) return binaryPath;
+
+            var zipDir = Path.GetDirectoryName(zipPath);
+            var binaryName = Path.GetFileName(binaryPath);
 
             //
             // Download the driver
@@ -70,10 +69,12 @@ namespace WebDriverManager.Services.Impl
             }
 #endif
 
+            var binaryDir = Path.GetDirectoryName(binaryPath);
+
             //
             // Create the destination directory if it doesn't exist
             //
-            Directory.CreateDirectory(binaryDir);
+            if (Directory.Exists(binaryDir) is false) Directory.CreateDirectory(binaryDir);
 
             //
             // Atomically rename the staging directory to the destination directory

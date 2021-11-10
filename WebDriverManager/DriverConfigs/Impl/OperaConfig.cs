@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
-using System.Net;
-using AngleSharp.Html.Parser;
+using WebDriverManager.Helpers;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -31,17 +29,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            using (var client = new WebClient())
-            {
-                var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases");
-                var parser = new HtmlParser();
-                var document = parser.ParseDocument(htmlCode);
-                var version = document.QuerySelectorAll("[class='Link--primary']")
-                    .Select(element => element.TextContent)
-                    .FirstOrDefault();
-                return version;
-            }
+            return GitHubHelper.GetLatestReleaseName("operasoftware", "operachromiumdriver");
         }
 
         public virtual string GetMatchingBrowserVersion()

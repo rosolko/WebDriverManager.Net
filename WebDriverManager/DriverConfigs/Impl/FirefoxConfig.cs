@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
-using System.Net;
 using System.Runtime.InteropServices;
-using AngleSharp.Html.Parser;
+using WebDriverManager.Helpers;
 using Architecture = WebDriverManager.Helpers.Architecture;
 
 namespace WebDriverManager.DriverConfigs.Impl
@@ -37,18 +35,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            using (var client = new WebClient())
-            {
-                var htmlCode = client.DownloadString("https://github.com/mozilla/geckodriver/releases");
-                var parser = new HtmlParser();
-                var document = parser.ParseDocument(htmlCode);
-                var version = document.QuerySelectorAll("[class='Link--primary']")
-                    .Select(element => element.TextContent)
-                    .FirstOrDefault()
-                    ?.Replace("v", "");
-                return version;
-            }
+            return GitHubHelper.GetLatestReleaseName("mozilla", "geckodriver");
         }
 
         public virtual string GetMatchingBrowserVersion()

@@ -7,9 +7,14 @@ namespace WebDriverManager.Helpers
 {
     internal static class GitHubHelper
     {
+        private static readonly string _assemblyUserAgent;
+
         static GitHubHelper()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            var version = typeof(GitHubHelper).Assembly.GetName().Version;
+            _assemblyUserAgent = $"WebDriverManager.Net/{version}";
         }
 
         public static string GetLatestReleaseName(string owner, string repo)
@@ -27,8 +32,7 @@ namespace WebDriverManager.Helpers
 
                 // All API requests MUST include a valid User-Agent header. Requests with no User-Agent header will be rejected.
                 // <https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required>
-                // TODO: Detect current package version.
-                client.Headers.Add(HttpRequestHeader.UserAgent, "2.12.2");
+                client.Headers.Add(HttpRequestHeader.UserAgent, _assemblyUserAgent);
 
                 json = client.DownloadString($"https://api.github.com/repos/{owner}/{repo}/releases/latest");
             }

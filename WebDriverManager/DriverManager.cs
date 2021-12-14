@@ -29,6 +29,7 @@ namespace WebDriverManager
         public DriverManager WithProxy(IWebProxy proxy)
         {
             _binaryService = new BinaryService {Proxy = proxy};
+            WebRequest.DefaultWebProxy = proxy;
             return this;
         }
 

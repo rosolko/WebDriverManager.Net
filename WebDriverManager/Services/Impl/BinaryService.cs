@@ -74,7 +74,10 @@ namespace WebDriverManager.Services.Impl
             //
             // Create the destination directory if it doesn't exist
             //
-            if (Directory.Exists(binaryDir) is false) Directory.CreateDirectory(binaryDir);
+            if (!Directory.Exists(binaryDir))
+            {
+                Directory.CreateDirectory(binaryDir);
+            }
 
             //
             // Atomically rename the staging directory to the destination directory

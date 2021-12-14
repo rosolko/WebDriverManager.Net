@@ -83,6 +83,10 @@ namespace WebDriverManager.DriverConfigs.Impl
         public virtual string GetMatchingBrowserVersion()
         {
             var rawChromeBrowserVersion = GetRawBrowserVersion();
+            if (string.IsNullOrEmpty(rawChromeBrowserVersion))
+            {
+                throw new Exception("Not able to get chrome version or not installed");
+            }
             var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
             var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
             return GetLatestVersion(url);

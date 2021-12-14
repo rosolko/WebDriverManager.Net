@@ -3,7 +3,7 @@ version: '{build}'
 image: Visual Studio 2019
 
 environment:
-  LIBRARY_VERSION: '2.12.2'
+  LIBRARY_VERSION: '2.12.3'
   SONAR_LOGIN:
     secure: JNopXLZtkO5PD8yEj2+W1BZnbhq9oegXmTFgvVWQw67z5PtWwd+ngjv5O7xFetCZ
 

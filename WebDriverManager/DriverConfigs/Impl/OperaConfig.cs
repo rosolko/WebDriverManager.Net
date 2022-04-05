@@ -39,7 +39,8 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var document = parser.ParseDocument(htmlCode);
                 var version = document.QuerySelectorAll("[class='Link--primary']")
                     .Select(element => element.TextContent)
-                    .FirstOrDefault();
+                    .FirstOrDefault()
+                    ?.Trim(' ', '\r', '\n');
                 return version;
             }
         }

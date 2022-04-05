@@ -46,8 +46,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 var version = document.QuerySelectorAll("[class='Link--primary']")
                     .Select(element => element.TextContent)
                     .FirstOrDefault()
-                    ?.Replace("v", "")
-                    .Trim(' ', '\r', '\n');
+                    ?.Trim(' ', '\r', '\n');
                 return version;
             }
         }

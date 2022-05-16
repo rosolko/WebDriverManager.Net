@@ -26,7 +26,10 @@ namespace WebDriverManager.Tests
         [Fact]
         public void GetMatchingBrowserVersionTest()
         {
-            Assert.Throws<NotImplementedException>(GetMatchingBrowserVersion);
+            var version = GetMatchingBrowserVersion();
+            var regex = new Regex(@"^\d+\.\d+\.\d+(\.\d+)?$");
+            Assert.NotEmpty(version);
+            Assert.Matches(regex, version);
         }
     }
 }

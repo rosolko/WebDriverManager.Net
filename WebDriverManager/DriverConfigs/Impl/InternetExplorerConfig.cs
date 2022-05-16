@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+using WebDriverManager.Helpers;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -31,7 +34,17 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetMatchingBrowserVersion()
         {
-            throw new NotImplementedException();
+#if NETSTANDARD
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                throw new PlatformNotSupportedException("Your operating system is not supported");
+            }
+#endif
+
+            return (string)Registry.GetValue(
+                @"HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer",
+                "svcVersion",
+                "Latest");
         }
     }
 }

@@ -102,7 +102,14 @@ namespace WebDriverManager.DriverConfigs.Impl
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                return RegistryHelper.GetInstalledBrowserVersionLinux("google-chrome", "--product-version");
+                try
+                {
+                    return RegistryHelper.GetInstalledBrowserVersionLinux("google-chrome", "--product-version");
+                }
+                catch
+                {
+                    return RegistryHelper.GetInstalledBrowserVersionLinux("chromium", "--version");
+                }
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

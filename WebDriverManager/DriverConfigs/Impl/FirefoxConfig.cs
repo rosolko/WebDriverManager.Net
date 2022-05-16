@@ -72,7 +72,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
             throw new PlatformNotSupportedException("Your operating system is not supported");
 #else
-            return RegistryHelper.GetInstalledBrowserVersionWin("chrome.exe");
+            return RegistryHelper.GetInstalledBrowserVersionWin("firefox.exe");
 #endif
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
@@ -25,10 +26,9 @@ namespace WebDriverManager.Tests
         [Fact]
         public void GetMatchingBrowserVersionTest()
         {
-            var version = GetLatestVersion();
-            var regex = new Regex(@"^\d+\.\d+\.\d+$");
+            var version = GetMatchingBrowserVersion();
             Assert.NotEmpty(version);
-            Assert.Matches(regex, version);
+            Version.Parse(version);
         }
     }
 }

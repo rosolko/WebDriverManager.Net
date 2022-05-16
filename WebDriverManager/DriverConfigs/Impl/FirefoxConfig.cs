@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using AngleSharp.Html.Parser;
+using WebDriverManager.Helpers;
 using Architecture = WebDriverManager.Helpers.Architecture;
 
 namespace WebDriverManager.DriverConfigs.Impl
@@ -53,7 +54,26 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetMatchingBrowserVersion()
         {
-            throw new NotImplementedException();
+#if NETSTANDARD
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionOsx("Firefox", "--version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionLinux("firefox", "--version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionWin("firefox.exe");
+            }
+
+            throw new PlatformNotSupportedException("Your operating system is not supported");
+#else
+            return RegistryHelper.GetInstalledBrowserVersionWin("chrome.exe");
+#endif
         }
 
         private static string GetUrl(Architecture architecture)

@@ -27,8 +27,9 @@ namespace WebDriverManager.Tests
         public void GetMatchingBrowserVersionTest()
         {
             var version = GetMatchingBrowserVersion();
+            var regex = new Regex(@"^\d+\.\d+(\.\d+)?$");
             Assert.NotEmpty(version);
-            Version.Parse(version);
+            Assert.Matches(regex, version);
         }
     }
 }

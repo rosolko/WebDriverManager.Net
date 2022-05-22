@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebDriverManager.Helpers
@@ -49,7 +50,9 @@ namespace WebDriverManager.Helpers
                 throw new Exception(error);
             }
 
-            return output;
+            // Tries to pick out just the version string, e.g. from "Chromium 101.0.4951.64 Arch Linux" pick
+            // "101.0.4951.64" and from "Mozilla Firefox 100.0" pick "100.0".
+            return output.Split().LastOrDefault(word => Version.TryParse(word, out _)) ?? output;
         }
     }
 }

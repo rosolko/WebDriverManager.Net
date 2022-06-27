@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
@@ -13,11 +14,17 @@ namespace WebDriverManager
 
         private IBinaryService _binaryService;
         private readonly IVariableService _variableService;
+        private string _downloadDirectory = Directory.GetCurrentDirectory();
 
         public DriverManager()
         {
             _binaryService = new BinaryService();
             _variableService = new VariableService();
+        }
+
+        public DriverManager(string downloadDirectory)
+        {
+            _downloadDirectory = downloadDirectory;
         }
 
         public DriverManager(IBinaryService binaryService, IVariableService variableService)
@@ -61,8 +68,7 @@ namespace WebDriverManager
                 version = GetVersionToDownload(config, version);
                 var url = architecture.Equals(Architecture.X32) ? config.GetUrl32() : config.GetUrl64();
                 url = UrlHelper.BuildUrl(url, version);
-                var binaryPath = FileHelper.GetBinDestination(config.GetName(), version, architecture,
-                    config.GetBinaryName());
+                var binaryPath = Path.Combine(_downloadDirectory, config.GetName(), version, architecture.ToString(), config.GetBinaryName());
                 return SetUpDriverImpl(url, binaryPath);
             }
         }

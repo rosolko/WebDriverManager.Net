@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <CheckEolTargetFramework>false</CheckEolTargetFramework>
         <TargetFrameworks>net46;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
         <IsPackable>false</IsPackable>
     </PropertyGroup>

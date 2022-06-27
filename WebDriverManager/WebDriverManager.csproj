@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
+        <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>2.13.0</PackageVersion>
         <Title>WebDriverManager.Net</Title>

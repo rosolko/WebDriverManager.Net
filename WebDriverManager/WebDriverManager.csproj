@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-
+        <CheckEolTargetFramework>false</CheckEolTargetFramework>
         <TargetFrameworks>netstandard2.0;netstandard2.1;net46</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>2.13.0</PackageVersion>

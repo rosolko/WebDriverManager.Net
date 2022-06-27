@@ -14,15 +14,16 @@ namespace WebDriverManager
 
         private IBinaryService _binaryService;
         private readonly IVariableService _variableService;
-        private string _downloadDirectory = Directory.GetCurrentDirectory();
+        private string _downloadDirectory;
 
         public DriverManager()
         {
             _binaryService = new BinaryService();
             _variableService = new VariableService();
+            _downloadDirectory = Directory.GetCurrentDirectory();
         }
 
-        public DriverManager(string downloadDirectory):this()
+        public DriverManager(string downloadDirectory)
         {
             _downloadDirectory = downloadDirectory;
         }

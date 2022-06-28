@@ -4,7 +4,7 @@
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
         <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>2.13.0</PackageVersion>
+        <PackageVersion>2.14.0</PackageVersion>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
         <Copyright>© 2016-2021, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
@@ -14,7 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver FirefoxDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes>Add an ability to get firefox and ie version matching browser</PackageReleaseNotes>
+        <PackageReleaseNotes>Add an ability to specify download folder</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

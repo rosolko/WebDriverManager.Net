@@ -22,7 +22,7 @@ namespace WebDriverManager
             _variableService = new VariableService();
         }
 
-        public DriverManager(string downloadDirectory)
+        public DriverManager(string downloadDirectory):this()
         {
             _downloadDirectory = downloadDirectory;
         }

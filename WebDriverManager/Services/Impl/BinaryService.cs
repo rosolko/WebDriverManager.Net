@@ -163,11 +163,11 @@ namespace WebDriverManager.Services.Impl
             const string nameHttps = "HTTPS_PROXY";
             var httpProxyVariable = Environment.GetEnvironmentVariable(nameHttp, EnvironmentVariableTarget.Process);
             var httpsProxyVariable = Environment.GetEnvironmentVariable(nameHttps, EnvironmentVariableTarget.Process);
-            if (httpProxyVariable != null)
+            if (!string.IsNullOrEmpty(httpProxyVariable))
             {
                 Proxy = new WebProxy(httpProxyVariable);
             }
-            else if (httpsProxyVariable != null)
+            else if (!string.IsNullOrEmpty(httpsProxyVariable))
             {
                 Proxy = new WebProxy(httpsProxyVariable);
             }

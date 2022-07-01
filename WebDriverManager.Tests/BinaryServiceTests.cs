@@ -16,6 +16,8 @@ namespace WebDriverManager.Tests
             const string proxyUrl = "http://myproxy:8080/";
             Environment.SetEnvironmentVariable(httpName, proxyUrl);
             CheckProxySystemVariables();
+            // Remove to make sure it is not saved in later runs
+            Environment.SetEnvironmentVariable(httpName, null);
             Assert.NotNull(Proxy);
             Assert.Equal(proxyUrl, Proxy.GetProxy(new Uri(url)).AbsoluteUri);
         }
@@ -25,9 +27,11 @@ namespace WebDriverManager.Tests
         {
             const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
             const string httpName = "HTTPS_PROXY";
-            const string proxyUrl = "http://myproxy:8080/";
+            const string proxyUrl = "https://myproxy:8080/";
             Environment.SetEnvironmentVariable(httpName, proxyUrl);
             CheckProxySystemVariables();
+            // Remove to make sure it is not saved in later runs
+            Environment.SetEnvironmentVariable(httpName, null);
             Assert.NotNull(Proxy);
             Assert.Equal(proxyUrl, Proxy.GetProxy(new Uri(url)).AbsoluteUri);
         }

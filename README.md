@@ -220,6 +220,9 @@ new DriverManager().SetUpDriver(new TaobaoPhantomConfig());
 new DriverManager().WithProxy(previouslyInitializedProxy).SetUpDriver(new ChromeConfig());
 ```
 
+You can also set the environment variables `HTTP_PROXY` and/or `HTTPS_PROXY` to use a proxy when retrieving the drivers. 
+This does not require any changes in the setup of DriverManager in C#.
+
 ## Thanks
 Thanks to the following companies for generously providing their services/products to help improve this project:
 

@@ -138,6 +138,8 @@ namespace WebDriverManager.Services.Impl
         public string DownloadZip(string url, string destination)
         {
             if (File.Exists(destination)) return destination;
+            if (Proxy == null) CheckProxySystemVariables();
+
             if (Proxy != null)
             {
                 using (var webClient = new WebClient() {Proxy = Proxy})
@@ -154,6 +156,21 @@ namespace WebDriverManager.Services.Impl
             }
 
             return destination;
+        }
+        protected void CheckProxySystemVariables()
+        {
+            const string nameHttp = "HTTP_PROXY";
+            const string nameHttps = "HTTPS_PROXY";
+            var httpProxyVariable = Environment.GetEnvironmentVariable(nameHttp, EnvironmentVariableTarget.Process);
+            var httpsProxyVariable = Environment.GetEnvironmentVariable(nameHttps, EnvironmentVariableTarget.Process);
+            if (httpProxyVariable != null)
+            {
+                Proxy = new WebProxy(httpProxyVariable);
+            }
+            else if (httpsProxyVariable != null)
+            {
+                Proxy = new WebProxy(httpsProxyVariable);
+            }
         }
 
         protected string UnZip(string path, string destination, string name)

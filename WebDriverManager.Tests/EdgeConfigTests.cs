@@ -16,7 +16,7 @@ namespace WebDriverManager.Tests
             Assert.Matches(regex, version);
         }
 
-        [Fact(Skip = "Broken by Microsoft")]
+        [Fact]
         public void DriverDownloadTest()
         {
             new DriverManager().SetUpDriver(new EdgeConfig());

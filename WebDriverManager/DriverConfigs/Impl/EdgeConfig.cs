@@ -24,9 +24,17 @@ namespace WebDriverManager.DriverConfigs.Impl
         public virtual string GetUrl64()
         {
 #if NETSTANDARD
-            return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? $"{BaseVersionPatternUrl}edgedriver_mac64.zip"
-                : $"{BaseVersionPatternUrl}edgedriver_win64.zip";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return $"{BaseVersionPatternUrl}edgedriver_mac64.zip";
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return $"{BaseVersionPatternUrl}edgedriver_linux64.zip";
+            }
+
+            return $"{BaseVersionPatternUrl}edgedriver_win64.zip";
 #else
             return $"{BaseVersionPatternUrl}edgedriver_win64.zip";
 #endif
@@ -35,9 +43,12 @@ namespace WebDriverManager.DriverConfigs.Impl
         public virtual string GetBinaryName()
         {
 #if NETSTANDARD
-            return RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-                ? "msedgedriver"
-                : "msedgedriver.exe";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return "msedgedriver";
+            }
+
+            return "msedgedriver.exe";
 #else
             return "msedgedriver.exe";
 #endif
@@ -72,6 +83,11 @@ namespace WebDriverManager.DriverConfigs.Impl
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 return RegistryHelper.GetInstalledBrowserVersionOsx("Microsoft Edge", "--version");
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return RegistryHelper.GetInstalledBrowserVersionLinux("microsoft-edge", "--version");
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

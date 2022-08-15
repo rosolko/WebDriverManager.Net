@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services.Impl;
@@ -7,6 +8,42 @@ namespace WebDriverManager.Tests
 {
     public class BinaryServiceTests : BinaryService
     {
+        [Fact]
+        public void ProxySetBySystemVariableHttp()
+        {
+            const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
+            const string httpName = "HTTP_PROXY";
+            const string proxyUrl = "http://myproxy:8080/";
+            Environment.SetEnvironmentVariable(httpName, proxyUrl);
+            CheckProxySystemVariables();
+            // Remove to make sure it is not saved in later runs
+            Environment.SetEnvironmentVariable(httpName, null);
+            Assert.NotNull(Proxy);
+            Assert.Equal(proxyUrl, Proxy.GetProxy(new Uri(url)).AbsoluteUri);
+        }
+
+        [Fact]
+        public void ProxySetBySystemVariableHttps()
+        {
+            const string url = "https://chromedriver.storage.googleapis.com/2.27/chromedriver_win32.zip";
+            const string httpName = "HTTPS_PROXY";
+            const string proxyUrl = "https://myproxy:8080/";
+            Environment.SetEnvironmentVariable(httpName, proxyUrl);
+            CheckProxySystemVariables();
+            // Remove to make sure it is not saved in later runs
+            Environment.SetEnvironmentVariable(httpName, null);
+            Assert.NotNull(Proxy);
+            Assert.Equal(proxyUrl, Proxy.GetProxy(new Uri(url)).AbsoluteUri);
+        }
+
+
+        [Fact]
+        public void NoProxyBySystemVariable()
+        {
+            CheckProxySystemVariables();
+            Assert.Null(Proxy);
+        }
+
         [Fact]
         public void DownloadZipResultNotEmpty()
         {

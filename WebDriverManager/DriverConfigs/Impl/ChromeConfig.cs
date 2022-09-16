@@ -34,7 +34,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return $"{BaseVersionPatternUrl}chromedriver_mac64.zip";
+                var extension = RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "_m1" : "";
+                return $"{BaseVersionPatternUrl}chromedriver_mac64{extension}.zip";
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))

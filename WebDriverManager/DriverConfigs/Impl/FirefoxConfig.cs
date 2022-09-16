@@ -81,7 +81,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return $"{DownloadUrl}macos.tar.gz";
+                var extension = RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "-aarch64" : "";
+                return $"{DownloadUrl}macos{extension}.tar.gz";
             }
 
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)

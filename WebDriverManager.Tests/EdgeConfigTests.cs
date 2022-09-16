@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;
@@ -16,7 +15,7 @@ namespace WebDriverManager.Tests
             Assert.Matches(regex, version);
         }
 
-        [Fact]
+        [Fact(Skip = "The remote server returned an error: (429) Too Many Requests")]
         public void DriverDownloadTest()
         {
             new DriverManager().SetUpDriver(new EdgeConfig());

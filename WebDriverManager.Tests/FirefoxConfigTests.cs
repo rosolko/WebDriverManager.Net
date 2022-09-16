@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit;

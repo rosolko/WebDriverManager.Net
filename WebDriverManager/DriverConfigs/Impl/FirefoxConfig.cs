@@ -10,7 +10,8 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class FirefoxConfig : IDriverConfig
     {
-        private const string DownloadUrl = "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-";
+        private const string DownloadUrl =
+            "https://github.com/mozilla/geckodriver/releases/download/v<version>/geckodriver-v<version>-";
 
         public virtual string GetName()
         {
@@ -81,8 +82,11 @@ namespace WebDriverManager.DriverConfigs.Impl
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var extension = RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "-aarch64" : "";
-                return $"{DownloadUrl}macos{extension}.tar.gz";
+                var architectureExtension =
+                    RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
+                        ? "-aarch64"
+                        : "";
+                return $"{DownloadUrl}macos{architectureExtension}.tar.gz";
             }
 
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux)

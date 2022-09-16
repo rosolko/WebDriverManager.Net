@@ -26,8 +26,11 @@ namespace WebDriverManager.DriverConfigs.Impl
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                var extension = RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "_m1" : "";
-                return $"{BaseVersionPatternUrl}edgedriver_mac64{extension}.zip";
+                var architectureExtension =
+                    RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
+                        ? "_m1"
+                        : "";
+                return $"{BaseVersionPatternUrl}edgedriver_mac64{architectureExtension}.zip";
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))

@@ -13,12 +13,14 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return "https://selenium-release.storage.googleapis.com/3.150/IEDriverServer_Win32_3.150.1.zip";
+            return
+                "https://github.com/SeleniumHQ/selenium/releases/download/selenium-<version>/IEDriverServer_Win32_<version>.zip";
         }
 
         public virtual string GetUrl64()
         {
-            return "https://selenium-release.storage.googleapis.com/3.150/IEDriverServer_x64_3.150.1.zip";
+            return
+                "https://github.com/SeleniumHQ/selenium/releases/download/selenium-<version>/IEDriverServer_x64_<version>.zip";
         }
 
         public virtual string GetBinaryName()
@@ -28,7 +30,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            return "3.150.1";
+            return "4.3.0";
         }
 
         public virtual string GetMatchingBrowserVersion()

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using AngleSharp.Html.Parser;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -30,7 +33,19 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            return "4.3.0";
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            using (var client = new WebClient())
+            {
+                var htmlCode = client.DownloadString("https://github.com/SeleniumHQ/selenium/releases");
+                var parser = new HtmlParser();
+                var document = parser.ParseDocument(htmlCode);
+                var version = document.QuerySelectorAll("[class='Link--primary']")
+                    .Select(element => element.TextContent)
+                    .FirstOrDefault()
+                    ?.Replace("Selenium", "")
+                    .Trim(' ', '\r', '\n');
+                return version;
+            }
         }
 
         public virtual string GetMatchingBrowserVersion()

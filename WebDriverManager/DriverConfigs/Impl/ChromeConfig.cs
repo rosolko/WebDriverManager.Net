@@ -36,7 +36,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             {
                 var architectureExtension =
                     RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
-                        ? "arm64"
+                        ? "_arm64"
                         : "64";
                 return $"{BaseVersionPatternUrl}chromedriver_mac{architectureExtension}.zip";
             }

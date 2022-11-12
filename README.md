@@ -79,7 +79,7 @@ Notice that simply adding ``new DriverManager().SetUpDriver(<config>)`` does mag
 1. It checks the latest version of the WebDriver binary file
 2. It downloads the binary WebDriver if it is not present in your system
 
-So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (Just change <config> to prefered config):
+So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (just change <config> to preferred config):
 
 ```csharp
 new ChromeConfig();
@@ -110,7 +110,7 @@ Or architecture:
 Or version and architecture:  
 	``new DriverManager().SetUpDriver(new ChromeConfig(), "2.25", Architecture.X64)``
 
-Only for Google Chrome so far, you can specify to automatically download a ```chromedriver.exe``` matching the version of the browser that is installed in your machine:  
+Or you can specify to automatically download a driver matching the version of the browser that is installed in your machine (only for Chrome, Edge, Firefox and Internet Explorer):  
     ``new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser); ``
 
 #### Manual way:

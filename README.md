@@ -79,7 +79,7 @@ Notice that simply adding ``new DriverManager().SetUpDriver(<config>)`` does mag
 1. It checks the latest version of the WebDriver binary file
 2. It downloads the binary WebDriver if it is not present in your system
 
-So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (Just change <config> to prefered config):
+So far, WebDriverManager supports **Chrome**, **Microsoft Edge**, **Firefox(Marionette)**, **Internet Explorer**, **Opera** or **PhantomJS** configs (just change <config> to preferred config):
 
 ```csharp
 new ChromeConfig();

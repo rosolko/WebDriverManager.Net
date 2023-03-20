@@ -9,9 +9,13 @@ on:
 jobs:
   automerge:
     runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
       - name: automerge
-        uses: pascalgn/automerge-action@v0.15.6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_METHOD: squash
+        uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          merge-method: squash

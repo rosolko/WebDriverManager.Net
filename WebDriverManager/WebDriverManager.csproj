@@ -4,7 +4,7 @@
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
         <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>2.16.2</PackageVersion>
+        <PackageVersion>2.16.3</PackageVersion>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
         <Copyright>© 2016-2022, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
@@ -14,7 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver FirefoxDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes>Extend chorme detection</PackageReleaseNotes>
+        <PackageReleaseNotes>Update latest version match for git based configs</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

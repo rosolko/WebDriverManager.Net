@@ -15,7 +15,7 @@ namespace WebDriverManager.Tests
             Assert.Matches(regex, version);
         }
 
-        [Fact(Skip = "The remote server returned an error: (404) Not Found")]
+        [Fact]
         public void DriverDownloadTest()
         {
             new DriverManager().SetUpDriver(new InternetExplorerConfig());

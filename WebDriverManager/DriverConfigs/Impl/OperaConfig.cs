@@ -34,10 +34,10 @@ namespace WebDriverManager.DriverConfigs.Impl
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             using (var client = new WebClient())
             {
-                var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases");
+                var htmlCode = client.DownloadString("https://github.com/operasoftware/operachromiumdriver/releases/latest");
                 var parser = new HtmlParser();
                 var document = parser.ParseDocument(htmlCode);
-                var version = document.QuerySelectorAll("[class='Link--primary']")
+                var version = document.QuerySelectorAll("h1.d-inline")
                     .Select(element => element.TextContent)
                     .FirstOrDefault()
                     ?.Trim(' ', '\r', '\n');

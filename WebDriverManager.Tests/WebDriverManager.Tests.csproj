@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
-        <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 

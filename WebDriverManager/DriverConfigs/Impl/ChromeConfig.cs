@@ -56,30 +56,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 return GetUrlFromChromeForTestingApi();
             }
 
-#if NETSTANDARD
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                // Handle older versions of chrome driver arm64 builds that are tagged with 64_m1 instead of arm64.
-                // See: https://chromedriver.storage.googleapis.com/index.html?path=106.0.5249.21/
-                var useM1Prefix = new Version(_chromeVersion) < MinArm64ExtensionVersion;
-                var armArchitectureExtension = useM1Prefix
-                    ? "64_m1"
-                    : "_arm64";
-
-                var architectureExtension = RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
-                    ? armArchitectureExtension
-                    : "64";
-
-                return $"{BaseVersionPatternUrl}chromedriver_mac{architectureExtension}.zip";
-            }
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
-            }
-#endif
-
-            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
+            return GetUrlFromChromeStorage();
         }
 
         public virtual string GetBinaryName()
@@ -123,6 +100,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             {
                 var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeVersion);
                 _chromeVersion = GetVersionFromChromeStorage(url);
+                return _chromeVersion;
             }
             else
             {
@@ -156,6 +134,38 @@ namespace WebDriverManager.DriverConfigs.Impl
         }
 
         /// <summary>
+        /// Retrieves a download URL for a chrome driver from the https://chromedriver.storage.googleapis.com API's
+        /// </summary>
+        /// <returns>A chrome driver download URL</returns>
+        private string GetUrlFromChromeStorage()
+        {
+#if NETSTANDARD
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // Handle older versions of chrome driver arm64 builds that are tagged with 64_m1 instead of arm64.
+                // See: https://chromedriver.storage.googleapis.com/index.html?path=106.0.5249.21/
+                var useM1Prefix = new Version(_chromeVersion) < MinArm64ExtensionVersion;
+                var armArchitectureExtension = useM1Prefix
+                    ? "64_m1"
+                    : "_arm64";
+
+                var architectureExtension = RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
+                    ? armArchitectureExtension
+                    : "64";
+
+                return $"{BaseVersionPatternUrl}chromedriver_mac{architectureExtension}.zip";
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
+            }
+#endif
+
+            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
+        }
+
+        /// <summary>
         /// Retrieves a chrome driver version string from https://googlechromelabs.github.io/chrome-for-testing
         /// </summary>
         /// <param name="version">The desired version to download</param>
@@ -168,6 +178,10 @@ namespace WebDriverManager.DriverConfigs.Impl
             return _chromeVersionInfo;
         }
 
+        /// <summary>
+        /// Retrieves a chrome driver download URL from Chrome for Testing API's
+        /// </summary>
+        /// <returns>A chrome driver download URL</returns>
         private string GetUrlFromChromeForTestingApi()
         {
             var platform = "win32";

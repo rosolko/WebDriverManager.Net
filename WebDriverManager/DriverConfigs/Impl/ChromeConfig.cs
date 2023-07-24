@@ -100,7 +100,6 @@ namespace WebDriverManager.DriverConfigs.Impl
             {
                 var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeVersion);
                 _chromeVersion = GetVersionFromChromeStorage(url);
-                return _chromeVersion;
             }
             else
             {

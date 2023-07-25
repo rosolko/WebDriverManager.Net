@@ -95,7 +95,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
             // Handle downloading versions of the chrome webdriver less than what's supported by the Chrome for Testing known good versions API
             // See https://googlechromelabs.github.io/chrome-for-testing for more info
-            var matchedVersion = new Version(chromeVersion);
+            var matchedVersion = new Version(rawChromeBrowserVersion);
             if (matchedVersion < MinChromeForTestingDriverVersion)
             {
                 var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeVersion);
@@ -103,7 +103,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             }
             else
             {
-                _chromeVersion = GetVersionFromChromeForTestingApi(chromeVersion).Version;
+                _chromeVersion = GetVersionFromChromeForTestingApi(rawChromeBrowserVersion).Version;
             }
 
             return _chromeVersion;

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using WebDriverManager.Clients;
 using WebDriverManager.Helpers;
 using WebDriverManager.Models.Chrome;
 
@@ -23,14 +24,8 @@ namespace WebDriverManager.DriverConfigs.Impl
         /// </summary>
         private static readonly Version MinArm64ExtensionVersion = new Version("106.0.5249.61");
 
-        private readonly ChromeForTestingClient _chromeForTestingClient;
         private ChromeVersionInfo _chromeVersionInfo;
         private string _chromeVersion;
-
-        public ChromeConfig()
-        {
-            _chromeForTestingClient = new ChromeForTestingClient();
-        }
 
         public virtual string GetName()
         {
@@ -72,7 +67,7 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            var chromeReleases = _chromeForTestingClient.GetLastKnownGoodVersions().Result;
+            var chromeReleases = ChromeForTestingClient.GetLastKnownGoodVersions();
             var chromeStable = chromeReleases.Channels.Stable;
 
             _chromeVersionInfo = new ChromeVersionInfo
@@ -103,7 +98,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             }
             else
             {
-                _chromeVersion = GetVersionFromChromeForTestingApi(rawChromeBrowserVersion).Version;
+                _chromeVersion = GetVersionFromChromeForTestingApi(chromeVersion).Version;
             }
 
             return _chromeVersion;
@@ -169,10 +164,14 @@ namespace WebDriverManager.DriverConfigs.Impl
         /// </summary>
         /// <param name="version">The desired version to download</param>
         /// <returns>Chrome driver version info (version number, revision number, download URLs)</returns>
-        private ChromeVersionInfo GetVersionFromChromeForTestingApi(string version)
+        private ChromeVersionInfo GetVersionFromChromeForTestingApi(string noRevisionVersion)
         {
-            var knownGoodVersions = _chromeForTestingClient.GetKnownGoodVersionsWithDownloads().Result;
-            _chromeVersionInfo = knownGoodVersions.Versions.FirstOrDefault(cV => cV.Version == version);
+            var knownGoodVersions = ChromeForTestingClient.GetKnownGoodVersionsWithDownloads();
+
+            // Pull latest patch version
+            _chromeVersionInfo = knownGoodVersions.Versions.LastOrDefault(
+                cV => cV.Version.Contains(noRevisionVersion)
+            );
 
             return _chromeVersionInfo;
         }

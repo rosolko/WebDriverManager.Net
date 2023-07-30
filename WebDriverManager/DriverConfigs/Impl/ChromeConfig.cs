@@ -1,18 +1,31 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using WebDriverManager.Clients;
 using WebDriverManager.Helpers;
+using WebDriverManager.Models.Chrome;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
     public class ChromeConfig : IDriverConfig
     {
         private const string BaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/<version>/";
-        private const string LatestReleaseVersionUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE";
+        private const string ExactReleaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
 
-        private const string ExactReleaseVersionPatternUrl =
-            "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
+        /// <summary>
+        /// The minimum version required to download chrome drivers from Chrome for Testing API's 
+        /// </summary>
+        private static readonly Version MinChromeForTestingDriverVersion = new Version("115.0.5763.0");
+
+        /// <summary>
+        /// The minimum version of chrome driver required to reference download URLs via the "arm64" extension
+        /// </summary>
+        private static readonly Version MinArm64ExtensionVersion = new Version("106.0.5249.61");
+
+        private ChromeVersionInfo _chromeVersionInfo;
+        private string _chromeVersion;
 
         public virtual string GetName()
         {
@@ -31,23 +44,14 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         private string GetUrl()
         {
-#if NETSTANDARD
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            // Handle newer versions of chrome driver only being available for download via the Chrome for Testing API's
+            // whilst retaining backwards compatibility for older versions of chrome/chrome driver.
+            if (_chromeVersionInfo != null)
             {
-                var architectureExtension =
-                    RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
-                        ? "_arm64"
-                        : "64";
-                return $"{BaseVersionPatternUrl}chromedriver_mac{architectureExtension}.zip";
+                return GetUrlFromChromeForTestingApi();
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
-            }
-#endif
-
-            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
+            return GetUrlFromChromeStorage();
         }
 
         public virtual string GetBinaryName()
@@ -63,10 +67,49 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetLatestVersion()
         {
-            return GetLatestVersion(LatestReleaseVersionUrl);
+            var chromeReleases = ChromeForTestingClient.GetLastKnownGoodVersions();
+            var chromeStable = chromeReleases.Channels.Stable;
+
+            _chromeVersionInfo = new ChromeVersionInfo
+            {
+                Downloads = chromeStable.Downloads
+            };
+
+            return chromeStable.Version;
         }
 
-        private static string GetLatestVersion(string url)
+        public virtual string GetMatchingBrowserVersion()
+        {
+            var rawChromeBrowserVersion = GetRawBrowserVersion();
+            if (string.IsNullOrEmpty(rawChromeBrowserVersion))
+            {
+                throw new Exception("Not able to get chrome version or not installed");
+            }
+
+            var chromeVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
+
+            // Handle downloading versions of the chrome webdriver less than what's supported by the Chrome for Testing known good versions API
+            // See https://googlechromelabs.github.io/chrome-for-testing for more info
+            var matchedVersion = new Version(rawChromeBrowserVersion);
+            if (matchedVersion < MinChromeForTestingDriverVersion)
+            {
+                var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeVersion);
+                _chromeVersion = GetVersionFromChromeStorage(url);
+            }
+            else
+            {
+                _chromeVersion = GetVersionFromChromeForTestingApi(chromeVersion).Version;
+            }
+
+            return _chromeVersion;
+        }
+
+        /// <summary>
+        /// Retrieves a chrome driver version string from https://chromedriver.storage.googleapis.com
+        /// </summary>
+        /// <param name="url">The request URL</param>
+        /// <returns>A chrome driver version string</returns>
+        private static string GetVersionFromChromeStorage(string url)
         {
             var uri = new Uri(url);
             var webRequest = WebRequest.Create(uri);
@@ -84,17 +127,85 @@ namespace WebDriverManager.DriverConfigs.Impl
             }
         }
 
-        public virtual string GetMatchingBrowserVersion()
+        /// <summary>
+        /// Retrieves a download URL for a chrome driver from the https://chromedriver.storage.googleapis.com API's
+        /// </summary>
+        /// <returns>A chrome driver download URL</returns>
+        private string GetUrlFromChromeStorage()
         {
-            var rawChromeBrowserVersion = GetRawBrowserVersion();
-            if (string.IsNullOrEmpty(rawChromeBrowserVersion))
+#if NETSTANDARD
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                throw new Exception("Not able to get chrome version or not installed");
+                // Handle older versions of chrome driver arm64 builds that are tagged with 64_m1 instead of arm64.
+                // See: https://chromedriver.storage.googleapis.com/index.html?path=106.0.5249.21/
+                var useM1Prefix = new Version(_chromeVersion) < MinArm64ExtensionVersion;
+                var armArchitectureExtension = useM1Prefix
+                    ? "64_m1"
+                    : "_arm64";
+
+                var architectureExtension = RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
+                    ? armArchitectureExtension
+                    : "64";
+
+                return $"{BaseVersionPatternUrl}chromedriver_mac{architectureExtension}.zip";
             }
 
-            var chromeBrowserVersion = VersionHelper.GetVersionWithoutRevision(rawChromeBrowserVersion);
-            var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeBrowserVersion);
-            return GetLatestVersion(url);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
+            }
+#endif
+
+            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
+        }
+
+        /// <summary>
+        /// Retrieves a chrome driver version string from https://googlechromelabs.github.io/chrome-for-testing
+        /// </summary>
+        /// <param name="version">The desired version to download</param>
+        /// <returns>Chrome driver version info (version number, revision number, download URLs)</returns>
+        private ChromeVersionInfo GetVersionFromChromeForTestingApi(string noRevisionVersion)
+        {
+            var knownGoodVersions = ChromeForTestingClient.GetKnownGoodVersionsWithDownloads();
+
+            // Pull latest patch version
+            _chromeVersionInfo = knownGoodVersions.Versions.LastOrDefault(
+                cV => cV.Version.Contains(noRevisionVersion)
+            );
+
+            return _chromeVersionInfo;
+        }
+
+        /// <summary>
+        /// Retrieves a chrome driver download URL from Chrome for Testing API's
+        /// </summary>
+        /// <returns>A chrome driver download URL</returns>
+        private string GetUrlFromChromeForTestingApi()
+        {
+            var platform = "win32";
+
+#if NETSTANDARD
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                platform = RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64
+                    ? "mac-arm64"
+                    : "mac-x64";
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                platform = "linux64";
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                platform = RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.X64
+                    ? "win64"
+                    : "win32";
+            }
+#endif
+            var result = _chromeVersionInfo.Downloads.ChromeDriver
+                .FirstOrDefault(driver => driver.Platform == platform);
+
+            return result.Url;
         }
 
         private string GetRawBrowserVersion()

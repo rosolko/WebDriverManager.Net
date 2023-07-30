@@ -16,7 +16,7 @@ namespace WebDriverManager.Tests
         }
 
         [Fact]
-        public void DriverDownloadTest()
+        public void DriverDownloadLatestTest()
         {
             new DriverManager().SetUpDriver(new ChromeConfig());
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));

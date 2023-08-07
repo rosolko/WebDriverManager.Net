@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using WebDriverManager.Clients;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.Helpers;
 using WebDriverManager.Services;
@@ -36,6 +37,7 @@ namespace WebDriverManager
         public DriverManager WithProxy(IWebProxy proxy)
         {
             _binaryService = new BinaryService {Proxy = proxy};
+            ChromeForTestingClient.Proxy = proxy;
             WebRequest.DefaultWebProxy = proxy;
             return this;
         }

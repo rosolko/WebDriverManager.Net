@@ -21,11 +21,9 @@ namespace WebDriverManager.Clients
         {
             get
             {
-                var useProxy = Proxy != null;
-
                 var handler = new HttpClientHandler
                 {
-                    UseProxy = useProxy,
+                    UseProxy = Proxy != null,
                     Proxy = Proxy
                 };
 

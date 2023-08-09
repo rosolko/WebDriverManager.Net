@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,27 +15,40 @@ namespace WebDriverManager.Clients
             PropertyNameCaseInsensitive = true
         };
 
-        private static readonly HttpClient _httpClient;
+        private static HttpClient _httpClient;
 
-        static ChromeForTestingClient()
+        private static HttpClient HttpClient
         {
-            _httpClient = new HttpClient
+            get
             {
-                BaseAddress = new Uri(BaseUrl)
-            };
+                var handler = new HttpClientHandler
+                {
+                    UseProxy = Proxy != null,
+                    Proxy = Proxy
+                };
+
+                _httpClient = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri(BaseUrl)
+                };
+
+                return _httpClient;
+            }
         }
+
+        public static IWebProxy Proxy { get; set; }
 
         public static ChromeVersions GetKnownGoodVersionsWithDownloads()
         {
             return GetResultFromHttpTask<ChromeVersions>(
-                _httpClient.GetAsync("known-good-versions-with-downloads.json")
+                HttpClient.GetAsync("known-good-versions-with-downloads.json")
             );
         }
 
         public static ChromeVersions GetLastKnownGoodVersions()
         {
             return GetResultFromHttpTask<ChromeVersions>(
-                _httpClient.GetAsync("last-known-good-versions-with-downloads.json")
+                HttpClient.GetAsync("last-known-good-versions-with-downloads.json")
             );
         }
 

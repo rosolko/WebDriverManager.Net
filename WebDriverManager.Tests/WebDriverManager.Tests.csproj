@@ -9,7 +9,7 @@
     <ItemGroup>
         <PackageReference Include="coverlet.msbuild" Version="6.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-        <PackageReference Include="Selenium.WebDriver" Version="4.12.3" />
+        <PackageReference Include="Selenium.WebDriver" Version="4.12.4" />
         <PackageReference Include="xunit" Version="2.5.0" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0" />
     </ItemGroup>

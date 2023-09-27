@@ -2,8 +2,6 @@
 > Built-in manager was released by Selenium ["Selenium Manager"](https://www.selenium.dev/blog/2022/introducing-selenium-manager/), which will automatically download the most suitable version and platform WebDriver executable file. So now, **you can run applications that use Selenium and manipulates web browsers without this package.**
 
 [![Build status](https://ci.appveyor.com/api/projects/status/kjpqb5twmpxw6lpl?svg=true)](https://ci.appveyor.com/project/rosolko/webdrivermanager-net)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=rosolko_WebDriverManager.Net&metric=alert_status)](https://sonarcloud.io/dashboard?id=rosolko_WebDriverManager.Net)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=rosolko_WebDriverManager.Net&metric=coverage)](https://sonarcloud.io/dashboard?id=rosolko_WebDriverManager.Net)
 [![NuGet](https://img.shields.io/nuget/v/WebDriverManager.svg)](https://www.nuget.org/packages/WebDriverManager)
 
 # WebDriverManager.Net

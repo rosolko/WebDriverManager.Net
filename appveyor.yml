@@ -7,25 +7,12 @@ environment:
   SONAR_LOGIN:
     secure: JNopXLZtkO5PD8yEj2+W1BZnbhq9oegXmTFgvVWQw67z5PtWwd+ngjv5O7xFetCZ
 
-init:
-  - SET JAVA_HOME=C:\Program Files\Java\jdk11
-  - SET PATH=%JAVA_HOME%\bin;%PATH%
-
-install:
-  - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { dotnet tool install --global dotnet-sonarscanner }
-
 test: off
-
-before_build:
-  - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { dotnet sonarscanner begin /k:"rosolko_WebDriverManager.Net" /v:$env:LIBRARY_VERSION /o:"rosolko-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_LOGIN /d:sonar.language="cs" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.coverage.exclusions="WebDriverManager.Tests/**,**/*Tests.cs" /d:sonar.cs.opencover.reportsPaths="C:\projects\webdrivermanager-net\WebDriverManager.Tests\opencover.xml" }
 
 build_script:
   - ps: dotnet restore
   - ps: dotnet build
-  - ps: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" /p:CoverletOutput="opencover.xml"
-
-after_build:
-  - ps: if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { dotnet sonarscanner end /d:sonar.login=$env:SONAR_LOGIN }
+  - ps: dotnet test
 
 artifacts:
   - path: '**\*.nupkg'

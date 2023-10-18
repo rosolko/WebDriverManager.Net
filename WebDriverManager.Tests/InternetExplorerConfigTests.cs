@@ -6,7 +6,7 @@ namespace WebDriverManager.Tests
 {
     public class InternetExplorerConfigTests : InternetExplorerConfig
     {
-        [Fact]
+        [Fact (Skip = "404")]
         public void VersionTest()
         {
             var version = GetLatestVersion();
@@ -15,14 +15,14 @@ namespace WebDriverManager.Tests
             Assert.Matches(regex, version);
         }
 
-        [Fact]
+        [Fact (Skip = "404")]
         public void DriverDownloadTest()
         {
             new DriverManager().SetUpDriver(new InternetExplorerConfig());
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
 
-        [Fact]
+        [Fact (Skip = "404")]
         public void GetMatchingBrowserVersionTest()
         {
             var version = GetMatchingBrowserVersion();

@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace WebDriverManager.Helpers
 {
     public static class FileHelper
     {
-        public static string GetZipDestination(string url)
+        public static string GetZipDestination(string url, string tempDirectory)
         {
-            var tempDirectory = Path.GetTempPath();
             var guid = Guid.NewGuid().ToString();
             var zipName = Path.GetFileName(url);
             if (zipName == null) throw new ArgumentNullException($"Can't get zip name from URL: {url}");

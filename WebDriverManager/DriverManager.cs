@@ -16,6 +16,7 @@ namespace WebDriverManager
         private IBinaryService _binaryService;
         private readonly IVariableService _variableService;
         private string _downloadDirectory = Directory.GetCurrentDirectory();
+        private string _tmpPathDirectory = Path.GetTempPath();
 
         public DriverManager()
         {
@@ -75,9 +76,14 @@ namespace WebDriverManager
             }
         }
 
+        public void SetTempPathDirectory(string tempPath)
+        {
+            _tmpPathDirectory = tempPath;
+        }
+
         private string SetUpDriverImpl(string url, string binaryPath)
         {
-            var zipPath = FileHelper.GetZipDestination(url);
+            var zipPath = FileHelper.GetZipDestination(url, _tmpPathDirectory);
             binaryPath = _binaryService.SetupBinary(url, zipPath, binaryPath);
             _variableService.SetupVariable(binaryPath);
             return binaryPath;

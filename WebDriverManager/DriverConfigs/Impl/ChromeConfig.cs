@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using WebDriverManager.Clients;
 using WebDriverManager.Helpers;
 using WebDriverManager.Models.Chrome;
+using Architecture = WebDriverManager.Helpers.Architecture;
 
 namespace WebDriverManager.DriverConfigs.Impl
 {
@@ -34,24 +35,24 @@ namespace WebDriverManager.DriverConfigs.Impl
 
         public virtual string GetUrl32()
         {
-            return GetUrl();
+            return GetUrl(Architecture.X32);
         }
 
         public virtual string GetUrl64()
         {
-            return GetUrl();
+            return GetUrl(Architecture.X64);
         }
 
-        private string GetUrl()
+        private string GetUrl(Architecture architecture)
         {
             // Handle newer versions of chrome driver only being available for download via the Chrome for Testing API's
             // whilst retaining backwards compatibility for older versions of chrome/chrome driver.
             if (_chromeVersionInfo != null)
             {
-                return GetUrlFromChromeForTestingApi();
+                return GetUrlFromChromeForTestingApi(architecture);
             }
 
-            return GetUrlFromChromeStorage();
+            return GetUrlFromChromeStorage(architecture);
         }
 
         public virtual string GetBinaryName()
@@ -131,7 +132,7 @@ namespace WebDriverManager.DriverConfigs.Impl
         /// Retrieves a download URL for a chrome driver from the https://chromedriver.storage.googleapis.com API's
         /// </summary>
         /// <returns>A chrome driver download URL</returns>
-        private string GetUrlFromChromeStorage()
+        private string GetUrlFromChromeStorage(Architecture architecture)
         {
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -155,8 +156,8 @@ namespace WebDriverManager.DriverConfigs.Impl
                 return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
             }
 #endif
-
-            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
+            var driverName = architecture == Architecture.X32 ? "chromedriver_win32.zip" : "chromedriver_win64.zip";
+            return $"{BaseVersionPatternUrl}{driverName}";
         }
 
         /// <summary>
@@ -180,9 +181,9 @@ namespace WebDriverManager.DriverConfigs.Impl
         /// Retrieves a chrome driver download URL from Chrome for Testing API's
         /// </summary>
         /// <returns>A chrome driver download URL</returns>
-        private string GetUrlFromChromeForTestingApi()
+        private string GetUrlFromChromeForTestingApi(Architecture architecture)
         {
-            var platform = "win32";
+            string platform = architecture == Architecture.X32 ? "win32" : "win64";
 
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))

@@ -1,8 +1,8 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using WebDriverManager.Models.Chrome;
 
 namespace WebDriverManager.Clients
@@ -10,11 +10,7 @@ namespace WebDriverManager.Clients
     public static class ChromeForTestingClient
     {
         private static readonly string BaseUrl = "https://googlechromelabs.github.io/chrome-for-testing/";
-        private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
+        
         private static HttpClient _httpClient;
 
         private static HttpClient HttpClient
@@ -67,7 +63,7 @@ namespace WebDriverManager.Clients
             var readStringTask = Task.Run(() => httpTask.Result.Content.ReadAsStringAsync());
             readStringTask.Wait();
 
-            return JsonSerializer.Deserialize<TResult>(readStringTask.Result, JsonSerializerOptions);
+            return JsonConvert.DeserializeObject<TResult>(readStringTask.Result);
         }
     }
 }

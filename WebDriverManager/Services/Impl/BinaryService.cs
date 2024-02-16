@@ -3,10 +3,11 @@ using ICSharpCode.SharpZipLib.Tar;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace WebDriverManager.Services.Impl
 {
@@ -182,13 +183,21 @@ namespace WebDriverManager.Services.Impl
                 return destination;
             }
 
-            using (var zip = ZipFile.Open(path, ZipArchiveMode.Read))
+            using (var zip = new ZipFile(path))
             {
-                foreach (var entry in zip.Entries)
+                foreach (ZipEntry zipEntry in zip)
                 {
-                    if (entry.Name == name)
+                    if (zipEntry.Name.EndsWith(name) && zipEntry.IsFile)
                     {
-                        entry.ExtractToFile(destination, true);
+                        byte[] buffer = new byte[4096];
+                        Stream zipStream = zip.GetInputStream(zipEntry);
+
+                        // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
+                        // of the file, but does not waste memory.
+                        using (FileStream streamWriter = File.Create(destination))
+                        {
+                            StreamUtils.Copy(zipStream, streamWriter, buffer);
+                        }
                     }
                 }
             }

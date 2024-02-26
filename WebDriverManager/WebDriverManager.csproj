@@ -7,7 +7,7 @@
         <Version>2.17.2</Version>
         <Title>WebDriverManager.Net</Title>
         <Description>Automatic Selenium WebDriver binaries management for .Net</Description>
-        <Copyright>© 2016-2022, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
+        <Copyright>© 2016-2024, Aliaksandr Rasolka. All Rights Reserved.</Copyright>
         <PackageProjectUrl>https://github.com/rosolko/WebDriverManager.Net</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/rosolko/WebDriverManager.Net</RepositoryUrl>

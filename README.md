@@ -118,8 +118,7 @@ Or you can specify to automatically download a driver matching the version of th
 ```csharp
 new DriverManager().SetUpDriver(
     "https://chromedriver.storage.googleapis.com/2.25/chromedriver_win32.zip",
-    Path.Combine(Directory.GetCurrentDirectory(), "chromedriver.exe"),
-    "chromedriver.exe"
+    Path.Combine(Directory.GetCurrentDirectory(), "chromedriver.exe")
 );
 ```
 

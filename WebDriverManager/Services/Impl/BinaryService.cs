@@ -190,13 +190,14 @@ namespace WebDriverManager.Services.Impl
                     if (zipEntry.Name.EndsWith(name) && zipEntry.IsFile)
                     {
                         byte[] buffer = new byte[4096];
-                        Stream zipStream = zip.GetInputStream(zipEntry);
-
-                        // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
-                        // of the file, but does not waste memory.
-                        using (FileStream streamWriter = File.Create(destination))
+                        using (Stream zipStream = zip.GetInputStream(zipEntry))
                         {
-                            StreamUtils.Copy(zipStream, streamWriter, buffer);
+                            // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
+                            // of the file, but does not waste memory.
+                            using (FileStream streamWriter = File.Create(destination))
+                            {
+                                StreamUtils.Copy(zipStream, streamWriter, buffer);
+                            }
                         }
                     }
                 }

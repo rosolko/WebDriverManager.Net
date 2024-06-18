@@ -16,7 +16,7 @@ namespace WebDriverManager.DriverConfigs.Impl
         private const string ExactReleaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
 
         /// <summary>
-        /// The minimum version required to download chrome drivers from Chrome for Testing API's 
+        /// The minimum version required to download chrome drivers from Chrome for Testing API's
         /// </summary>
         private static readonly Version MinChromeForTestingDriverVersion = new Version("115.0.5763.0");
 
@@ -165,13 +165,13 @@ namespace WebDriverManager.DriverConfigs.Impl
         /// </summary>
         /// <param name="version">The desired version to download</param>
         /// <returns>Chrome driver version info (version number, revision number, download URLs)</returns>
-        private ChromeVersionInfo GetVersionFromChromeForTestingApi(string noRevisionVersion)
+        private ChromeVersionInfo GetVersionFromChromeForTestingApi(string version)
         {
             var knownGoodVersions = ChromeForTestingClient.GetKnownGoodVersionsWithDownloads();
 
             // Pull latest patch version
             _chromeVersionInfo = knownGoodVersions.Versions.LastOrDefault(
-                cV => cV.Version.Contains(noRevisionVersion)
+                cV => cV.Version.Contains(version)
             );
 
             return _chromeVersionInfo;
@@ -206,7 +206,7 @@ namespace WebDriverManager.DriverConfigs.Impl
             var result = _chromeVersionInfo.Downloads.ChromeDriver
                 .FirstOrDefault(driver => driver.Platform == platform);
 
-            return result.Url;
+            return result?.Url;
         }
 
         private string GetRawBrowserVersion()

@@ -89,10 +89,10 @@ namespace WebDriverManager.Services.Impl
             Exception renameException = null;
             try
             {
-                string[] files = Directory.GetFiles(stagingDir);
+                var files = Directory.GetFiles(stagingDir);
 
                 // Copy the files and overwrite destination files if they already exist.
-                foreach (string file in files)
+                foreach (var file in files)
                 {
                     // Use static Path methods to extract only the file name from the path.
                     var fileName = Path.GetFileName(file);
@@ -116,6 +116,7 @@ namespace WebDriverManager.Services.Impl
             {
                 Console.Error.WriteLine(ex.ToString());
             }
+
             try
             {
                 RemoveZip(zipPath);
@@ -141,23 +142,19 @@ namespace WebDriverManager.Services.Impl
             if (File.Exists(destination)) return destination;
             if (Proxy == null) CheckProxySystemVariables();
 
-            if (Proxy != null)
+            using (var webClient = new WebClient())
             {
-                using (var webClient = new WebClient() {Proxy = Proxy})
+                if (Proxy != null)
                 {
-                    webClient.DownloadFile(new Uri(url), destination);
+                    webClient.Proxy = Proxy;
                 }
-            }
-            else
-            {
-                using (var webClient = new WebClient())
-                {
-                    webClient.DownloadFile(new Uri(url), destination);
-                }
+
+                webClient.DownloadFile(new Uri(url), destination);
             }
 
             return destination;
         }
+
         protected void CheckProxySystemVariables()
         {
             const string nameHttp = "HTTP_PROXY";
@@ -187,17 +184,16 @@ namespace WebDriverManager.Services.Impl
             {
                 foreach (ZipEntry zipEntry in zip)
                 {
-                    if (zipEntry.Name.EndsWith(name) && zipEntry.IsFile)
+                    if (!zipEntry.Name.EndsWith(name) || !zipEntry.IsFile) continue;
+
+                    var buffer = new byte[4096];
+                    using (var zipStream = zip.GetInputStream(zipEntry))
                     {
-                        byte[] buffer = new byte[4096];
-                        using (Stream zipStream = zip.GetInputStream(zipEntry))
+                        // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
+                        // of the file, but does not waste memory.
+                        using (var streamWriter = File.Create(destination))
                         {
-                            // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
-                            // of the file, but does not waste memory.
-                            using (FileStream streamWriter = File.Create(destination))
-                            {
-                                StreamUtils.Copy(zipStream, streamWriter, buffer);
-                            }
+                            StreamUtils.Copy(zipStream, streamWriter, buffer);
                         }
                     }
                 }

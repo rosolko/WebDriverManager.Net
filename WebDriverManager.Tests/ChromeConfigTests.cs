@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager.Helpers;
 using Xunit;
 
 namespace WebDriverManager.Tests
@@ -19,6 +20,14 @@ namespace WebDriverManager.Tests
         public void DriverDownloadLatestTest()
         {
             new DriverManager().SetUpDriver(new ChromeConfig());
+            Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
+        }
+
+        [Fact]
+        public void DriverDownloadTest()
+        {
+            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
     }

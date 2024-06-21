@@ -32,9 +32,8 @@ namespace WebDriverManager.Clients
                 };
 
                 _httpClient.DefaultRequestHeaders.Add("User-Agent", "WebDriverManager.NET");
-                _httpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
-                _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br, zstd");
-                _httpClient.DefaultRequestHeaders.Add("Accept-Language", "zh-CN,zh;q=0.9");
+                _httpClient.DefaultRequestHeaders.Add("Accept", "*/*");
+                _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "br, deflate, gzip, x-gzip");
                 return _httpClient;
             }
         }

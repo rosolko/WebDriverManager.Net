@@ -65,26 +65,20 @@ namespace WebDriverManager.Clients
         {
             var httpTask = Task.Run(() => taskToRun);
             httpTask.Wait();
-            var response = httpTask.Result;
-            if (response.Content.Headers.Contains("Content-Encoding"))
+
+            var encoding = httpTask.Result.Content.Headers?.GetValues("Content-Encoding")?.FirstOrDefault();
+            if (encoding != null && encoding.Equals("gzip", StringComparison.OrdinalIgnoreCase))
             {
-                string encoding = response.Content.Headers.GetValues("Content-Encoding").FirstOrDefault();
-                if (string.Equals(encoding, "gzip", StringComparison.OrdinalIgnoreCase))
-                {
-                    var readBytesTask = Task.Run(() => httpTask.Result.Content.ReadAsByteArrayAsync());
-                    readBytesTask.Wait();
+                var readBytesTask = Task.Run(() => httpTask.Result.Content.ReadAsByteArrayAsync());
+                readBytesTask.Wait();
 
-                    byte[] decompressionData = GzipDecompression.DecompressGzip(readBytesTask.Result);
-                    return JsonConvert.DeserializeObject<TResult>(Encoding.UTF8.GetString(decompressionData));
-                }
+                var decompressionData = ArchiveHelper.UnpackGzip(readBytesTask.Result);
+                return JsonConvert.DeserializeObject<TResult>(Encoding.UTF8.GetString(decompressionData));
             }
-
 
             var readStringTask = Task.Run(() => httpTask.Result.Content.ReadAsStringAsync());
             readStringTask.Wait();
             return JsonConvert.DeserializeObject<TResult>(readStringTask.Result);
-
-
         }
     }
 }

@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebDriverManager.Helpers;
 using WebDriverManager.Models.Chrome;
 
 namespace WebDriverManager.Clients
@@ -10,7 +13,7 @@ namespace WebDriverManager.Clients
     public static class ChromeForTestingClient
     {
         private static readonly string BaseUrl = "https://googlechromelabs.github.io/chrome-for-testing/";
-        
+
         private static HttpClient _httpClient;
 
         private static HttpClient HttpClient
@@ -28,6 +31,9 @@ namespace WebDriverManager.Clients
                     BaseAddress = new Uri(BaseUrl)
                 };
 
+                _httpClient.DefaultRequestHeaders.Add("User-Agent", "WebDriverManager.NET");
+                _httpClient.DefaultRequestHeaders.Add("Accept", "*/*");
+                _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "br, deflate, gzip, x-gzip");
                 return _httpClient;
             }
         }
@@ -59,11 +65,26 @@ namespace WebDriverManager.Clients
         {
             var httpTask = Task.Run(() => taskToRun);
             httpTask.Wait();
+            var response = httpTask.Result;
+            if (response.Content.Headers.Contains("Content-Encoding"))
+            {
+                string encoding = response.Content.Headers.GetValues("Content-Encoding").FirstOrDefault();
+                if (string.Equals(encoding, "gzip", StringComparison.OrdinalIgnoreCase))
+                {
+                    var readBytesTask = Task.Run(() => httpTask.Result.Content.ReadAsByteArrayAsync());
+                    readBytesTask.Wait();
+
+                    byte[] decompressionData = GzipDecompression.DecompressGzip(readBytesTask.Result);
+                    return JsonConvert.DeserializeObject<TResult>(Encoding.UTF8.GetString(decompressionData));
+                }
+            }
+
 
             var readStringTask = Task.Run(() => httpTask.Result.Content.ReadAsStringAsync());
             readStringTask.Wait();
-
             return JsonConvert.DeserializeObject<TResult>(readStringTask.Result);
+
+
         }
     }
 }

@@ -226,11 +226,11 @@ This does not require any changes in the setup of DriverManager in C#.
 ## Thanks
 Thanks to the following companies for generously providing their services/products to help improve this project:
 
-- [AppVeyor](https://appveyor.com) is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub on a Microsoft Windows virtual machine. |
-- [BrowserStack](https://www.browserstack.com) is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators. |
-- [GitHub](https://github.com) is a web-based Git repository hosting service. It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding several collaboration features such as bug tracking, feature requests, task management, and wikis for every project. |
-- [JetBrains](https://www.jetbrains.com)  (formerly IntelliJ) is a software development company whose tools are targeted towards software developers and project managers. |
-- [SonarQube](https://www.sonarqube.org) (formerly Sonar) is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells and security vulnerabilities on 20+ programming languages. |
+- [AppVeyor](https://appveyor.com)
+- [BrowserStack](https://www.browserstack.com)
+- [GitHub](https://github.com)
+- [JetBrains](https://www.jetbrains.com)
+- [SonarQube](https://www.sonarqube.org)
 
 ## About
 

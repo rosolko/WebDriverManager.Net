@@ -8,9 +8,9 @@ namespace WebDriverManager.DriverConfigs.Impl
 {
     public class EdgeConfig : IDriverConfig
     {
-        private const string BaseVersionPatternUrl = "https://msedgedriver.azureedge.net/<version>/";
-        private const string LatestStableReleaseVersionUrl = "https://msedgedriver.azureedge.net/LATEST_STABLE";
-        private const string LatestBetaReleaseVersionUrl = "https://msedgedriver.azureedge.net/LATEST_BETA";
+        private const string BaseVersionPatternUrl = "https://msedgedriver.microsoft.com/<version>/";
+        private const string LatestStableReleaseVersionUrl = "https://msedgedriver.microsoft.com/LATEST_STABLE";
+        private const string LatestBetaReleaseVersionUrl = "https://msedgedriver.microsoft.com/LATEST_BETA";
 
         public virtual string GetName()
         {

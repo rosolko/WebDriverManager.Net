@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --continue-on-error
+      run: dotnet test --no-restore --no-build
   
   deploy:
     needs: build
@@ -31,6 +31,6 @@ jobs:
       with:
         approvers: rosolko
     - name: Pack
-      run: dotnet pack --output nupkgs
+      run: dotnet pack --no-restore --no-build --output nupkgs
     - name: Push
       run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

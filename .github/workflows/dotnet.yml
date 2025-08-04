@@ -31,7 +31,9 @@ jobs:
     - name: Approve
       uses: trstringer/manual-approval@v1.9.0
       with:
+        secret: ${{ github.TOKEN }}
         approvers: rosolko
+        minimum-approvals: 1
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:

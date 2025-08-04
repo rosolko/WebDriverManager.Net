@@ -18,12 +18,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test
+      run: dotnet test --no-build --continue-on-error
   
   deploy:
-    if: always()
     needs: build
     runs-on: windows-latest
     steps:

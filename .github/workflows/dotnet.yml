@@ -26,12 +26,16 @@ jobs:
   
   deploy:
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Approve
       uses: trstringer/manual-approval@v1.9.0
       with:
         approvers: rosolko
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
     - name: Pack
       run: dotnet pack --no-restore --no-build --output nupkgs
     - name: Push

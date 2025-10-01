@@ -234,7 +234,7 @@ Thanks to the following companies for generously providing their services/produc
 
 ## About
 
-WebDriverManager.Net (Copyright &copy; 2016-2024) is a personal project of [Aliaksandr Rasolka] licensed under [MIT] license. 
+WebDriverManager.Net (Copyright &copy; 2016-2025) is a personal project of [Aliaksandr Rasolka] licensed under [MIT] license. 
 Comments, questions and suggestions are always very welcome!
 
 [Aliaksandr Rasolka]: https://github.com/rosolko

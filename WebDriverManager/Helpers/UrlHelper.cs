@@ -10,5 +10,13 @@ namespace WebDriverManager.Helpers
                 .Replace("<version>", version)
                 .Replace("<release>", version.Substring(0, version.LastIndexOf(".", StringComparison.CurrentCulture)));
         }
+
+        public static string BuildUrl(string url, string version, string platform)
+        {
+            return url
+                .Replace("<version>", version)
+                .Replace("<platform>", platform)
+                .Replace("<release>", version.Substring(0, version.LastIndexOf(".", StringComparison.CurrentCulture)));
+        }
     }
 }

@@ -54,11 +54,18 @@ namespace WebDriverManager.Tests
             {
                 if (disposing)
                 {
-                    if (Directory.Exists(WebDriverFinder.FindFile(GetBinaryName())))
+                    try
                     {
-                        var childDirectory = new DirectoryInfo(WebDriverFinder.FindFile(GetBinaryName()));
-                        //Go to parent as child directory is the x64 directory
-                        childDirectory.Parent.Delete(true);
+                        if (Directory.Exists(WebDriverFinder.FindFile(GetBinaryName())))
+                        {
+                            var childDirectory = new DirectoryInfo(WebDriverFinder.FindFile(GetBinaryName()));
+                            //Go to parent as child directory is the x64 directory
+                            childDirectory.Parent.Delete(true);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // ignored - when run from container, we may not have access to delete the directory
                     }
                 }
                 disposedValue = true;

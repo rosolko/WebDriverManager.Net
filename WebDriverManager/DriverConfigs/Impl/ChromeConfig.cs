@@ -13,7 +13,10 @@ namespace WebDriverManager.DriverConfigs.Impl
     public class ChromeConfig : IDriverConfig
     {
         private const string BaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/<version>/";
+        private const string BaseVersionPatternUrlNewer = "https://storage.googleapis.com/chrome-for-testing-public/<version>/<platform>/";
         private const string ExactReleaseVersionPatternUrl = "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_<version>";
+
+        private static readonly Version MinChromeForNewPath = new Version("113.0.5672.0");
 
         /// <summary>
         /// The minimum version required to download chrome drivers from Chrome for Testing API's
@@ -134,6 +137,7 @@ namespace WebDriverManager.DriverConfigs.Impl
         /// <returns>A chrome driver download URL</returns>
         private string GetUrlFromChromeStorage(Architecture architecture)
         {
+            var baseVersionPattern = new Version(_chromeVersion) < MinChromeForNewPath ? BaseVersionPatternUrlNewer : BaseVersionPatternUrl;
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
@@ -148,16 +152,16 @@ namespace WebDriverManager.DriverConfigs.Impl
                     ? armArchitectureExtension
                     : "64";
 
-                return $"{BaseVersionPatternUrl}chromedriver_mac{architectureExtension}.zip";
+                return $"{baseVersionPattern}chromedriver_mac{architectureExtension}.zip";
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
+                return $"{baseVersionPattern}chromedriver_linux64.zip";
             }
 #endif
             var driverName = architecture == Architecture.X32 ? "chromedriver_win32.zip" : "chromedriver_win64.zip";
-            return $"{BaseVersionPatternUrl}{driverName}";
+            return $"{baseVersionPattern}{driverName}";
         }
 
         /// <summary>

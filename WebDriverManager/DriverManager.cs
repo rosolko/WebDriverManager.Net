@@ -92,7 +92,7 @@ namespace WebDriverManager
             {
                 case VersionResolveStrategy.MatchingBrowser: return config.GetMatchingBrowserVersion();
                 case VersionResolveStrategy.Latest: return config.GetLatestVersion();
-                default: return version;
+                default: return config.GetMatchingExplicitRequest(version);
             }
         }
     }

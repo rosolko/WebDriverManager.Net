@@ -77,6 +77,11 @@ namespace WebDriverManager.DriverConfigs.Impl
 #endif
         }
 
+        public string GetMatchingExplicitRequest(string desiredVersion)
+        {
+            return desiredVersion;
+        }
+
         private static string GetUrl(Architecture architecture)
         {
 #if NETSTANDARD

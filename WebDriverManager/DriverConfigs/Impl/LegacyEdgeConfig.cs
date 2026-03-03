@@ -34,5 +34,10 @@ namespace WebDriverManager.DriverConfigs.Impl
         {
             throw new NotImplementedException();
         }
+
+        public string GetMatchingExplicitRequest(string desiredVersion)
+        {
+            return desiredVersion;
+        }
     }
 }

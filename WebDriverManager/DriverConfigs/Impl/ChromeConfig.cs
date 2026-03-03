@@ -105,6 +105,26 @@ namespace WebDriverManager.DriverConfigs.Impl
             return _chromeVersion;
         }
 
+        public virtual string GetMatchingExplicitRequest(string desiredVersion)
+        {
+            var chromeVersion = VersionHelper.GetVersionWithoutRevision(desiredVersion);
+
+            // Handle downloading versions of the chrome webdriver less than what's supported by the Chrome for Testing known good versions API
+            // See https://googlechromelabs.github.io/chrome-for-testing for more info
+            var matchedVersion = new Version(desiredVersion);
+            if (matchedVersion < MinChromeForTestingDriverVersion)
+            {
+                var url = ExactReleaseVersionPatternUrl.Replace("<version>", chromeVersion);
+                _chromeVersion = GetVersionFromChromeStorage(url);
+            }
+            else
+            {
+                _chromeVersion = GetVersionFromChromeForTestingApi(chromeVersion).Version;
+            }
+
+            return _chromeVersion;
+        }
+
         /// <summary>
         /// Retrieves a chrome driver version string from https://chromedriver.storage.googleapis.com
         /// </summary>
@@ -236,5 +256,6 @@ namespace WebDriverManager.DriverConfigs.Impl
             return RegistryHelper.GetInstalledBrowserVersionWin("chrome.exe");
 #endif
         }
+
     }
 }

@@ -108,5 +108,11 @@ namespace WebDriverManager.DriverConfigs.Impl
             return RegistryHelper.GetInstalledBrowserVersionWin("msedge.exe");
 #endif
         }
+
+        public string GetMatchingExplicitRequest(string desiredVersion)
+        {
+            return desiredVersion;
+        }
+
     }
 }

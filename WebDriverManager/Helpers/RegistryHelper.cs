@@ -67,6 +67,7 @@ namespace WebDriverManager.Helpers
 
             var currentUserPath = Microsoft.Win32.Registry.GetValue(
                 currentUserRegistryPathPattern.Replace("<executableFileName>", executableFileName), "", null);
+            //TODO: If Chromium is installed, that version is returned instead, skip if currentUserPath contains Chromium?
             if (currentUserPath != null)
             {
                 return FileVersionInfo.GetVersionInfo(currentUserPath.ToString()).FileVersion;

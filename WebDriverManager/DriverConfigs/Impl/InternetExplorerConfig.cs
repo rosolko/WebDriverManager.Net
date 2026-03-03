@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -62,5 +62,11 @@ namespace WebDriverManager.DriverConfigs.Impl
                 "svcVersion",
                 "Latest");
         }
+
+        public string GetMatchingExplicitRequest(string desiredVersion)
+        {
+            return desiredVersion;
+        }
+
     }
 }

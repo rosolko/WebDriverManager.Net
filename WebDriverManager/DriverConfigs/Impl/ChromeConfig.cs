@@ -138,6 +138,7 @@ namespace WebDriverManager.DriverConfigs.Impl
         private string GetUrlFromChromeStorage(Architecture architecture)
         {
             var baseVersionPattern = new Version(_chromeVersion) < MinChromeForNewPath ? BaseVersionPatternUrlNewer : BaseVersionPatternUrl;
+            baseVersionPattern = baseVersionPattern.Replace("<platform>",(architecture == Architecture.X32 ? "win32" : "win64"))
 #if NETSTANDARD
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {

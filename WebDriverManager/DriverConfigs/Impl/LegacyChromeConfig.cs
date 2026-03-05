@@ -35,8 +35,7 @@ namespace WebDriverManager.DriverConfigs.Impl
                 return $"{BaseVersionPatternUrl}chromedriver_linux64.zip";
             }
 #endif
-            var driverName = architecture == Architecture.X64 ? "chromedriver_win64.zip" : "chromedriver_win32.zip";
-            return $"{BaseVersionPatternUrl}{driverName}";
+            return $"{BaseVersionPatternUrl}chromedriver_win32.zip";
         }
 
         public override string GetLatestVersion()

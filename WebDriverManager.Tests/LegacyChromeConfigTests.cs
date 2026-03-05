@@ -5,7 +5,7 @@ using Xunit;
 
 namespace WebDriverManager.Tests
 {
-    public class ChromeConfigTests : ChromeConfig
+    public class LegacyChromeConfigTests : LegacyChromeConfig
     {
         [Fact]
         public void VersionTest()
@@ -14,26 +14,20 @@ namespace WebDriverManager.Tests
             var regex = new Regex(@"^\d+\.\d+.\d+.\d+$");
             Assert.NotEmpty(version);
             Assert.Matches(regex, version);
+            Assert.Equal("114.0.5735.90", version);
         }
 
         [Fact]
         public void DriverDownloadLatestTest()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
+            new DriverManager().SetUpDriver(new LegacyChromeConfig());
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
 
         [Fact]
         public void DriverDownloadExactTest()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig(), "115.0.5763.0");
-            Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
-        }
-
-        [Fact]
-        public void DriverDownloadMatchingBrowserTest()
-        {
-            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+            new DriverManager().SetUpDriver(new LegacyChromeConfig(), "106.0.5249.61");
             Assert.NotEmpty(WebDriverFinder.FindFile(GetBinaryName()));
         }
     }

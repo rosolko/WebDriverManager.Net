@@ -14,6 +14,7 @@ namespace WebDriverManager.Tests
             var regex = new Regex(@"^\d+\.\d+$");
             Assert.NotEmpty(version);
             Assert.Matches(regex, version);
+            Assert.Equal("6.17134", version);
         }
 
         [Fact]

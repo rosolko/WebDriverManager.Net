@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-          3.1.x
+          7.0.x
           9.0.x
     - name: Restore dependencies
       run: dotnet restore
@@ -23,7 +23,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-restore --no-build
-  
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

@@ -9,7 +9,6 @@ namespace WebDriverManager.DriverConfigs.Impl
     {
         public abstract string GetLatestVersion();
         public abstract string GetMatchingBrowserVersion();
-
         protected abstract string GetUrl(Architecture architecture);
 
         public virtual string GetName()

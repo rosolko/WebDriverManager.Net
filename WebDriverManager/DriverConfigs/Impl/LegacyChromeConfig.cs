@@ -8,7 +8,6 @@ using Architecture = WebDriverManager.Helpers.Architecture;
 namespace WebDriverManager.DriverConfigs.Impl
 {
     /// <summary>
-    ///
     /// Works with versions [106.0.5249.61; 114.0.5735.90]
     /// </summary>
     public class LegacyChromeConfig : BaseChromeConfig

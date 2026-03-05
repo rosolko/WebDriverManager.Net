@@ -14,7 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>Selenium WebDriver ChromeDriver EdgeDriver InternetExplorerDriver FirefoxDriver OperaDriver PhantomJsDriver</PackageTags>
-        <PackageReleaseNotes>Fix chrome exact veresion driver download</PackageReleaseNotes>
+        <PackageReleaseNotes>Fix chrome exact version driver download</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

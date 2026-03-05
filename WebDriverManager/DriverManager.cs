@@ -71,7 +71,7 @@ namespace WebDriverManager
                     ? ArchitectureHelper.GetArchitecture()
                     : architecture;
                 version = GetVersionToDownload(config, version);
-                var url = architecture.Equals(Architecture.X32) ? config.GetUrl32() : config.GetUrl64();
+                var url = architecture == Architecture.X64 ? config.GetUrl64() : config.GetUrl32();
                 url = UrlHelper.BuildUrl(url, version);
                 var binaryPath = Path.Combine(_downloadDirectory, config.GetName(), version, architecture.ToString(), config.GetBinaryName());
                 return SetUpDriverImpl(url, binaryPath);

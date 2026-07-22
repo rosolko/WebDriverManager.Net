@@ -3,15 +3,16 @@
     <PropertyGroup>
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
         <TargetFrameworks>net472;net7.0</TargetFrameworks>
+        <SuppressTfmSupportBuildErrors>true</SuppressTfmSupportBuildErrors>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="coverlet.msbuild" Version="6.0.2" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"/>
-        <PackageReference Include="Selenium.WebDriver" Version="4.25.0" />
-        <PackageReference Include="xunit" Version="2.9.2" />
+        <PackageReference Include="coverlet.msbuild" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5"/>
+        <PackageReference Include="Selenium.WebDriver" Version="4.46.0"/>
+        <PackageReference Include="xunit" Version="2.9.3"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -34,7 +35,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Text.Json" Version="8.0.5" />
+        <PackageReference Include="System.Text.Json" Version="10.0.10"/>
         <None Update="Assets\gzip.tar.gz">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
